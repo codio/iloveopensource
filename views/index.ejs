@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel='stylesheet' href='/css/main.css'/>
+	<script type="text/javascript" src="/js/vendors/github.js"></script>
+</head>
+<body>
+<% if (!user) { %>
+<h2>Welcome! Please <a href="/auth/github">log in</a>.</h2>
+<% } else { %>
+<h2>Hello, <%= user.displayName %>. <a href="/logout">log out</a></h2>
+<% } %>
+</body>
+</html>

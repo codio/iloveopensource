@@ -1,0 +1,30 @@
+<h3>
+	Select repos which have your support
+</h3>
+
+<ul class="nav nav-tabs">
+	<li class="active"><a href="#repo-search" data-toggle="tab">Search For Repo</a></li>
+	<li class="{{^repos.own}}disabled{{/repos.own}}">
+		<a href="#own-repos" data-toggle="tab">
+			{{^repos.own}}<i class="icon-spinner icon-spin icon-large"></i>{{/repos.own}} Own Repos
+		</a>
+	</li>
+	<li class="{{^repos.starred}}disabled{{/repos.starred}}">
+		<a href="#starred-repos" data-toggle="tab">
+			{{^repos.starred}}<i class="icon-spinner icon-spin icon-large"></i>{{/repos.starred}} Watching Repos
+		</a>
+	</li>
+	<li class="{{^repos.watched}}disabled{{/repos.watched}}">
+		<a href="#watched-repos" data-toggle="tab">
+			{{^repos.watched}}<i class="icon-spinner icon-spin icon-large"></i>{{/repos.watched}} Starred Repos
+		</a>
+	</li>
+	<li class="pull-right"><a href="#selected-repos" data-toggle="tab">Selected Repos</a></li>
+</ul>
+<div class="tab-content">
+	<div class="tab-pane" id="own-repos"></div>
+	<div class="tab-pane" id="starred-repos"></div>
+	<div class="tab-pane" id="watched-repos"></div>
+	<div class="tab-pane active" id="repo-search"></div>
+	<div class="tab-pane" id="selected-repos"></div>
+</div>

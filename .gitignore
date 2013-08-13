@@ -10,5 +10,10 @@ lib-cov
 pids
 logs
 results
+bower_components
+node_modules
+public/js/vendors
+css/main.css
+config/config.*.js
 
 npm-debug.log

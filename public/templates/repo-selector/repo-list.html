@@ -1,0 +1,23 @@
+<div class='repos-list'>
+	<div class="controls row">
+		<div class="col-4">
+			<!--<input type="text" placeholder="Filter.."/>-->
+		</div>
+		<span class="col-1">
+			<span class="support-type donating" proxy-tap="toggle-support-all" data-type="donating" title="I'm donating"></span>
+		</span>
+		<span class="col-1">
+			<span class="support-type contributing" proxy-tap="toggle-support-all" data-type="contributing" title="I'm contributing"></span>
+		</span>
+		<span class="col-1">
+			<span class="support-type supporting" proxy-tap="toggle-support-all" data-type="supporting" title="I'm supporting in other way"></span>
+		</span>
+	</div>
+	{{#repos}}
+	{{>repo}}
+	{{/repos}}
+
+	{{#linkMore}}
+	<button type="button" class="btn btn-large btn-block load-more" proxy-tap="load-more" >Load More!</button>
+	{{/linkMore}}
+</div>
