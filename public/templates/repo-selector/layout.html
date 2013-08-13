@@ -4,22 +4,26 @@
 
 <ul class="nav nav-tabs">
 	<li class="active"><a href="#repo-search" data-toggle="tab">Search For Repo</a></li>
-	<li class="{{^repos.own}}disabled{{/repos.own}}">
+	<li class="disabled">
 		<a href="#own-repos" data-toggle="tab">
-			{{^repos.own}}<i class="icon-spinner icon-spin icon-large"></i>{{/repos.own}} Own Repos
+			<i class="icon-spinner icon-spin icon-large"></i> Own Repos
 		</a>
 	</li>
-	<li class="{{^repos.starred}}disabled{{/repos.starred}}">
+	<li class="disabled">
 		<a href="#starred-repos" data-toggle="tab">
-			{{^repos.starred}}<i class="icon-spinner icon-spin icon-large"></i>{{/repos.starred}} Watching Repos
+			<i class="icon-spinner icon-spin icon-large"></i> Watching Repos
 		</a>
 	</li>
-	<li class="{{^repos.watched}}disabled{{/repos.watched}}">
+	<li class="disabled">
 		<a href="#watched-repos" data-toggle="tab">
-			{{^repos.watched}}<i class="icon-spinner icon-spin icon-large"></i>{{/repos.watched}} Starred Repos
+			<i class="icon-spinner icon-spin icon-large"></i> Starred Repos
 		</a>
 	</li>
-	<li class="pull-right"><a href="#selected-repos" data-toggle="tab">Selected Repos</a></li>
+	<li class="pull-right">
+		<a href="#selected-repos" data-toggle="tab">
+			Selected Repos <span class="badge" id="selected-count"><%= obj.selectedCount %></span>
+		</a>
+	</li>
 </ul>
 <div class="tab-content">
 	<div class="tab-pane" id="own-repos"></div>

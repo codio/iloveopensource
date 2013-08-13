@@ -1,4 +1,4 @@
-<div class='repos-list'>
+<div class='repos-list hidden'>
 	<div class="controls row">
 		<div class="col-4">
 			<!--<input type="text" placeholder="Filter.."/>-->
@@ -13,11 +13,8 @@
 			<span class="support-type supporting" proxy-tap="toggle-support-all" data-type="supporting" title="I'm supporting in other way"></span>
 		</span>
 	</div>
-	{{#repos}}
-	{{>repo}}
-	{{/repos}}
 
-	{{#linkMore}}
+	<% if (linkMore) { %>
 	<button type="button" class="btn btn-large btn-block load-more" proxy-tap="load-more" >Load More!</button>
-	{{/linkMore}}
+	<% } %>
 </div>

@@ -1,89 +1,122 @@
-section#repos-selector {
-  padding: 20px;
+section#repos-editor {
 
-  .search-form {
-	margin: 20px 0;
-	input {
-	  width: 30em;
-	  display: inline-block;
-	}
+  .to-account {
+	margin-top: 20px;
   }
-  .repos-list {
+
+  section#repos-selector {
 	padding: 20px;
 
-	.load-more {
-	  margin-top: 20px;
+	.nav-tabs {
+
+	  li {
+
+		.icon-spinner {
+		  display: none;
+		}
+
+		&.disabled {
+		  .icon-spinner {
+			display: inline;
+		  }
+		}
+	  }
 	}
 
-	.controls {
-	  padding-left: 1em;
+	.search-form {
+	  margin: 20px 0;
+
+	  input {
+		width: 30em;
+		display: inline-block;
+	  }
+
+	  input, button {
+		margin-right: 2em;
+	  }
+
 	}
 
-	.repo {
-	  padding: 5px 0;
-	  padding-left: 1em;
-	  position: relative;
+	.query-too-short {
+	  display: none;
+	}
 
-	  &.fork {
+	.repos-list {
+	  padding: 20px;
+
+	  .load-more {
+		margin-top: 20px;
+	  }
+
+	  .controls {
+		padding-left: 1em;
+	  }
+
+	  .repo {
+		padding: 5px 0;
+		padding-left: 1em;
+		position: relative;
+
+		&.fork {
+		  &:before {
+			.icon(@code-fork);
+			position: absolute;
+			left: 1em;
+		  }
+		}
+
+		&:nth-child(even) {
+		  background-color: #f9f9f9;
+		}
+
+		.repo-name {
+
+		}
+
+	  }
+
+	  .support-type, .remove-icon {
+		cursor: pointer;
+		border-radius: 5px;
+		width: 2em;
+		height: 2em;
+		display: block;
+		position: relative;
+		border: 2px solid #000;
+
+		&.active {
+		  &:before {
+			opacity: 1;
+		  }
+		}
+
 		&:before {
-		  .icon(@code-fork);
+		  opacity: .5;
 		  position: absolute;
-		  left: 1em;
+		  top: 50%;
+		  margin-top: -.7em;
+		  text-align: center;
+		  width: 100%;
+		}
+
+		&.contributing:before {
+		  .icon(@group);
+		}
+
+		&.donating:before {
+		  .icon(@usd);
+		}
+
+		&.supporting:before {
+		  .icon(@heart);
 		}
 	  }
 
-	  &:nth-child(even) {
-		background-color: #f9f9f9;
-	  }
-
-	  .repo-name {
-
+	  .remove-icon:before {
+		.icon(@remove);
 	  }
 
 	}
-
-	.support-type, .remove-icon {
-	  cursor: pointer;
-	  border-radius: 5px;
-	  width: 2em;
-	  height: 2em;
-	  display: block;
-	  position: relative;
-	  border: 2px solid #000;
-
-	  &.active {
-		&:before {
-		  opacity: 1;
-		}
-	  }
-
-	  &:before {
-		opacity: .5;
-		position: absolute;
-		top: 50%;
-		margin-top: -.7em;
-		text-align: center;
-		width: 100%;
-	  }
-
-	  &.contributing:before {
-		.icon(@group);
-	  }
-
-	  &.donating:before {
-		.icon(@usd);
-	  }
-
-	  &.supporting:before {
-		.icon(@heart);
-	  }
-	}
-
-	.remove-icon:before {
-	  .icon(@remove);
-	}
-
-
   }
 }
 

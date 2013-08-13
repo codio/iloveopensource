@@ -6,7 +6,9 @@
  */
 var passport = require('passport'),
 	cfg = require('../config'),
-	GitHubStrategy = require('passport-github').Strategy;
+	GitHubStrategy = require('passport-github').Strategy,
+	mongoose = require('mongoose'),
+	User = mongoose.model('User')
 
 passport.serializeUser(function (user, done) {
 	done(null, user);
@@ -29,14 +31,26 @@ passport.use(new GitHubStrategy({
 		callbackURL: callbackUrl
 	},
 	function (accessToken, refreshToken, profile, done) {
-		profile.accessToken = accessToken
-		profile.avatar = profile._json.avatar_url
-		profile.type = profile._json.type
-		profile.url = profile._json.html_url
+		User.findOne({ 'github.id': profile.id }, function (err, user) {
+			if (user) return done(err, user)
 
-		delete profile._json
-		delete profile.raw
-		return done(null, profile);
+			user = new User({
+				name: profile.displayName,
+				email: profile.emails[0].value,
+				username: profile.username,
+				displayName: profile.username,
+				provider: 'github',
+				github: profile._json,
+				type: profile._json.type,
+				authToken: accessToken
+			})
+//			req.session.firstTime = true
+			console.log(user)
+			user.save(function (err) {
+				if (err) console.log(err)
+				return done(err, user)
+			})
+		})
 	}
 ));
 

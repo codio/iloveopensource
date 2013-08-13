@@ -1,27 +1,2 @@
-{{^repos.length}}
-<h4>You didn't selected any repos yet :-(</h4>
-{{/repos.length}}
-{{#repos.length}}
-
-<div class='repos-list'>
-	{{#repos}}
-	<div class="repo row {{# fork }}fork{{/ fork }}">
-		<div class="col-4 repo-name">
-			<a href="{{ url }}" target="_blank">{{ name }}</a>
-		</div>
-		<div class="col-1">
-			<span class="support-type donating {{#support.donating}}active{{/support.donating}}" proxy-tap="toggle-support" data-type="donating" title="I'm donating"></span>
-		</div>
-		<div class="col-1">
-			<span class="support-type contributing {{#support.contributing}}active{{/support.contributing}}" proxy-tap="toggle-support" data-type="contributing" title="I'm contributing"></span>
-		</div>
-		<div class="col-1">
-			<span class="support-type supporting {{#support.supporting}}active{{/support.supporting}}" proxy-tap="toggle-support" data-type="supporting" title="I'm supporting in other way"></span>
-		</div>
-		<div class="col-1">
-			<span class="remove-icon" proxy-tap="remove-repo" title="Remove repo"></span>
-		</div>
-	</div>
-	{{/repos}}
-</div>
-{{/repos.length}}
+<h4 class="is-empty message">You didn't selected any repos yet :-(</h4>
+<div class='repos-list hidden'></div>

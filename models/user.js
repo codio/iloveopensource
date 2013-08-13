@@ -7,28 +7,15 @@
 
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
-	, ObjectId = Schema.ObjectId;
 
-var User = new Schema({
-	displayName: ObjectId,
-	gitHubId: Number,
-	username: String,
-	gitHubUrl: String,
-	avatar: String,
+var UserSchema = new Schema({
+	username: { type: String, required: true, index: { unique: true } },
+	displayName: String,
 	type: String,
-	created: Date
+	avatar: String,
+	github: {},
+	provider: { type: String, default: '' },
+	authToken: { type: String, default: '' }
 });
 
-var Repo = new Schema({
-	belongsTo: ObjectId,
-	gitHubId: Number,
-	name: String,
-	gitHubUrl: String,
-	type: String
-});
-
-var Project = new Schema({
-	gitHubId: Number,
-	name: String,
-	gitHubUrl: String
-});
+mongoose.model('User', UserSchema);

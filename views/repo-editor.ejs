@@ -1,0 +1,38 @@
+<% include header.html %>
+<section id="repos-editor">
+	<div class="well">
+		<div class="row">
+			<a href="<%= user.github.html_url %>" class="col-1">
+				<img src="<%= user.github.avatar_url %>" class="img-rounded" alt="<%= user.displayName %>"/>
+			</a>
+
+			<div class="data col-4">
+				<p><b>Username:</b> <%= user.username %></p>
+
+				<p><b>Name:</b> <%= user.displayName %></p>
+
+				<p><b>Type:</b> <%= user.github.type %></p>
+			</div>
+
+			<div class="col-2 col-offset-5">
+				<button type="button" class="btn btn-primary col-12" id="save-changes">Done!</button>
+
+				<a href="/users/<%= user.username %>" class="btn btn-link col-12 to-account">To my account!</a>
+			</div>
+		</div>
+	</div>
+
+	<section id="repos-selector"></section>
+</section>
+<script type="text/javascript" src="/js/vendors/requirejs/js/require.js"></script>
+<script type="text/javascript" src="/js/require.config.js"></script>
+<script type="text/javascript">
+	window.accessToken = '<%= user.authToken %>'
+
+	<% if (typeof supports !== 'undefined') { %>
+	window.entities = <%- JSON.stringify(supports) %>
+	<% } %>
+
+	require(['modules/repo-selector/main'])
+</script>
+<% include footer.html %>

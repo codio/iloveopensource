@@ -1,12 +1,8 @@
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="/css/main.css"/>
-</head>
-<body>
+<% include header.html %>
 <div class="well">
 	<div class="row">
-		<a href="<%= user.url %>" class="col-1">
-			<img src="<%= user.avatar %>" class="img-rounded" alt="<%= user.displayName %>"/>
+		<a href="<%= user.github.html_url %>" class="col-1">
+			<img src="<%= user.github.avatar_url %>" class="img-rounded" alt="<%= user.displayName %>"/>
 		</a>
 
 		<div class="data col-4">
@@ -14,21 +10,12 @@
 
 			<p><b>Name:</b> <%= user.displayName %></p>
 
-			<p><b>Type:</b> <%= user.type %></p>
+			<p><b>Type:</b> <%= user.github.type %></p>
 		</div>
-		<button type="button" class="btn btn-primary col-1 col-offset-6">Done!</button>
+
+		<a href="/users/<%= user.username %>/editor" class="btn btn-link col-1 col-offset-6" id="save-changes">Edit Projects</a>
 	</div>
 </div>
 
-<section id="repos-selector"></section>
-
-<script type="text/javascript" src="/js/vendors/requirejs/js/require.js"></script>
-<script type="text/javascript" src="/js/require.config.js"></script>
-<script type="text/javascript">
-	window.accessToken = '<%= user.accessToken %>'
-	require(['main'])
-</script>
-<script type="text/js-template" id="repo-row">
-</script>
-</body>
-</html>
+<section id="user-repos"></section>
+<% include footer.html %>

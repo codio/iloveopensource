@@ -1,14 +1,18 @@
-<div class="repo row {{# fork }}fork{{/ fork }}">
-	<div class="col-4 repo-name">
-		<a href="{{ url }}" target="_blank">{{ name }}</a>
-	</div>
-	<div class="col-1">
-		<span class="support-type donating {{#support.donating}}active{{/support.donating}}" proxy-tap="toggle-support" data-type="donating" title="I'm donating"></span>
-	</div>
-	<div class="col-1">
-		<span class="support-type contributing {{#support.contributing}}active{{/support.contributing}}" proxy-tap="toggle-support" data-type="contributing" title="I'm contributing"></span>
-	</div>
-	<div class="col-1">
-		<span class="support-type supporting {{#support.supporting}}active{{/support.supporting}}" proxy-tap="toggle-support" data-type="supporting" title="I'm supporting in other way"></span>
-	</div>
+<div class="col-4 repo-name">
+	<a href="<%= repo.url %>" target="_blank"><%= repo.name %></a>
 </div>
+<div class="col-1">
+	<span class="support-type donating <%= repo.support.donating ? 'active' : '' %>" proxy-tap="toggle-support" data-type="donating" title="I'm donating"></span>
+</div>
+<div class="col-1">
+	<span class="support-type contributing <%= repo.support.contributing ? 'active' : '' %>" proxy-tap="toggle-support" data-type="contributing" title="I'm contributing"></span>
+</div>
+<div class="col-1">
+	<span class="support-type supporting <%= repo.support.supporting ? 'active' : '' %>" proxy-tap="toggle-support" data-type="supporting" title="I'm supporting in other way"></span>
+</div>
+
+<% if (obj.canDelete) { %>
+<div class="col-1">
+	<span class="remove-icon" proxy-tap="remove-repo" title="Remove repo"></span>
+</div>
+<% } %>

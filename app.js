@@ -7,9 +7,17 @@
 var http = require('http'),
 	path = require('path'),
 	express = require('express'),
-	passport = require('./middleware/passport'),
 	cfg = require('./config'),
+	MongoStore = require('connect-mongo')(express),
+	mongoose = require('mongoose'),
 	app = express();
+
+mongoose.connect('mongodb://' + cfg.mongodb.host + '/' + cfg.mongodb.name)
+
+// Bootstrap models
+require('./models')
+
+var passport = require('./middleware/passport')
 
 // all environments
 app.set('port', cfg.port);
@@ -20,7 +28,12 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser(cfg.sessionSecret));
-app.use(express.session());
+app.use(express.session({
+	secret: cfg.sessionSecret,
+	store: new MongoStore({
+		db: cfg.mongodb.name
+	})
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(app.router);

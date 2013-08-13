@@ -41,7 +41,7 @@ define(function (require) {
 		},
 		parseRepos = store().parseRepos = function (repos) {
 			return _.map(repos, function (repo) {
-				var exists = _.find(store().selected, {url: repo.url})
+				var exists = store().selected.find({url: repo.html_url})
 				var support = _.defaults(exists ? exists.support : {}, defaultSupport)
 
 				return {
