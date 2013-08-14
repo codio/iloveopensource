@@ -52,19 +52,20 @@ module.exports = function (app) {
 		User.findOne({ 'username': req.param('username') }, function (err, user) {
 			if (!user) return res.render('404');
 
-			Support.find({user: user._id}, function (error, supports) {
-				if (!supports.length && req.user._id == user._id) {
-					return res.render('repo-editor', { user: req.user });
-				}
-
-				res.render('account', { user: user });
+			Support.getSupportByUser(user._id, function (error, supports) {
+				res.render('account', {
+					user: user,
+					supports: supports,
+					isCurrentUser: req.isAuthenticated() && req.user._id == user._id,
+					isLoggedIn: req.isAuthenticated()
+				});
 			})
 		})
 	});
 
 	app.get('/users/:username/editor', ensureAuthenticated, function (req, res) {
 		Support.getSupportByUser(req.user._id, function (error, supports) {
-				res.render('repo-editor', { user: req.user, supports: supports });
+			res.render('repo-editor', { user: req.user, supports: supports });
 		})
 	});
 

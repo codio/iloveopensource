@@ -15,13 +15,16 @@ var http = require('http'),
 mongoose.connect('mongodb://' + cfg.mongodb.host + '/' + cfg.mongodb.name)
 
 // Bootstrap models
-require('./models')
+require('./app/models')
 
-var passport = require('./middleware/passport')
+var passport = require('./app/middleware/passport')
+
+app.locals._ = require('lodash');
+app.locals.titleBuilder = require('./app/utils/title-builder');
 
 // all environments
 app.set('port', cfg.port);
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/app/views');
 app.set('view engine', 'ejs');
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -39,7 +42,7 @@ app.use(passport.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
-require('./routes')(app)
+require('./app/routes')(app)
 
 // development only
 if ('development' == cfg.env) {

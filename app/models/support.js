@@ -60,7 +60,6 @@ SupportSchema.statics.updateSupportByUser = function (userId, repos, cb) {
 }
 
 SupportSchema.statics.getProjectBySupport = function (entity, callback) {
-	console.log(entity.project)
 	Project.findById(entity.project, function (err, project) {
 		var result = _.pick(project.toObject(), 'name', 'url')
 		result.support = _.pick(entity.toObject(), 'contributing', 'supporting', 'donating')

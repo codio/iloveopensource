@@ -1,0 +1,55 @@
+<% titleBuilder.add(user.username) %>
+<% include header.ejs %>
+<section id="user-repos">
+	<div class="well">
+		<div class="row">
+			<a href="<%= user.github.html_url %>" class="col-1">
+				<img src="<%= user.github.avatar_url %>" class="img-rounded" alt="<%= user.displayName %>"/>
+			</a>
+
+			<div class="data col-4">
+				<p><b>Username:</b> <%= user.username %></p>
+
+				<p><b>Name:</b> <%= user.displayName %></p>
+
+				<p><b>Type:</b> <%= user.github.type %></p>
+			</div>
+
+			<% if (isCurrentUser) { %>
+			<a href="/users/<%= user.username %>/editor" class="btn btn-link col-2 col-offset-5">Edit Projects</a>
+			<a href="/logout" class="btn btn-link col-2 col-offset-5">Log Out</a>
+			<% } else if (isLoggedIn && !isCurrentUser) { %>
+			<a href="/users/<%= user.username %>/editor" class="btn btn-link col-2 col-offset-5">To my account!</a>
+			<% } else { %>
+			<a href="/auth/github" class="btn btn-link col-1 col-offset-6" id="save-changes">Join Now!</a>
+			<% } %>
+		</div>
+	</div>
+
+	<% if (!supports.length) { %>
+	<% if (isCurrentUser) { %>
+	<h4 class="text-center">
+		You didn't added any projects yet, want to add some?
+		<a class="btn btn-primary btn-lg" href="/users/<%= user.username %>/editor">Sure!</a>
+	</h4>
+	<% } else { %>
+	<h4 class="text-center">This user didn't added any projects yet</h4>
+	<% } %>
+	<% } %>
+
+	<div class="repos-list">
+		<% _.each(supports, function(repo) { %>
+		<div class="repo">
+			<div class="repo-name">
+				<a href="<%= repo.url %>" target="_blank"><%= repo.name %></a>
+			</div>
+			<div class="support">
+				<span class="support-type donating <%= repo.support.donating ? 'active' : '' %>" data-type="donating" title="I'm donating"></span>
+				<span class="support-type contributing <%= repo.support.contributing ? 'active' : '' %>" title="I'm contributing"></span>
+				<span class="support-type supporting <%= repo.support.supporting ? 'active' : '' %>" title="I'm supporting in other way"></span>
+			</div>
+		</div>
+		<% }) %>
+	</div>
+</section>
+<% include footer.ejs %>

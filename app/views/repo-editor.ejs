@@ -1,4 +1,6 @@
-<% include header.html %>
+<% titleBuilder.add(user.username) %>
+<% titleBuilder.add('Repo Editor') %>
+<% include header.ejs %>
 <section id="repos-editor">
 	<div class="well">
 		<div class="row">
@@ -35,4 +37,4 @@
 
 	require(['modules/repo-selector/main'])
 </script>
-<% include footer.html %>
+<% include footer.ejs %>

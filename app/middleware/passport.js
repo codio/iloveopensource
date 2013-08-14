@@ -5,7 +5,7 @@
  * Time: 6:15 PM
  */
 var passport = require('passport'),
-	cfg = require('../config'),
+	cfg = require('../../config'),
 	GitHubStrategy = require('passport-github').Strategy,
 	mongoose = require('mongoose'),
 	User = mongoose.model('User')

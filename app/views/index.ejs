@@ -1,4 +1,4 @@
-<% include header.html %>
+<% include header.ejs %>
 <% if (!user) { %>
 <a href="/auth/github" class="btn btn-info" id="login">
 	Join us with your GitHub Account
@@ -8,4 +8,4 @@
 	Welcome back <%= user.username %>!
 </a>
 <% } %>
-<% include footer.html %>
+<% include footer.ejs %>

@@ -1,0 +1,64 @@
+section#user-repos {
+
+  .repos-list {
+
+	.repo {
+	  float: left;
+	  padding: 5px 0;
+	  width: 33%;
+	  padding-left: 1em;
+	  position: relative;
+	  box-sizing: border-box;
+
+	  &:nth-child(even) {
+		background-color: #f9f9f9;
+	  }
+
+	  .repo-name {
+		width: calc(~"100% - 8em");
+		float: left;
+	  }
+	  .support {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 8em;
+	  }
+
+	  .support-type {
+		cursor: pointer;
+		border-radius: 5px;
+		width: 2em;
+		height: 2em;
+		display: inline-block;
+		position: relative;
+		opacity: 0;
+
+		&.active {
+		  opacity: 1;
+		}
+
+		&:before {
+		  position: absolute;
+		  top: 50%;
+		  margin-top: -.7em;
+		  text-align: center;
+		  width: 100%;
+		}
+
+		&.contributing:before {
+		  .icon(@group);
+		}
+
+		&.donating:before {
+		  .icon(@usd);
+		}
+
+		&.supporting:before {
+		  .icon(@heart);
+		}
+	  }
+	}
+  }
+}
+
