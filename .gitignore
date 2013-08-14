@@ -13,6 +13,7 @@ results
 bower_components
 node_modules
 public/js/vendors
+public/js/build
 css/main.css
 config/config.*.js
 
