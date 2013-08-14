@@ -37,9 +37,9 @@ define(function (require) {
 				.done(function () {
 					toastr.success('All changes saved!', 'Success!')
 				})
-				.fail(function (message) {
+				.fail(function (xhr) {
 					console.log(arguments)
-					toastr.error(message)
+					toastr.error(xhr.responseText, 'Error!')
 				})
 				.always(function () {
 					btn.attr('disabled', false)

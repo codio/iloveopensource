@@ -6,21 +6,33 @@
  */
 define(function (require) {
 	require('backbone')
-	var store = require('plugins/storage').getNamespace('repo-selector')
 	var RepoRow = require('modules/repo-selector/views/repo-row')
 
 	return Backbone.View.extend({
 		tpl: require('tpl!templates/repo-selector/repo-list.html'),
 		events: {
+			'click .load-more': 'loadMore',
 			'click .controls .support-type': 'toogleReposSupport'
 		},
-		toogleReposSupport: function(event) {
+		initialize: function () {
+			this.repoRows = []
+			this.listenTo(this.collection, 'sync', this.render)
+		},
+		loadMore: function () {
+			var btn = this.$('.load-more')
+			if (btn.attr('disabled')) return
+			btn.button('loading')
+
+			this.collection.path = this.collection.hasMore
+			this.collection.fetch({remove: false})
+		},
+		toogleReposSupport: function (event) {
 			var el = $(event.currentTarget)
 			el.toggleClass('active')
 
 			_.invoke(this.repoRows, 'toggleSupportByType', el.data().type, el.hasClass('active'))
 		},
-		renderRepos: function() {
+		renderRepos: function () {
 			var list = this.$('.repos-list')
 			_.invoke(this.repoRows, 'remove')
 			this.repoRows = []
@@ -39,14 +51,21 @@ define(function (require) {
 		},
 		render: function () {
 			this.$el.html(this.tpl({
-				linkMore: this.collection.linkMore
+				hasMore: this.collection.hasMore
 			}))
 
+			this.checkIsEmpty && this.checkIsEmpty()
 			this.renderRepos()
 			return this
 		},
-		initialize: function () {
-			this.repoRows = []
+		checkIsEmpty: function () {
+			var el = this.$('.is-empty.message')
+
+			if (this.collection.length) {
+				el.addClass('hidden')
+			} else {
+				el.removeClass('hidden')
+			}
 		}
 	});
 })

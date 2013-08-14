@@ -19,7 +19,7 @@ define(function (require) {
 			this.type = options.type
 		},
 		parse: function (res, req) {
-			if (req && req.xhr) {
+			if (this.type != 'search' && req && req.xhr) {
 				this.parseLinkHeader(req.xhr.getResponseHeader('Link'))
 			}
 

@@ -13,8 +13,7 @@
 			<span class="support-type supporting" proxy-tap="toggle-support-all" data-type="supporting" title="I'm supporting in other way"></span>
 		</span>
 	</div>
-
-	<% if (linkMore) { %>
-	<button type="button" class="btn btn-large btn-block load-more" proxy-tap="load-more" >Load More!</button>
-	<% } %>
 </div>
+<% if (hasMore) { %>
+<button type="button" class="btn btn-large btn-block load-more" proxy-tap="load-more">Load More!</button>
+<% } %>

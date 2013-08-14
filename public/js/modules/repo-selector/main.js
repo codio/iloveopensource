@@ -13,14 +13,14 @@ define(function (require) {
 	var store = require('plugins/storage').getNamespace('repo-selector')
 
 	store().hub = _.extend({}, Backbone.Events)
-
+	store().selected = new Projects()
 	store().repos = {
 		search: new Repos(null, {
 			path: 'search/repositories',
 			type: 'search'
 		})
 	}
-	store().selected = new Projects()
+
 	if (window.entities) store().selected.reset(window.entities, {parse: true})
 
 	_.each({
