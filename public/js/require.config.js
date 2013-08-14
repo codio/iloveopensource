@@ -5,9 +5,8 @@
  * Time: 4:59 PM
  */
 require.config({
-	baseUrl: '/js/',
 	paths: {
-		templates: '/templates',
+		templates: '../templates',
 
 		rv: 'vendors/require-ractive-plugin/js/rv',
 		tpl: 'vendors/requirejs-tpl/js/tpl',

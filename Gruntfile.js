@@ -24,6 +24,28 @@ module.exports = function (grunt) {
 			}
 		},
 
+		requirejs: {
+			compile: {
+				options: {
+					appDir: './public/js',
+					dir: './public/js/build',
+					baseUrl: './',
+					removeCombined: true,
+					preserveLicenseComments: false,
+					optimizeCss: 'none',
+					useStrict: true,
+					generateSourceMaps: true,
+					optimize: 'uglify2',
+					mainConfigFile: "./public/js/require.config.js",
+					modules: [
+						{
+							name: 'modules/repo-selector/main'
+						}
+					]
+				}
+			}
+		},
+
 		autoprefixer: {
 			options: {
 				browsers: ['last 5 versions', '> 1%', 'ie 8', 'ie 7']
@@ -54,6 +76,7 @@ module.exports = function (grunt) {
 
 	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-bower-task');
+	grunt.loadNpmTasks('grunt-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-watch');
@@ -61,5 +84,5 @@ module.exports = function (grunt) {
 	// Default task(s).
 	grunt.registerTask('default', ['build']);
 	grunt.registerTask('build', ['less', 'autoprefixer']);
-	grunt.registerTask('build:production', ['less', 'autoprefixer', 'cssmin']);
+	grunt.registerTask('build:prod', ['less', 'autoprefixer', 'cssmin', 'requirejs']);
 };

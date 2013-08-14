@@ -17,6 +17,7 @@ config.port = '8080';
 
 config.sessionSecret = 's,dfjsklfj3k45j34k5kjLKj87093476ukvj jlk';
 config.path = path.join(__dirname, 'config.' + config.env + '.js')
+config.jsPath = '/js/'
 
 if (fs.existsSync(config.path)) {
 	config = _.extend({}, config, require(config.path))
