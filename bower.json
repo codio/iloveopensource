@@ -11,9 +11,7 @@
   "dependencies": {
     "jquery": "~2.0.3",
     "lodash": "~1.3.1",
-    "ractive": "~0.3.5",
     "toastr": "~1.3.1",
-    "require-ractive-plugin": "git@github.com:Rich-Harris/require-ractive-plugin.git",
     "requirejs": "~2.1.8",
     "text": "~2.0.10",
     "backbone": "~1.0.0",
@@ -37,17 +35,11 @@
     "requirejs-tpl": {
       "js": "tpl.js"
     },
-    "require-ractive-plugin": {
-      "js": "rv.js"
-    },
     "text": {
       "js": "text.js"
     },
     "lodash": {
       "js": "lodash.js"
-    },
-    "ractive": {
-      "js": "Ractive.js"
     },
     "requirejs": {
       "js": "require.js"
