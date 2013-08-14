@@ -14,15 +14,15 @@ var ProjectSchema = new Schema({
 })
 
 ProjectSchema.statics.bulkAdd = function(newRepos, cb) {
-	this.create(newRepos, function (error, projects) {
-		if (!_.isArray(projects)) projects = [projects]
+	this.create(newRepos, function (error) {
+		var projects = [].slice.call(arguments, 1)
 		cb(error, projects);
 	})
 }
 ProjectSchema.statics.checkForNew = function(repos, cb) {
 	var self = this
 	this.find({url: { $in: _.pluck(repos, 'url')}}, function (error, projects) {
-		updateRepoIds(projects, repos)
+		repos = updateRepoIds(projects, repos)
 
 		var newRepos = _.filter(repos, function (repo) {
 			return !repo._id
@@ -31,8 +31,7 @@ ProjectSchema.statics.checkForNew = function(repos, cb) {
 		if (!newRepos.length) return cb(error, repos);
 
 		self.bulkAdd(newRepos, function(err, newProjects) {
-			updateRepoIds(newProjects, repos)
-			return cb(error, repos);
+			return cb(error, updateRepoIds(newProjects, repos));
 		})
 	})
 }

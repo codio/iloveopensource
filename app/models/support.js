@@ -35,7 +35,7 @@ SupportSchema.statics.updateSupportByUser = function (userId, repos, cb) {
 			project: repo._id,
 			contributing: repo.support.contributing === 'true',
 			donating: repo.support.donating === 'true',
-			supporting: repo.support.donating === 'true'
+			supporting: repo.support.supporting === 'true'
 		}
 	})
 
