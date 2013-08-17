@@ -30,7 +30,6 @@ module.exports = function (grunt) {
 					appDir: './public/js',
 					dir: './public/js/build',
 					baseUrl: './',
-					removeCombined: true,
 					preserveLicenseComments: false,
 					optimizeCss: 'none',
 					useStrict: true,
