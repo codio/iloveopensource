@@ -7,10 +7,10 @@
 define(function (require) {
 	require('bootstrap')
 	var toastr = require('toastr')
-	var Layout = require('modules/repo-selector/views/layout')
-	var Repos = require('modules/repo-selector/collections/repos')
-	var Projects = require('modules/repo-selector/collections/projects')
-	var store = require('plugins/storage').getNamespace('repo-selector')
+	var Layout = require('./views/layout')
+	var Repos = require('./collections/repos')
+	var Projects = require('./collections/projects')
+	var store = require('store').getNamespace('repo-selector')
 
 	store().hub = _.extend({}, Backbone.Events)
 	store().selected = new Projects()

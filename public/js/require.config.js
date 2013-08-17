@@ -6,7 +6,7 @@
  */
 require.config({
 	paths: {
-		templates: '../templates',
+		store: './plugins/store',
 
 		rv: 'vendors/require-ractive-plugin/js/rv',
 		tpl: 'vendors/requirejs-tpl/js/tpl',

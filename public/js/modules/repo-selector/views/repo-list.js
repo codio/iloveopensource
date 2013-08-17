@@ -6,10 +6,10 @@
  */
 define(function (require) {
 	require('backbone')
-	var RepoRow = require('modules/repo-selector/views/repo-row')
+	var RepoRow = require('./repo-row')
 
 	return Backbone.View.extend({
-		tpl: require('tpl!templates/repo-selector/repo-list.html'),
+		tpl: require('tpl!../templates/repo-list.html'),
 		events: {
 			'click .load-more': 'loadMore',
 			'click .controls .support-type': 'toogleReposSupport'

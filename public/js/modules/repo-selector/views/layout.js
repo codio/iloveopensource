@@ -8,11 +8,11 @@ define(function (require) {
 	require('backbone')
 
 	var toastr = require('toastr')
-	var RepoList = require('modules/repo-selector/views/repo-list')
-	var RepoSearch = require('modules/repo-selector/views/search')
-	var SelectedRepos = require('modules/repo-selector/views/selected')
-	var store = require('plugins/storage').getNamespace('repo-selector')
-	var tpl = require('tpl!templates/repo-selector/layout.html')
+	var RepoList = require('./repo-list')
+	var RepoSearch = require('./search')
+	var SelectedRepos = require('./selected')
+	var store = require('store').getNamespace('repo-selector')
+	var tpl = require('tpl!../templates/layout.html')
 
 	return Backbone.View.extend({
 		events: {

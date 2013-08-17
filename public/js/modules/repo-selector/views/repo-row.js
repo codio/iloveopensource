@@ -6,8 +6,8 @@
  */
 define(function (require) {
 	require('backbone')
-	var store = require('plugins/storage').getNamespace('repo-selector')
-	var tpl = require('tpl!templates/repo-selector/repo-row.html')
+	var store = require('store').getNamespace('repo-selector')
+	var tpl = require('tpl!../templates/repo-row.html')
 
 	return Backbone.View.extend({
 		initialize: function (options) {

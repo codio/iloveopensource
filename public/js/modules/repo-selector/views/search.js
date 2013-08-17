@@ -6,11 +6,11 @@
  */
 define(function (require) {
 	var toastr = require('toastr')
-	var RepoList = require('modules/repo-selector/views/repo-list')
+	var RepoList = require('./repo-list')
 	var urlRegExp = /^((https+:\/\/github.com\/)([^\/]+)\/([^\/#]+)\/*)(.*)$/
 
 	return RepoList.extend({
-		tpl: require('tpl!templates/repo-selector/repo-search.html'),
+		tpl: require('tpl!../templates/repo-search.html'),
 		events: {
 			'click .controls .support-type': 'toogleReposSupport',
 			'focus .search-string': 'clearSearchString',

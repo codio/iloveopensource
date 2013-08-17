@@ -6,7 +6,7 @@
  */
 define(function (require) {
 	require('backbone')
-	var store = require('plugins/storage').getNamespace('repo-selector')
+	var store = require('store').getNamespace('repo-selector')
 	var Repo = require('modules/repo-selector/models/repo')
 
 	return Backbone.Collection.extend({

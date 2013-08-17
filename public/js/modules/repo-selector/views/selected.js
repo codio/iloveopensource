@@ -5,11 +5,11 @@
  * Time: 3:27 AM
  */
 define(function (require) {
-	var RepoList = require('modules/repo-selector/views/repo-list')
+	var RepoList = require('./repo-list')
 
 	return RepoList.extend({
 		isProjectList: true,
-		tpl: require('tpl!templates/repo-selector/selected.html'),
+		tpl: require('tpl!../templates/selected.html'),
 		initialize: function() {
 			RepoList.prototype.initialize.apply(this, arguments)
 			this.listenTo(this.collection, 'add', this.renderRepos)
