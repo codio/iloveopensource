@@ -39,12 +39,15 @@ UserSchema.post('save', function (doc) {
 })
 
 UserSchema.pre('validate', function (next, done) {
+	var reg = /^https:\/\/www.paypal(objects)?.com\//
 	if (this.support && this.support.paypal) {
 		if (this.support.paypal) {
-			this.support.paypal = sanitizer.sanitize(this.support.paypal)
+			this.support.paypal = sanitizer.sanitize(this.support.paypal, function (value) {
+				return  value.match(reg) ? value : ''
+			})
 		}
 		if (this.support.other) {
-			this.support.other = sanitizer.escape(this.support.other)
+			this.support.other = sanitizer.sanitize(this.support.other)
 		}
 	}
 	next();

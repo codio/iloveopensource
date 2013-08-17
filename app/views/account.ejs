@@ -21,7 +21,7 @@
 	</div>
 
 	<% if (!supports.length) { %>
-	<% if (isCurrentUser) { %>
+	<% if (isLoggedIn && loggedUser._id == user._id) { %>
 	<h4 class="text-center">
 		You didn't added any projects yet, want to add some?
 		<a class="btn btn-primary btn-lg" href="/users/<%= user.username %>/editor">Sure!</a>
@@ -32,18 +32,102 @@
 	<% } %>
 
 	<div class="repos-list">
+		<% if (supports.length) { %>
+		<div class="row">
+			<span class="col-5 col-offset-7">Make a contribution</span>
+		</div>
+		<% } %>
 		<% _.each(supports, function(repo) { %>
-		<div class="repo <%= repo.project.fork ? 'fork' : '' %>">
-			<div class="repo-name">
-				<a href="<%= repo.project.url %>" target="_blank"><%= repo.project.name %> / <%= repo.project.name %></a>
+		<div class="repo <%= repo.project.fork ? 'fork' : '' %> row">
+			<div class="repo-name col-4">
+				<% if (repo.project.owner.user) { %>
+				<a href="/users/repo.project.owner.username" target="_blank">
+					<%= repo.project.owner.username %>
+				</a>
+				<% } else { %>
+				<%= repo.project.owner.username %>
+				<% } %>
+				&nbsp; /&nbsp;
+				<a href="<%= repo.project.url %>" target="_blank">
+					<%= repo.project.name %>
+				</a>
 			</div>
-			<div class="support">
+			<div class="support col-3">
 				<span class="support-type donating <%= repo.donating ? 'active' : '' %>" data-type="donating" title="I'm donating"></span>
 				<span class="support-type contributing <%= repo.contributing ? 'active' : '' %>" title="I'm contributing"></span>
 				<span class="support-type supporting <%= repo.supporting ? 'active' : '' %>" title="I'm supporting in other way"></span>
 			</div>
+			<div class="col-5">
+				<% if (!_.isEmpty(repo.project.owner.support)) { %>
+				<% if (repo.project.owner.support.paypal) { %>
+				<div class="contribution">
+					<%- repo.project.owner.support.paypal %>
+				</div>
+				<% } %>
+				<% if (repo.project.owner.support.gittip) { %>
+				<div class="contribution">
+					<iframe src="https://www.gittip.com/<%= repo.project.owner.support.gittip %>/widget.html" style="border: 0; margin: 0; padding: 0;" width="48pt" height="22pt"></iframe>
+				</div>
+				<% } %>
+				<% if (repo.project.owner.support.other) { %>
+				<div class="contribution">
+					<div data-html="true" data-toggle="popover">
+						<i class="icon-info-sign"></i>
+					</div>
+					<div class="hidden">
+						<%- repo.project.owner.support.other %>
+					</div>
+				</div>
+				<% } %>
+				<% if (repo.project.owner.support.emailMe) { %>
+				<div class="contribution">
+					<i class="icon-envelope" data-toggle="modal" data-target="#email-to-author"></i>
+				</div>
+				<% } %>
+				<% if (repo.project.owner.support.code) { %>
+				<div class="contribution">
+					<a href="<%= repo.project.url %>" target="_blank">
+						<i class="icon-code"></i>
+					</a>
+				</div>
+				<% } %>
+				<div class="clearfix"></div>
+				<% } else { %>
+				Would like to contribute something?
+				<% } %>
+			</div>
 		</div>
 		<% }) %>
 	</div>
+	<div class="modal fade" id="email-to-author" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Send Comment To Author</h4>
+				</div>
+				<div class="modal-body">
+					<textarea class="form-control" rows="3"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Send</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
+<script type="text/javascript" src="<%= jsPath %>/vendors/jquery/js/jquery.js"></script>
+<script type="text/javascript" src="<%= jsPath %>/bootstrap.js"></script>
+<script type="text/javascript">
+	$(function () {
+		$('[data-toggle="popover"]').popover({
+			container: 'body',
+			title: 'Note from Author',
+			content: function () {
+				return $(this).next().html()
+			}
+		})
+	})
+</script>
 <% include footer.ejs %>

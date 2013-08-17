@@ -60,7 +60,7 @@ define(function (require) {
 			this.model.get('fork') && this.$el.addClass('fork')
 			this.$el.html(tpl({
 				repo: this.model.toJSON(),
-				canDelete: this.options.isProject
+				canDelete: this.model.isProject
 			}))
 			return this
 		}

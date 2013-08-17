@@ -1,6 +1,8 @@
 section#user-repos {
 
   .repos-list {
+	width: 100%;
+	overflow: hidden;
 
 	.repo {
 	  padding: 5px 0;
@@ -10,18 +12,6 @@ section#user-repos {
 
 	  &:nth-child(even) {
 		background-color: #f9f9f9;
-	  }
-
-	  .repo-name {
-		width: 90%;
-		width: calc(~"100% - 8em");
-	  }
-
-	  .support {
-		position: absolute;
-		top: 0;
-		right: 0;
-		width: 8em;
 	  }
 
 	  .support-type {

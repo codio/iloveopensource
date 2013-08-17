@@ -7,7 +7,7 @@
 var mongoose = require('mongoose'),
 	_ = require('lodash'),
 	Schema = mongoose.Schema,
-	Project = mongoose.model('User')
+	User = mongoose.model('User')
 
 var ProjectSchema = new Schema({
 	name: {type: String, required: true},
@@ -20,18 +20,24 @@ var ProjectSchema = new Schema({
 		username: {type: String, required: true},
 		type: {type: String, required: true},
 		url: String,
-		gravatar: String
+		gravatar: String,
+		support: {}
 	}
 })
 
 ProjectSchema.statics.updateOwner = function (user, cb) {
-	this.update({
-		'owner.githubId': user.github.id
-	}, {
-		$set: { 'owner.user': user._id }
-	}, { multi: true }, function (error, projects) {
-		cb && cb(error, projects)
+	var data = {'owner.user': user._id}
+	_.each(user.support, function (val, key) {
+		data['owner.support.' + key] = val
 	})
+
+	this.update(
+		{'owner.githubId': user.github.id },
+		{ $set: data},
+		{ multi: true },
+		function (error, projects) {
+			cb && cb(error, projects)
+		})
 }
 
 ProjectSchema.statics.bulkAdd = function (newRepos, cb) {
@@ -39,6 +45,24 @@ ProjectSchema.statics.bulkAdd = function (newRepos, cb) {
 		var projects = [].slice.call(arguments, 1)
 		cb(error, projects);
 	})
+}
+
+ProjectSchema.statics.checkOwners = function (projects, cb) {
+	var self = this
+	var owners = _.compact(_.map(projects, function (project) {
+		if (project.owner.user) return
+		return project.owner.githubId
+	}))
+
+	if (!owners.length) return
+
+	User.find({'github.id': { $in: owners}}, function(err, users) {
+		if (err) return console.log(err)
+		_.each(users, function(user) {
+			self.updateOwner(user)
+		})
+	})
+
 }
 
 ProjectSchema.statics.checkForNew = function (repos, cb) {
@@ -53,7 +77,9 @@ ProjectSchema.statics.checkForNew = function (repos, cb) {
 		if (!newRepos.length) return cb(error, repos);
 
 		self.bulkAdd(newRepos, function (err, newProjects) {
-			return cb(error, updateRepoIds(newProjects, repos));
+			repos = updateRepoIds(newProjects, repos)
+			self.checkOwners(repos)
+			return cb(error, repos);
 		})
 	})
 }

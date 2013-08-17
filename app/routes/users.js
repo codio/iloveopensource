@@ -19,9 +19,7 @@ module.exports = function (app) {
 			Support.getSupportByUser(user._id, function (error, supports) {
 				res.render('account', {
 					user: user,
-					supports: supports,
-					isCurrentUser: req.isAuthenticated() && req.user._id == user._id,
-					isLoggedIn: req.isAuthenticated()
+					supports: supports
 				});
 			})
 		})
@@ -51,10 +49,17 @@ module.exports = function (app) {
 		var data = {}
 		data[field.join('.')] = req.body.value
 
-		User.findByIdAndUpdate(req.user._id, { $set: data}, function (err, user) {
-			req.user = user
-			if (err) return res.send(400, 'Failed to update field');
-			res.send(200, 'Field saved');
+		User.findById(req.user._id, function (err, user) {
+			if (field.length > 1) {
+				user.support[field[1]] = req.body.value
+			} else {
+				user[field[0]] = req.body.value
+			}
+
+			user.save(function(err, user) {
+				if (err) return res.send(400, 'Failed to update field');
+				res.send(200, 'Field saved');
+			})
 		});
 	});
 
