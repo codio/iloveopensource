@@ -1,14 +1,4 @@
-/*
- * GET home page.
- */
-
-var passport = require('passport'),
-	_ = require('lodash'),
-	mongoose = require('mongoose'),
-	async = require('async'),
-	Project = mongoose.model('Project'),
-	Support = mongoose.model('Support'),
-	User = mongoose.model('User')
+var passport = require('passport')
 
 module.exports = function (app) {
 	app.get('/auth/github', passport.authenticate('github'));
@@ -48,50 +38,5 @@ module.exports = function (app) {
 		res.render('index', { user: req.user });
 	});
 
-	app.get('/users/:username', function (req, res) {
-		User.findOne({ 'username': req.param('username') }, function (err, user) {
-			if (!user) return res.render('404');
-
-			Support.getSupportByUser(user._id, function (error, supports) {
-				res.render('account', {
-					user: user,
-					supports: supports,
-					isCurrentUser: req.isAuthenticated() && req.user._id == user._id,
-					isLoggedIn: req.isAuthenticated()
-				});
-			})
-		})
-	});
-
-	app.get('/users/:username/editor', ensureAuthenticated, function (req, res) {
-		Support.getSupportByUser(req.user._id, function (error, supports) {
-			res.render('repo-editor', { user: req.user, supports: supports });
-		})
-	});
-
-	app.put('/save-projects', ensureAuthenticated, function (req, res) {
-		var repos = req.body
-
-		async.waterfall([
-			function (callback) {
-				Project.checkForNew(repos, callback)
-			},
-			function (projects, callback) {
-				Support.updateSupportByUser(req.user._id, projects, callback)
-			}
-		], function (err, results) {
-			console.log(err)
-			if (err) return res.send(400, 'Unable to update packages')
-			return res.send(200, repos)
-		});
-	});
-
-	function ensureAuthenticated(req, res, next) {
-		if (req.isAuthenticated()) {
-			return next();
-		}
-
-		req.session.redirectUrl = req.url;
-		res.redirect('/');
-	}
+	require('./users')(app)
 };

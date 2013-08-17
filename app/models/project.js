@@ -6,7 +6,8 @@
  */
 var mongoose = require('mongoose'),
 	_ = require('lodash'),
-	Schema = mongoose.Schema
+	Schema = mongoose.Schema,
+	Project = mongoose.model('User')
 
 var ProjectSchema = new Schema({
 	name: {type: String, required: true},
@@ -15,12 +16,23 @@ var ProjectSchema = new Schema({
 	fork: Boolean,
 	owner: {
 		githubId: {type: Number, required: true, index: { unique: true }},
+		user: {type: Schema.ObjectId, ref: 'User'},
 		username: {type: String, required: true},
 		type: {type: String, required: true},
 		url: String,
 		gravatar: String
 	}
 })
+
+ProjectSchema.statics.updateOwner = function (user, cb) {
+	this.update({
+		'owner.githubId': user.github.id
+	}, {
+		$set: { 'owner.user': user._id }
+	}, { multi: true }, function (error, projects) {
+		cb && cb(error, projects)
+	})
+}
 
 ProjectSchema.statics.bulkAdd = function (newRepos, cb) {
 	this.create(newRepos, function (error) {

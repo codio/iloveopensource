@@ -1,0 +1,109 @@
+<% include header.ejs %>
+<section id="page-settings">
+	<form class="form-horizontal" role="form" method="post">
+		<fieldset class="col-6">
+			<legend>
+				Preferred Support Types for Your Projects
+			</legend>
+			<div class="form-group">
+				<label for="input-gittip" class="col-4 control-label">Gittip:</label>
+
+				<div class="col-6">
+					<input type="text" class="form-control" name="support[gittip]" id="input-gittip" placeholder="Gittip username" data-field="support.gittip" value="<%= loggedUser.support && loggedUser.support.gittip  || '' %>">
+
+					<div class="help-block">Fill this field so users will be able to support your projects via
+						<a href="https://www.gittip.com/">GitTip</a></div>
+				</div>
+				<div class="col-2 saved">
+					Saved!
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-paypal" class="col-4 control-label">Paypal Direct Donation:</label>
+
+				<div class="col-6">
+					<textarea name="support[paypal]" id="input-paypal" cols="30" rows="10" class="form-control" data-field="support.paypal"><%= loggedUser.support && loggedUser.support.paypal || '' %></textarea>
+
+					<div class="help-block">
+						Put PayPal Donate button widget in this field so users will be able to support your projects via
+						<a href="https://www.paypal.com/">PayPal</a>
+					</div>
+				</div>
+				<div class="col-2 saved">
+					Saved!
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-emailme" class="col-4 control-label">Email me a comment</label>
+
+				<div class="col-6">
+					<input type="checkbox" data-field="support.emailMe" id="input-emailMe" <%= loggedUser.support && loggedUser.support.emailme && 'checked' %>>
+				</div>
+				<div class="col-2 saved">
+					Saved!
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-code" class="col-4 control-label">Code</label>
+
+				<div class="col-6">
+					<input type="checkbox" id="input-code" data-field="support.code" <%= loggedUser.support && loggedUser.support.code && 'checked' %>>
+				</div>
+				<div class="col-2 saved">
+					Saved!
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-other" class="col-4 control-label">Other</label>
+
+				<div class="col-6">
+					<textarea id="input-other" class="form-control" cols="30" rows="10" data-field="support.other"><%= loggedUser.support && loggedUser.support.other || '' %></textarea>
+					<div class="help-block">
+						Give users a note about how else they could support your projects
+						<a href="https://www.paypal.com/">PayPal</a>
+					</div>
+
+				</div>
+				<div class="col-2 saved">
+					Saved!
+				</div>
+			</div>
+		</fieldset>
+		<fieldset class="col-6">
+			<legend>
+				Contact Information
+			</legend>
+			<div class="form-group">
+				<label for="input-email" class="col-3 control-label">Email address</label>
+
+				<div class="col-7">
+					<input type="email" name="email" class="form-control" id="input-email" placeholder="Email" data-field="email" value="<%= loggedUser.email || '' %>" required>
+				</div>
+				<div class="col-2 saved">
+					Saved!
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-twitter" class="col-3 control-label">Twitter</label>
+
+				<div class="col-7">
+					<input type="text" name="twitterName" class="form-control" id="input-twitter" placeholder="Twitter" data-field="twitterName" value="<%= loggedUser.twitterName  || '' %>">
+				</div>
+				<div class="col-2 saved">
+					Saved!
+				</div>
+			</div>
+		</fieldset>
+	</form>
+</section>
+<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
+<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
+<script type="text/javascript">
+	require.config({
+		baseUrl: "<%=jsPath %>"
+	})
+
+	require(['modules/user-settings/main'])
+</script>
+<% include footer.ejs %>

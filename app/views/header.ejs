@@ -6,3 +6,25 @@
 	<link rel="stylesheet" type="text/css" href="/css/main.css"/>
 </head>
 <body>
+<header>
+	<% if (isLoggedIn) { %>
+	<a href="/users/<%= loggedUser.username %>">
+		<img src="http://www.gravatar.com/avatar/<%= loggedUser.github.gravatar_id %>?s=20" alt="" class="img-rounded"/>
+		<%= loggedUser.displayName %>
+	</a>
+
+	<a href="/users/<%= loggedUser.username %>/editor">
+		<i class="icon-edit"></i>
+		Projects
+	</a>
+	<a href="/settings">
+		<i class="icon-cog"></i>
+		Settings
+	</a>
+
+	<a href="/logout" class="pull-right">logout</a>
+	<% } else { %>
+	<a href="/auth/github" class="pull-right">Join Now!</a>
+	<% } %>
+	<div class="clearfix"></div>
+</header>

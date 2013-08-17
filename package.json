@@ -13,7 +13,8 @@
     "mongoose": "~3.6.15",
     "lodash": "latest",
     "connect-mongo": "~0.3.3",
-    "async": "~0.2.9"
+    "async": "~0.2.9",
+    "sanitizer": "0.0.15"
   },
   "devDependencies": {
     "grunt-contrib-less": "~0.6.4",

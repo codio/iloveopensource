@@ -41,6 +41,17 @@ app.use(express.session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+app.use(function(req, res, next){
+	app.locals.isLoggedIn = req.isAuthenticated()
+	if (app.locals.isLoggedIn) {
+		app.locals.loggedUser = req.user
+	}
+	next();
+});
+
+
 app.use(app.router);
 
 app.use(function(req, res, next){
@@ -62,6 +73,7 @@ app.use(function(req, res, next){
 app.use(function(err, req, res, next){
 	res.status(err.status || 500);
 	res.render('500', { error: err });
+	console.log(err)
 });
 
 require('./app/routes')(app)

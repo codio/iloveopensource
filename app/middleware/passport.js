@@ -15,7 +15,9 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (obj, done) {
-	done(null, obj);
+	User.findOne(obj._id, function (err, user) {
+		done(err, user);
+	});
 });
 
 var callbackUrl = 'http://' + cfg.hostname
@@ -44,9 +46,8 @@ passport.use(new GitHubStrategy({
 				type: profile._json.type,
 				authToken: accessToken
 			})
-//			req.session.firstTime = true
-			console.log(user)
-			user.save(function (err) {
+
+			user.register(function (err) {
 				if (err) console.log(err)
 				return done(err, user)
 			})
