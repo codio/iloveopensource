@@ -42,7 +42,7 @@ define(function (require) {
 			}
 
 			this.collection.each(function (repo) {
-				var view = new RepoRow({model: repo, isProject: this.isProjectList})
+				var view = new RepoRow({model: repo})
 				this.repoRows.push(view)
 				view.render()
 			}, this)
@@ -56,6 +56,15 @@ define(function (require) {
 
 			this.checkIsEmpty && this.checkIsEmpty()
 			this.renderRepos()
+			this.$('[data-toggle="popover"]').popover({
+				container: 'body',
+				title: 'Note from Author',
+				content: function () {
+					return $(this).next().html()
+				}
+			})
+
+
 			return this
 		},
 		checkIsEmpty: function () {

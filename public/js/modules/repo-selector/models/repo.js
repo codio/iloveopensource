@@ -50,7 +50,7 @@ define(function (require) {
 			};
 
 			options.success = function (resp) {
-				if (options.wait || model.isNew()) destroy();
+				destroy();
 				if (success) success(model, resp, options);
 				if (!model.isNew()) model.trigger('sync', model, resp, options);
 			};

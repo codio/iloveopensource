@@ -14,13 +14,17 @@ define(function (require) {
 		idAttribute: 'githubId',
 		isProject: true,
 		parse: function (entity) {
-			var result = _.extend(entity.project, {
-				support: {
-					contributing: entity.contributing,
-					donating: entity.donating,
-					supporting: entity.supporting
-				}
-			})
+			var result = entity
+			if (entity.project) {
+				result = _.extend(entity.project, {
+					support: {
+						contributing: entity.contributing,
+						donating: entity.donating,
+						supporting: entity.supporting
+					},
+					contribution: entity.project.owner.support
+				})
+			}
 
 			result.owner = new Owner(result.owner)
 			result.support = new Support(result.support)

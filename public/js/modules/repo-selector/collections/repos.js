@@ -46,6 +46,7 @@ define(function (require) {
 			this.hasMore = links.next;
 		},
 		fetch: function (options) {
+			var self = this
 			options || (options = {});
 			options.headers = {
 				'Accept': 'application/vnd.github.preview'
@@ -55,7 +56,27 @@ define(function (require) {
 				access_token: accessToken
 			})
 
-			return Backbone.Collection.prototype.fetch.call(this, options);
+			var request = Backbone.Collection.prototype.fetch.call(this, options);
+			request.done(function (data) {
+				var ids = _.unique(_.map(data, function (el) {
+					return el.owner.id
+				}))
+
+				$.post('/get-contributing-options', {ids: ids})
+					.done(function (contributions) {
+						_.each(contributions, function (el) {
+							self.each(function (model) {
+								if (model.get('owner').get('githubId') != el.github.id) return
+
+								model.set('contribution', el.support)
+							})
+						})
+
+						store().hub.trigger('repos-loaded', self)
+					})
+			})
+
+			return request
 		}
 	})
 })

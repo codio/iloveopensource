@@ -31,9 +31,7 @@ define(function (require) {
 			type: type
 		})
 		store().repos[type].fetch()
-			.done(function () {
-				store().hub.trigger('repos-loaded', store().repos[type])
-			}).fail(function () {
+			.fail(function () {
 				toastr.error('Failed to load your ' + type + ' repos')
 			})
 

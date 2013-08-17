@@ -11,8 +11,8 @@ define(function (require) {
 
 	return Backbone.View.extend({
 		initialize: function (options) {
-			this.listenTo(store().hub, 'changed:' + this.model.get('url'), this.renderSupportChange)
-			this.listenTo(store().hub, 'removed:' + this.model.get('url'), this.removeSupport)
+			this.listenTo(store().hub, 'changed:' + this.model.id, this.renderSupportChange)
+			this.listenTo(store().hub, 'removed:' + this.model.id, this.removeSupport)
 		},
 		attributes: {
 			class: 'repo row'
@@ -24,14 +24,13 @@ define(function (require) {
 		removeProject: function () {
 			this.model.destroy()
 			this.remove()
-			store().hub.trigger('removed:' + this.model.get('url'))
+			store().hub.trigger('removed:' + this.model.id)
 		},
 		renderSupportChange: function (type, value) {
 			this.$('.support-type.' + type).toggleClass('active', value)
 			this.model.get('support').set(type, value)
 
-			this.options.isProject && console.log(this.model.get('support').isEmpty())
-			if (this.options.isProject && this.model.get('support').isEmpty()) {
+			if (this.model.isProject && this.model.get('support').isEmpty()) {
 				this.model.destroy()
 				this.remove()
 			}
@@ -41,20 +40,26 @@ define(function (require) {
 			this.model.get('support').clear()
 		},
 		toggleSupportByType: function (type, value) {
-			var support = this.model.get('support')
+			var support = this.model.get('support'),
+				val = typeof value === 'undefined' ? !support.get(type) : value,
+				alert = 'If you do not check any icons, this item will be removed. OK?'
 
-			support.set(type, typeof value === 'undefined' ? !support.get(type) : value)
+			if (!val && this.model.isProject && this.model.get('support').count() == 1 && !confirm(alert)) {
+				return
+			}
 
-			store().hub.trigger('changed:' + this.model.get('url'), type, this.model.get('support').get(type))
+			support.set(type, val)
+
+			store().hub.trigger('changed:' + this.model.id, type, this.model.get('support').get(type))
 
 			if (!this.options.isProject && !this.model.get('support').isEmpty()
 				&& !store().selected.get(this.model.id)
 				) {
-				store().selected.add(this.model)
+				store().selected.add(this.model.toJSON(), {parse: true})
 			}
 		},
 		toggleSupport: function (event) {
-			this.toggleSupportByType($(event.currentTarget).data().type)
+				this.toggleSupportByType($(event.currentTarget).data().type)
 		},
 		render: function () {
 			this.model.get('fork') && this.$el.addClass('fork')

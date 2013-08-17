@@ -13,6 +13,9 @@ define(function (require) {
 			donating: false,
 			supporting: false
 		},
+		count: function() {
+			return _(this.attributes).values().compact().value().length
+		},
 		isEmpty: function () {
 			return !_(this.attributes).find(function (el) {
 				return el
