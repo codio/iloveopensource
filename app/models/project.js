@@ -10,18 +10,28 @@ var mongoose = require('mongoose'),
 
 var ProjectSchema = new Schema({
 	name: {type: String, required: true},
-	url: {type: String, required: true, index: { unique: true }}
+	githubId: {type: Number, required: true, index: { unique: true }},
+	url: {type: String, required: true},
+	fork: Boolean,
+	owner: {
+		githubId: {type: Number, required: true, index: { unique: true }},
+		username: {type: String, required: true},
+		type: {type: String, required: true},
+		url: String,
+		gravatar: String
+	}
 })
 
-ProjectSchema.statics.bulkAdd = function(newRepos, cb) {
+ProjectSchema.statics.bulkAdd = function (newRepos, cb) {
 	this.create(newRepos, function (error) {
 		var projects = [].slice.call(arguments, 1)
 		cb(error, projects);
 	})
 }
-ProjectSchema.statics.checkForNew = function(repos, cb) {
+
+ProjectSchema.statics.checkForNew = function (repos, cb) {
 	var self = this
-	this.find({url: { $in: _.pluck(repos, 'url')}}, function (error, projects) {
+	this.find({githubId: { $in: _.pluck(repos, 'githubId')}}, function (error, projects) {
 		repos = updateRepoIds(projects, repos)
 
 		var newRepos = _.filter(repos, function (repo) {
@@ -30,15 +40,16 @@ ProjectSchema.statics.checkForNew = function(repos, cb) {
 
 		if (!newRepos.length) return cb(error, repos);
 
-		self.bulkAdd(newRepos, function(err, newProjects) {
+		self.bulkAdd(newRepos, function (err, newProjects) {
 			return cb(error, updateRepoIds(newProjects, repos));
 		})
 	})
 }
 
-var updateRepoIds = function(existing, cheking) {
+var updateRepoIds = function (existing, cheking) {
 	_.each(existing, function (project) {
-		_.find(cheking, {url: project.url})._id = project._id
+		var repo = _.find(cheking, {githubId: project.githubId})
+		if (repo) repo._id = project._id
 	})
 
 	return cheking

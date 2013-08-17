@@ -33,7 +33,7 @@ define(function (require) {
 
 			btn.attr('disabled', true)
 
-			$.post('/save-projects', {repos: store().selected.toJSON()})
+			store().selected.save()
 				.done(function () {
 					toastr.success('All changes saved!', 'Success!')
 				})

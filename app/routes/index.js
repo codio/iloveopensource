@@ -69,8 +69,8 @@ module.exports = function (app) {
 		})
 	});
 
-	app.post('/save-projects', ensureAuthenticated, function (req, res) {
-		var repos = !_.isArray(req.body.repos) ? [] : req.body.repos
+	app.put('/save-projects', ensureAuthenticated, function (req, res) {
+		var repos = req.body
 
 		async.waterfall([
 			function (callback) {
@@ -80,8 +80,9 @@ module.exports = function (app) {
 				Support.updateSupportByUser(req.user._id, projects, callback)
 			}
 		], function (err, results) {
+			console.log(err)
 			if (err) return res.send(400, 'Unable to update packages')
-			return res.send(200, 'done')
+			return res.send(200, repos)
 		});
 	});
 

@@ -7,7 +7,7 @@
 define(function (require) {
 	require('backbone')
 	var store = require('store').getNamespace('repo-selector')
-	var Repo = require('modules/repo-selector/models/repo')
+	var Repo = require('../models/repo')
 
 	return Backbone.Collection.extend({
 		model: Repo,
@@ -15,27 +15,16 @@ define(function (require) {
 			return 'https://api.github.com/' + this.path;
 		},
 		initialize: function (models, options) {
-			this.path = options.path
-			this.type = options.type
+			options = options || {}
+			options.path && (this.path = options.path)
+			options.type && (this.type = options.type)
 		},
 		parse: function (res, req) {
-			if (this.type != 'search' && req && req.xhr) {
+			if (req && req.xhr) {
 				this.parseLinkHeader(req.xhr.getResponseHeader('Link'))
 			}
 
-			return _.map(res.items || res, function (repo) {
-				var result = {
-					name: repo.name,
-					url: repo.html_url || repo.url
-				}
-
-				var exists = store().selected.findWhere({url: result.url})
-				if (exists) {
-					result.support = exists.get('support').toJSON()
-				}
-
-				return result
-			})
+			return res
 		},
 		parseLinkHeader: function (header) {
 			if (!header || !header.length) return

@@ -7,9 +7,13 @@
 define(function (require) {
 	require('backbone')
 
-	var Repo = require('modules/repo-selector/models/repo')
+	var Project = require('../models/project')
 
 	return Backbone.Collection.extend({
-		model: Repo
+		url: '/save-projects',
+		model: Project,
+		save: function (options) {
+			return this.sync('update', this, options);
+		}
 	})
 })

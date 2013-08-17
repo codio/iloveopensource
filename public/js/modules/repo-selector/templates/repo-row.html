@@ -1,5 +1,7 @@
 <div class="col-4 repo-name">
-	<a href="<%= repo.url %>" target="_blank"><%= repo.name %></a>
+	<a href="<%= repo.url %>" target="_blank">
+		<%= repo.owner.username %>/<%= repo.name %>
+	</a>
 </div>
 <div class="col-1">
 	<span class="support-type donating <%= repo.support.donating ? 'active' : '' %>" proxy-tap="toggle-support" data-type="donating" title="I'm donating"></span>

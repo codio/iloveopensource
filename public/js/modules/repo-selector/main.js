@@ -9,16 +9,14 @@ define(function (require) {
 	var toastr = require('toastr')
 	var Layout = require('./views/layout')
 	var Repos = require('./collections/repos')
+	var Search = require('./collections/search')
 	var Projects = require('./collections/projects')
 	var store = require('store').getNamespace('repo-selector')
 
 	store().hub = _.extend({}, Backbone.Events)
 	store().selected = new Projects()
 	store().repos = {
-		search: new Repos(null, {
-			path: 'search/repositories',
-			type: 'search'
-		})
+		search: new Search()
 	}
 
 	if (window.entities) store().selected.reset(window.entities, {parse: true})

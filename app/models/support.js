@@ -19,27 +19,21 @@ var SupportSchema = new Schema({
 })
 
 SupportSchema.statics.getSupportByUser = function (userId, callback) {
-	var self = this
-	this.find({user: userId}, function (error, supports) {
-		async.map(supports, self.getProjectBySupport, function (err, result) {
-			callback(null, result);
-		});
+	this.find({user: userId}).populate('project').lean().exec(function (error, supports) {
+		callback(error ? 'Failed to retrieve supporting projects' : null, supports);
 	})
 }
 
 SupportSchema.statics.updateSupportByUser = function (userId, repos, cb) {
 	var self = this
 	var support = _.map(repos, function (repo) {
-		return {
+		return _.extend({
 			user: userId,
-			project: repo._id,
-			contributing: repo.support.contributing === 'true',
-			donating: repo.support.donating === 'true',
-			supporting: repo.support.supporting === 'true'
-		}
+			project: repo._id
+		}, repo.support)
 	})
 
-	support = _.filter(support, function(entity) {
+	support = _.filter(support, function (entity) {
 		return (entity.contributing || entity.donating || entity.supporting)
 	})
 
@@ -57,15 +51,6 @@ SupportSchema.statics.updateSupportByUser = function (userId, repos, cb) {
 			})
 		}
 	], cb)
-}
-
-SupportSchema.statics.getProjectBySupport = function (entity, callback) {
-	Project.findById(entity.project, function (err, project) {
-		var result = _.pick(project.toObject(), 'name', 'url')
-		result.support = _.pick(entity.toObject(), 'contributing', 'supporting', 'donating')
-
-		callback(null, result);
-	});
 }
 
 SupportSchema.index({user: 1, project: 1}, {unique: true});

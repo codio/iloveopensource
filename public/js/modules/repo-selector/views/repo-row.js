@@ -48,7 +48,7 @@ define(function (require) {
 			store().hub.trigger('changed:' + this.model.get('url'), type, this.model.get('support').get(type))
 
 			if (!this.options.isProject && !this.model.get('support').isEmpty()
-				&& !store().selected.findWhere({url: this.model.get('url')})
+				&& !store().selected.get(this.model.id)
 				) {
 				store().selected.add(this.model)
 			}
