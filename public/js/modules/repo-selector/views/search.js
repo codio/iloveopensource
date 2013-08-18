@@ -51,7 +51,6 @@ define(function (require) {
 
 			this.collection.fetchRepo(match[3], match[4])
 				.done(function () {
-					console.log(arguments)
 					self.renderRepos()
 				})
 				.fail(function () {
