@@ -32,10 +32,9 @@ passport.use(new GitHubStrategy({
 		callbackURL: callbackUrl
 	},
 	function (accessToken, refreshToken, profile, done) {
-		User.findOne({ 'github.id': profile.id }, function (err, user) {
-			if (user) {
-					return done(err, user)
-			}
+		User.findOneAndUpdate({ 'github.id': profile.id }, { $set: {authToken: accessToken}}, function (err, user) {
+			console.log(arguments)
+			if (user) return done(err, user)
 
 			user = new User({
 				name: profile.displayName,

@@ -1,50 +1,15 @@
 section#user-repos {
 
   .repos-list {
-	width: 100%;
-	overflow: hidden;
+	padding: 20px;
 
-	.repo {
-	  padding: 5px 0;
-	  padding-left: 1em;
-	  position: relative;
-	  box-sizing: border-box;
-
-	  &:nth-child(even) {
-		background-color: #f9f9f9;
-	  }
-
+	.col.support-types {
 	  .support-type {
-		cursor: pointer;
-		border-radius: 5px;
-		width: 2em;
-		height: 2em;
-		display: inline-block;
-		position: relative;
+		border: 0;
 		opacity: 0;
 
 		&.active {
 		  opacity: 1;
-		}
-
-		&:before {
-		  position: absolute;
-		  top: 50%;
-		  margin-top: -.7em;
-		  text-align: center;
-		  width: 100%;
-		}
-
-		&.contributing:before {
-		  .icon(@group);
-		}
-
-		&.donating:before {
-		  .icon(@usd);
-		}
-
-		&.supporting:before {
-		  .icon(@heart);
 		}
 	  }
 	}

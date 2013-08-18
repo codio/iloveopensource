@@ -33,45 +33,42 @@
 
 	<div class="repos-list">
 		<% if (supports.length) { %>
-		<div class="row">
-			<span class="col-5 col-offset-7">Make a contribution</span>
+		<div class="controls row">
+			<div class="col repo-name"></div>
+			<div class="col support-types text-center">
+				<b>How I contribute</b>
+			</div>
+			<div class="col contribution-types">
+				<b>Authors preferred method of contribution</b>
+			</div>
 		</div>
 		<% } %>
 		<% _.each(supports, function(repo) { %>
-		<div class="repo <%= repo.project.fork ? 'fork' : '' %> row">
-			<div class="repo-name col-4">
-				<% if (repo.project.owner.user) { %>
-				<a href="/users/repo.project.owner.username" target="_blank">
-					<%= repo.project.owner.username %>
-				</a>
-				<% } else { %>
-				<%= repo.project.owner.username %>
-				<% } %>
-				&nbsp; /&nbsp;
-				<a href="<%= repo.project.url %>" target="_blank">
-					<%= repo.project.name %>
-				</a>
+		<div class="repo <%= repo.project.fork ? 'fork' : '' %>">
+			<div class="col repo-name">
+				<a href="<%= repo.project.url %>" class="icon-github-sign" target="_blank"></a>
+				<%= repo.project.owner.username %>/<%= repo.project.name %>
 			</div>
-			<div class="support col-3">
-				<span class="support-type donating <%= repo.donating ? 'active' : '' %>" data-type="donating" title="I'm donating"></span>
-				<span class="support-type contributing <%= repo.contributing ? 'active' : '' %>" title="I'm contributing"></span>
-				<span class="support-type supporting <%= repo.supporting ? 'active' : '' %>" title="I'm supporting in other way"></span>
+			<div class="col support-types">
+				<span class="support-type donating <%= repo.donating ? 'active' : '' %>" proxy-tap="toggle-support" data-type="donating" title="I'm donating"></span>
+				<span class="support-type contributing <%= repo.contributing ? 'active' : '' %>" proxy-tap="toggle-support" data-type="contributing" title="I'm contributing"></span>
+				<span class="support-type supporting <%= repo.supporting ? 'active' : '' %>" proxy-tap="toggle-support" data-type="supporting" title="I'm supporting in other way"></span>
 			</div>
-			<div class="col-5">
+			<div class="col contribution-types">
 				<% if (!_.isEmpty(repo.project.owner.support)) { %>
 				<% if (repo.project.owner.support.paypal) { %>
-				<div class="contribution">
+				<div class="contribution paypal">
 					<%- repo.project.owner.support.paypal %>
 				</div>
 				<% } %>
 				<% if (repo.project.owner.support.gittip) { %>
-				<div class="contribution">
-					<iframe src="https://www.gittip.com/<%= repo.project.owner.support.gittip %>/widget.html" style="border: 0; margin: 0; padding: 0;" width="48pt" height="22pt"></iframe>
+				<div class="contribution gittip">
+					<a href="https://www.gittip.com/krasu/">gittip</a>
 				</div>
 				<% } %>
 				<% if (repo.project.owner.support.other) { %>
-				<div class="contribution">
-					<div data-html="true" data-toggle="popover">
+				<div class="contribution other">
+					<div data-html="true">
 						<i class="icon-info-sign"></i>
 					</div>
 					<div class="hidden">
@@ -80,14 +77,14 @@
 				</div>
 				<% } %>
 				<% if (repo.project.owner.support.emailMe) { %>
-				<div class="contribution">
-					<i class="icon-envelope" data-toggle="modal" data-target="#email-to-author"></i>
+				<div class="contribution email-me">
+					<i class="icon-envelope" data-toggle="modal" data-target="#email-to-author" title="send a comment to the author"></i>
 				</div>
 				<% } %>
 				<% if (repo.project.owner.support.code) { %>
-				<div class="contribution">
+				<div class="contribution code">
 					<a href="<%= repo.project.url %>" target="_blank">
-						<i class="icon-code"></i>
+						<i class="icon-code" title="Contribute some code"></i>
 					</a>
 				</div>
 				<% } %>

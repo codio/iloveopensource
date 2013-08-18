@@ -15,11 +15,11 @@ define(function (require) {
 			this.listenTo(store().hub, 'removed:' + this.model.id, this.removeSupport)
 		},
 		attributes: {
-			class: 'repo row'
+			class: 'repo'
 		},
 		events: {
 			'click .support-type': 'toggleSupport',
-			'click .remove-icon': 'removeProject'
+			'click .remove': 'removeProject'
 		},
 		removeProject: function () {
 			this.model.destroy()

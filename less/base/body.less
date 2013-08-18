@@ -16,9 +16,133 @@ header {
   }
 }
 
-.contribution {
-  margin: 0 1em;
-  font-size: 1.2em;
-  float: left;
-  cursor: pointer;
+.clearfix {
+  *zoom: 1;
+  &:before,
+  &:after {
+	display: table;
+	content: "";
+  }
+  &:after {
+	clear: both;
+  }
+}
+
+.repos-list {
+  .controls, .repo {
+	.clearfix;
+
+	.col {
+	  float: left;
+	  min-height: 28px;
+
+	  &.support-types {
+		width: 15%;
+		min-width: 110px;
+	  }
+
+	  &.repo-name {
+		width: 30%;
+		min-width: 220px;
+		line-height: 2em;
+	  }
+
+	  &.contribution-types {
+		margin-left: 5%;
+		width: 40%;
+		min-width: 220px;
+	  }
+	}
+  }
+
+  .load-more {
+	margin-top: 20px;
+  }
+
+  .repo {
+	padding: 5px 0;
+	position: relative;
+
+	&.fork {
+	  .repo-name {
+		padding-left: 3em;
+
+		&:before {
+		  .icon(@code-fork);
+		  position: absolute;
+		  left: 2em;
+		}
+	  }
+	}
+
+	&:nth-child(even) {
+	  background-color: #f9f9f9;
+	}
+
+	.repo-name {
+	  padding-left: 2em;
+	  position: relative;
+
+	  .icon-github-sign {
+		font-size: 1.5em;
+		position: absolute;
+		left: 0;
+		top: .2em;
+	  }
+	}
+
+	.col.contribution-types {
+	  .contribution {
+		margin: 0 1em;
+		font-size: 1.2em;
+		float: left;
+		cursor: pointer;
+
+		&.paypal {
+		  margin-top: 3px;
+		}
+	  }
+	}
+
+	.col.support-types {
+	  .support-type {
+		cursor: pointer;
+		border-radius: 5px;
+		width: 2em;
+		height: 2em;
+		display: block;
+		position: relative;
+		border: 2px solid #000;
+		float: left;
+		margin: 0 1em;
+
+		&.active {
+		  &:before {
+			opacity: 1;
+		  }
+		}
+
+		&:before {
+		  opacity: .5;
+		  position: absolute;
+		  top: 50%;
+		  margin-top: -.7em;
+		  text-align: center;
+		  width: 100%;
+		}
+
+		&.contributing:before {
+		  .icon(@group);
+		}
+
+		&.donating:before {
+		  .icon(@usd);
+		}
+
+		&.supporting:before {
+		  .icon(@heart);
+		}
+	  }
+	}
+  }
 }

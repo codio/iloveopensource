@@ -1,37 +1,32 @@
-<div class="col-4 repo-name">
-	<a href="<%= repo.url %>" target="_blank">
-		<%= repo.owner.username %>/<%= repo.name %>
-	</a>
+<div class="col repo-name">
+	<a href="<%= repo.url %>" class="icon-github-sign" target="_blank"></a>
+	<%= repo.owner.username %>/<%= repo.name %>
 </div>
-<div class="col-1">
+<div class="col support-types">
 	<span class="support-type donating <%= repo.support.donating ? 'active' : '' %>" proxy-tap="toggle-support" data-type="donating" title="I'm donating"></span>
-</div>
-<div class="col-1">
 	<span class="support-type contributing <%= repo.support.contributing ? 'active' : '' %>" proxy-tap="toggle-support" data-type="contributing" title="I'm contributing"></span>
-</div>
-<div class="col-1">
 	<span class="support-type supporting <%= repo.support.supporting ? 'active' : '' %>" proxy-tap="toggle-support" data-type="supporting" title="I'm supporting in other way"></span>
 </div>
 <% if (obj.canDelete) { %>
 <div class="col-1">
-	<span class="remove-icon" proxy-tap="remove-repo" title="Remove repo"></span>
+	<span class="btn btn-danger btn-small remove" proxy-tap="remove-repo" title="Remove repo">Remove</span>
 </div>
 <% } %>
-<div class="col-4">
+<div class="col contribution-types">
 	<% if (!_.isEmpty(repo.contribution)) { %>
 	<% if (repo.contribution.paypal) { %>
-	<div class="contribution">
+	<div class="contribution paypal">
 		<%= repo.contribution.paypal %>
 	</div>
 	<% } %>
 	<% if (repo.contribution.gittip) { %>
-	<div class="contribution">
-		<iframe src="https://www.gittip.com/<%= repo.contribution.gittip %>/widget.html" style="border: 0; margin: 0; padding: 0;" width="48pt" height="22pt"></iframe>
+	<div class="contribution gittip">
+		<a href="https://www.gittip.com/krasu/">gittip</a>
 	</div>
 	<% } %>
 	<% if (repo.contribution.other) { %>
-	<div class="contribution">
-		<div data-html="true" data-toggle="popover">
+	<div class="contribution other">
+		<div data-html="true">
 			<i class="icon-info-sign"></i>
 		</div>
 		<div class="hidden">
@@ -40,14 +35,14 @@
 	</div>
 	<% } %>
 	<% if (repo.contribution.emailMe) { %>
-	<div class="contribution">
-		<i class="icon-envelope" data-toggle="modal" data-target="#email-to-author"></i>
+	<div class="contribution email-me">
+		<i class="icon-envelope" data-toggle="modal" data-target="#email-to-author" title="send a comment to the author"></i>
 	</div>
 	<% } %>
 	<% if (repo.contribution.code) { %>
-	<div class="contribution">
+	<div class="contribution code">
 		<a href="<%= repo.url %>" target="_blank">
-			<i class="icon-code"></i>
+			<i class="icon-code" title="Contribute some code"></i>
 		</a>
 	</div>
 	<% } %>
