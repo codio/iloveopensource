@@ -16,14 +16,6 @@ define(function (require) {
 			this.listenTo(this.collection, 'add', this.renderRepo)
 			this.listenTo(this.collection, 'destroy', this.checkIsEmpty)
 			this.listenTo(this.collection, 'add', this.checkIsEmpty)
-		},
-		renderRepo: function (repo) {
-			var list = this.$('.repos-list')
-			var view = new RepoRow({model: repo})
-			this.repoRows.push(view)
-			view.render()
-
-			list.removeClass('hidden').append(view.el)
 		}
 	});
 })

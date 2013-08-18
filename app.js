@@ -27,6 +27,8 @@ app.locals.jsPath = cfg.jsPath;
 app.set('port', cfg.port);
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'ejs');
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.logger('dev'));
 app.use(express.favicon());
@@ -41,42 +43,10 @@ app.use(express.session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-app.use(function(req, res, next){
-	app.locals.isLoggedIn = req.isAuthenticated()
-	if (app.locals.isLoggedIn) {
-		app.locals.loggedUser = req.user
-	}
-	next();
-});
-
-
+require('./app/middleware/users')(app)
 app.use(app.router);
-
-app.use(function(req, res, next){
-	res.status(404);
-
-	if (req.accepts('html')) {
-		res.render('404');
-		return;
-	}
-
-	if (req.accepts('json')) {
-		res.send({ error: 'Not found' });
-		return;
-	}
-
-	res.type('txt').send('Not found');
-});
-
-app.use(function(err, req, res, next){
-	res.status(err.status || 500);
-	res.render('500', { error: err });
-	console.log(err)
-});
-
 require('./app/routes')(app)
+require('./app/middleware/errors')(app)
 
 // development only
 if ('development' == cfg.env) {

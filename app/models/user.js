@@ -11,7 +11,7 @@ var sanitizer = require('sanitizer')
 
 var UserSchema = new Schema({
 	username: { type: String, required: true, index: { unique: true }, trim: true },
-	email: { type: String, required: true, match: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, trim: true },
+	email: { type: String, match: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, trim: true },
 	avatar: String,
 	type: String,
 	displayName: {type: String, trim: true},

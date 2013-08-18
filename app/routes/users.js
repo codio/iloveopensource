@@ -7,6 +7,7 @@
 var _ = require('lodash'),
 	mongoose = require('mongoose'),
 	async = require('async'),
+	ensureAuthenticated = require('../utils/ensure-auth')
 	Project = mongoose.model('Project'),
 	Support = mongoose.model('Support'),
 	User = mongoose.model('User')
@@ -79,13 +80,3 @@ module.exports = function (app) {
 		});
 	});
 };
-
-
-function ensureAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) {
-		return next();
-	}
-
-	req.session.redirectUrl = req.url;
-	res.redirect('/');
-}

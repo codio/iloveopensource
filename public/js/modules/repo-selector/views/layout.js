@@ -52,21 +52,22 @@ define(function (require) {
 				selectedCount: store().selected.length
 			}))
 
-			store().searchView = new RepoSearch({
+			new RepoSearch({
 				el: this.$('#repo-search'),
 				collection: store().repos.search
 			}).render()
 
-			store().selectedView = new SelectedRepos({
+			new SelectedRepos({
 				el: this.$('#selected-repos'),
 				collection: store().selected
 			}).render()
 		},
-		renderRepoList: function (collection) {
-			this.$('a[href="#' + collection.type + '-repos"]').parent().removeClass('disabled')
+		renderRepoList: function (collection, type) {
+			if (type == 'search') return
+			this.$('a[href="#' + type + '-repos"]').parent().removeClass('disabled')
 
 			var view = new RepoList({
-				el: this.$('#' + collection.type + '-repos'),
+				el: this.$('#' + type + '-repos'),
 				collection: collection
 			})
 

@@ -58,11 +58,21 @@ define(function (require) {
 
 			var request = Backbone.Collection.prototype.fetch.call(this, options);
 			request.done(function (data) {
-				var ids = _.unique(_.map(data, function (el) {
+				var repos = data.items || data
+				if (!_.isArray(repos)) repos = [repos]
+
+				var ids = _.unique(_.map(repos, function (el) {
 					return el.owner.id
 				}))
 
-				$.post('/get-contributing-options', {ids: ids})
+				if (!ids.length) {
+					store().hub.trigger('repos-loaded', self, self.type)
+					return
+				}
+
+				$.post('/get-contributing-options', {
+					ids: ids
+				})
 					.done(function (contributions) {
 						_.each(contributions, function (el) {
 							self.each(function (model) {
@@ -72,7 +82,7 @@ define(function (require) {
 							})
 						})
 
-						store().hub.trigger('repos-loaded', self)
+						store().hub.trigger('repos-loaded', self, self.type)
 					})
 			})
 

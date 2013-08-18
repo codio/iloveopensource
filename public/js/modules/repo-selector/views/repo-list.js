@@ -16,7 +16,6 @@ define(function (require) {
 		},
 		initialize: function () {
 			this.repoRows = []
-			this.listenTo(this.collection, 'sync', this.render)
 		},
 		loadMore: function () {
 			var btn = this.$('.load-more')
@@ -48,6 +47,14 @@ define(function (require) {
 			}, this)
 
 			list.removeClass('hidden').append(_.pluck(this.repoRows, 'el'))
+		},
+		renderRepo: function (repo) {
+			var list = this.$('.repos-list')
+			var view = new RepoRow({model: repo})
+			this.repoRows.push(view)
+			view.render()
+
+			list.removeClass('hidden').append(view.el)
 		},
 		render: function () {
 			this.$el.html(this.tpl({

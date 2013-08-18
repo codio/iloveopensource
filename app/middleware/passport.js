@@ -15,7 +15,7 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (obj, done) {
-	User.findOne(obj._id, function (err, user) {
+	User.findOne({_id: obj._id}, function (err, user) {
 		done(err, user);
 	});
 });
@@ -25,7 +25,6 @@ if (cfg.github.usePort) {
 	callbackUrl += ':' + cfg.port
 }
 callbackUrl += '/auth/github/callback'
-console.log(callbackUrl)
 
 passport.use(new GitHubStrategy({
 		clientID: cfg.github.clientId,
@@ -34,11 +33,13 @@ passport.use(new GitHubStrategy({
 	},
 	function (accessToken, refreshToken, profile, done) {
 		User.findOne({ 'github.id': profile.id }, function (err, user) {
-			if (user) return done(err, user)
+			if (user) {
+					return done(err, user)
+			}
 
 			user = new User({
 				name: profile.displayName,
-				email: profile.emails[0].value,
+				email: profile._json.email,
 				username: profile.username,
 				displayName: profile.username,
 				provider: 'github',
