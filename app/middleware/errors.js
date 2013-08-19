@@ -23,7 +23,6 @@ module.exports = function (app) {
 	});
 
 	app.use(function (err, req, res, next) {
-		console.log(err)
 		res.status(err.status || 500);
 
 		if (req.accepts('html')) {

@@ -15,16 +15,17 @@ var UserSchema = new Schema({
 	avatar: String,
 	type: String,
 	displayName: {type: String, trim: true},
-
 	twitterName: {type: String, trim: true},
-	github: {},
-	support: {
+
+	contributions: {
 		gittip: {type: String, trim: true},
 		paypal: {type: String, trim: true},
-		other: {type: String, trim: true},
+		note: {type: String, trim: true},
 		emailMe: Boolean,
 		code: Boolean
 	},
+
+	github: {},
 	provider: { type: String, default: '' },
 	authToken: { type: String, default: '' }
 });

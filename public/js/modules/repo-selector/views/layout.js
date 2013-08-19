@@ -38,7 +38,6 @@ define(function (require) {
 					toastr.success('All changes saved!', 'Success!')
 				})
 				.fail(function (xhr) {
-					console.log(arguments)
 					toastr.error(xhr.responseText, 'Error!')
 				})
 				.always(function () {

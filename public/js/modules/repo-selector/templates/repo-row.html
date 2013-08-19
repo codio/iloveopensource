@@ -13,33 +13,33 @@
 </div>
 <% } %>
 <div class="col contribution-types">
-	<% if (!_.isEmpty(repo.contribution)) { %>
-	<% if (repo.contribution.paypal) { %>
+	<% if (!_.isEmpty(repo.contributions)) { %>
+	<% if (repo.contributions.paypal) { %>
 	<div class="contribution paypal">
-		<%= repo.contribution.paypal %>
+		<%= repo.contributions.paypal %>
 	</div>
 	<% } %>
-	<% if (repo.contribution.gittip) { %>
+	<% if (repo.contributions.gittip) { %>
 	<div class="contribution gittip">
 		<a href="https://www.gittip.com/krasu/">gittip</a>
 	</div>
 	<% } %>
-	<% if (repo.contribution.other) { %>
+	<% if (repo.contributions.note) { %>
 	<div class="contribution other">
 		<div data-html="true">
 			<i class="icon-info-sign"></i>
 		</div>
 		<div class="hidden">
-			<%= repo.contribution.other %>
+			<%= repo.contributions.note %>
 		</div>
 	</div>
 	<% } %>
-	<% if (repo.contribution.emailMe) { %>
+	<% if (repo.contributions.emailMe) { %>
 	<div class="contribution email-me">
 		<i class="icon-envelope" data-toggle="modal" data-target="#email-to-author" title="send a comment to the author"></i>
 	</div>
 	<% } %>
-	<% if (repo.contribution.code) { %>
+	<% if (repo.contributions.code) { %>
 	<div class="contribution code">
 		<a href="<%= repo.url %>" target="_blank">
 			<i class="icon-code" title="Contribute some code"></i>

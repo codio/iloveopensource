@@ -5,10 +5,15 @@
 <ul class="nav nav-tabs">
 	<li class="selected-repos">
 		<a href="#selected-repos" data-toggle="tab">
-			Selected Repos <span class="badge" id="selected-count"><%= obj.selectedCount %></span>
+			Selected Repos
+			&nbsp;<span class="badge" id="selected-count"><%= obj.selectedCount %></span>
 		</a>
 	</li>
-	<li class="active"><a href="#repo-search" data-toggle="tab">Search For Repo</a></li>
+	<li class="active">
+		<a href="#repo-search" data-toggle="tab">
+			Search For Repo
+		</a>
+	</li>
 	<li class="disabled">
 		<a href="#own-repos" data-toggle="tab">
 			<i class="icon-spinner icon-spin icon-large"></i> Own Repos
@@ -23,9 +28,6 @@
 		<a href="#watched-repos" data-toggle="tab">
 			<i class="icon-spinner icon-spin icon-large"></i> Starred Repos
 		</a>
-	</li>
-	<li class="pull-right">
-		<button type="button" class="btn btn-primary col-12" id="save-changes">Save Changes!</button>
 	</li>
 </ul>
 <div class="tab-content">

@@ -14,12 +14,10 @@ define(function (require) {
 			supporting: false
 		},
 		count: function() {
-			return _(this.attributes).values().compact().value().length
+			return _(this.attributes).pick(_.keys(this.defaults)).values().compact().value().length
 		},
 		isEmpty: function () {
-			return !_(this.attributes).find(function (el) {
-				return el
-			})
+			return (!this.attributes.contributing && !this.attributes.supporting && !this.attributes.donating)
 		}
 	})
 })

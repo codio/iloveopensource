@@ -18,6 +18,35 @@ var SupportSchema = new Schema({
 	contributing: {type: Boolean, default: false}
 })
 
+SupportSchema.statics.isEmpty = function (data) {
+	return (!data.contributing && !data.supporting && !data.donating)
+}
+
+SupportSchema.statics.updateSupport = function (userData, callback) {
+	var query = {
+		'project': userData.project,
+		'user': userData.user
+	}
+
+	var data = {
+		donating: userData.donating,
+		supporting: userData.supporting,
+		contributing: userData.contributing
+	}
+
+	if (_.isEmpty(data)) {
+		return this.remove(query, function (err) {
+			if (err) return callback('Failed to unset support')
+			callback(null, {})
+		})
+	}
+
+	this.findOneAndUpdate(query, { $set: data }, {upsert: true}, function (err, supporting) {
+		if (err) return callback('Failed to update your support')
+		callback(null, supporting)
+	})
+}
+
 SupportSchema.statics.getSupportByUser = function (userId, callback) {
 	this.find({user: userId}).populate('project').lean().exec(function (error, supports) {
 		callback(error ? 'Failed to retrieve supporting projects' : null, supports);

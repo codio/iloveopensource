@@ -22,7 +22,7 @@ define(function (require) {
 						donating: entity.donating,
 						supporting: entity.supporting
 					},
-					contribution: entity.project.owner.support
+					contributions: entity.project.owner.contributions
 				})
 			}
 
@@ -30,6 +30,13 @@ define(function (require) {
 			result.support = new Support(result.support)
 
 			return result;
+		},
+		destroy: function (options) {
+			options = options || {}
+			options.data = JSON.stringify({id: this.get('_id')})
+			options.contentType = 'application/json'
+
+			return Backbone.Model.prototype.destroy.apply(this, [options])
 		}
 	})
 })

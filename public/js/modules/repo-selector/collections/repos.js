@@ -26,7 +26,7 @@ define(function (require) {
 
 			return res
 		},
-		parseLinkHeader: function (header) {
+		parseLinkHeader: function (header) { //TODO: test load more functionality
 			if (!header || !header.length) return
 
 			// Split parts by comma
@@ -78,7 +78,7 @@ define(function (require) {
 							self.each(function (model) {
 								if (model.get('owner').get('githubId') != el.github.id) return
 
-								model.set('contribution', el.support)
+								model.set('contributions', el.contributions)
 							})
 						})
 

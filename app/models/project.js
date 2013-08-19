@@ -15,20 +15,36 @@ var ProjectSchema = new Schema({
 	url: {type: String, required: true},
 	fork: Boolean,
 	owner: {
-		githubId: {type: Number, required: true, index: { unique: true }},
-		user: {type: Schema.ObjectId, ref: 'User'},
+		githubId: {type: Number, required: true, index: true},
 		username: {type: String, required: true},
 		type: {type: String, required: true},
+		user: {type: Schema.ObjectId, ref: 'User', index: true},
 		url: String,
 		gravatar: String,
-		support: {}
+		contributions: {}
 	}
 })
 
+ProjectSchema.statics.createIfNotExists = function (data, cb) {
+	var self = this
+	this.findOne({'githubId': data.githubId}, function (err, project) {
+		if (err) return cb('Failed to find project');
+
+		if (project) return self.checkForOwner(project, cb)
+
+		project = new Project(data);
+
+		project.save(function (err) {
+			if (err) return cb('Failed to create project')
+			self.checkForOwner(project, cb)
+		})
+	})
+}
+
 ProjectSchema.statics.updateOwner = function (user, cb) {
 	var data = {'owner.user': user._id}
-	_.each(user.support, function (val, key) {
-		data['owner.support.' + key] = val
+	_.each(user.contributions, function (val, key) {
+		data['owner.contributions.' + key] = val
 	})
 
 	this.update(
@@ -40,57 +56,21 @@ ProjectSchema.statics.updateOwner = function (user, cb) {
 		})
 }
 
-ProjectSchema.statics.bulkAdd = function (newRepos, cb) {
-	this.create(newRepos, function (error) {
-		var projects = [].slice.call(arguments, 1)
-		cb(error, projects);
-	})
-}
+ProjectSchema.statics.checkForOwner = function (project, cb) {
+	if (project.owner.user) return cb(null, project)
 
-ProjectSchema.statics.checkOwners = function (projects, cb) {
-	var self = this
-	var owners = _.compact(_.map(projects, function (project) {
-		if (project.owner.user) return
-		return project.owner.githubId
-	}))
+	User.findOne({'github.id': project.owner.githubId}, function (err, user) {
+		if (err) return cb('Failed to retrieve project owner')
+		if (!user) return cb(null, project)
 
-	if (!owners.length) return
+		project.owner.contributions = user.contributions
+		project.owner.user = user._id
 
-	User.find({'github.id': { $in: owners}}, function(err, users) {
-		if (err) return console.log(err)
-		_.each(users, function(user) {
-			self.updateOwner(user)
+		project.save(function (error) {
+			if (error) return cb('Failed to update project owner')
+			cb(null, project)
 		})
 	})
-
-}
-
-ProjectSchema.statics.checkForNew = function (repos, cb) {
-	var self = this
-	this.find({githubId: { $in: _.pluck(repos, 'githubId')}}, function (error, projects) {
-		repos = updateRepoIds(projects, repos)
-
-		var newRepos = _.filter(repos, function (repo) {
-			return !repo._id
-		})
-
-		if (!newRepos.length) return cb(error, repos);
-
-		self.bulkAdd(newRepos, function (err, newProjects) {
-			repos = updateRepoIds(newProjects, repos)
-			self.checkOwners(repos)
-			return cb(error, repos);
-		})
-	})
-}
-
-var updateRepoIds = function (existing, cheking) {
-	_.each(existing, function (project) {
-		var repo = _.find(cheking, {githubId: project.githubId})
-		if (repo) repo._id = project._id
-	})
-
-	return cheking
 }
 
 mongoose.model('Project', ProjectSchema)

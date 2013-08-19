@@ -33,7 +33,6 @@ passport.use(new GitHubStrategy({
 	},
 	function (accessToken, refreshToken, profile, done) {
 		User.findOneAndUpdate({ 'github.id': profile.id }, { $set: {authToken: accessToken}}, function (err, user) {
-			console.log(arguments)
 			if (user) return done(err, user)
 
 			user = new User({

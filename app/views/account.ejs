@@ -4,7 +4,7 @@
 	<div class="well">
 		<div class="row">
 			<a href="<%= user.github.html_url %>" class="col-1">
-				<img src="http://www.gravatar.com/avatar/<%= loggedUser.github.gravatar_id %>?s=80" alt="" class="img-rounded"/>
+				<img src="http://www.gravatar.com/avatar/<%= user.github.gravatar_id %>?s=80" alt="" class="img-rounded"/>
 			</a>
 
 			<div class="data col-4">
@@ -55,33 +55,33 @@
 				<span class="support-type supporting <%= repo.supporting ? 'active' : '' %>" proxy-tap="toggle-support" data-type="supporting" title="I'm supporting in other way"></span>
 			</div>
 			<div class="col contribution-types">
-				<% if (!_.isEmpty(repo.project.owner.support)) { %>
-				<% if (repo.project.owner.support.paypal) { %>
+				<% if (!_.isEmpty(repo.project.owner.contributions)) { %>
+				<% if (repo.project.owner.contributions.paypal) { %>
 				<div class="contribution paypal">
-					<%- repo.project.owner.support.paypal %>
+					<%- repo.project.owner.contributions.paypal %>
 				</div>
 				<% } %>
-				<% if (repo.project.owner.support.gittip) { %>
+				<% if (repo.project.owner.contributions.gittip) { %>
 				<div class="contribution gittip">
 					<a href="https://www.gittip.com/krasu/">gittip</a>
 				</div>
 				<% } %>
-				<% if (repo.project.owner.support.other) { %>
+				<% if (repo.project.owner.contributions.note) { %>
 				<div class="contribution other">
 					<div data-html="true">
 						<i class="icon-info-sign"></i>
 					</div>
 					<div class="hidden">
-						<%- repo.project.owner.support.other %>
+						<%- repo.project.owner.contributions.note %>
 					</div>
 				</div>
 				<% } %>
-				<% if (repo.project.owner.support.emailMe) { %>
+				<% if (repo.project.owner.contributions.emailMe) { %>
 				<div class="contribution email-me">
 					<i class="icon-envelope" data-toggle="modal" data-target="#email-to-author" title="send a comment to the author"></i>
 				</div>
 				<% } %>
-				<% if (repo.project.owner.support.code) { %>
+				<% if (repo.project.owner.contributions.code) { %>
 				<div class="contribution code">
 					<a href="<%= repo.project.url %>" target="_blank">
 						<i class="icon-code" title="Contribute some code"></i>
@@ -116,15 +116,4 @@
 </section>
 <script type="text/javascript" src="<%= jsPath %>/vendors/jquery/js/jquery.js"></script>
 <script type="text/javascript" src="<%= jsPath %>/bootstrap.js"></script>
-<script type="text/javascript">
-	$(function () {
-		$('[data-toggle="popover"]').popover({
-			container: 'body',
-			title: 'Note from Author',
-			content: function () {
-				return $(this).next().html()
-			}
-		})
-	})
-</script>
 <% include footer.ejs %>

@@ -9,9 +9,9 @@
 				<label for="input-gittip" class="col-4 control-label">Gittip:</label>
 
 				<div class="col-6">
-					<input type="text" class="form-control" name="support[gittip]" id="input-gittip" placeholder="Gittip username" data-field="support.gittip" value="<%= loggedUser.support && loggedUser.support.gittip  || '' %>">
+					<input type="text" class="form-control" name="contributions[gittip]" id="input-gittip" placeholder="Gittip username" data-field="contributions.gittip" value="<%= loggedUser.contributions && loggedUser.contributions.gittip  || '' %>">
 
-					<div class="help-block">Fill this field so users will be able to support your projects via
+					<div class="help-block">Fill this field so users will be able to contributions your projects via
 						<a href="https://www.gittip.com/">GitTip</a></div>
 				</div>
 				<div class="col-2 saved">
@@ -23,10 +23,10 @@
 				<label for="input-paypal" class="col-4 control-label">Paypal Direct Donation:</label>
 
 				<div class="col-6">
-					<textarea name="support[paypal]" id="input-paypal" cols="30" rows="10" class="form-control" data-field="support.paypal"><%= loggedUser.support && loggedUser.support.paypal || '' %></textarea>
+					<textarea name="contributions[paypal]" id="input-paypal" cols="30" rows="10" class="form-control" data-field="contributions.paypal"><%= loggedUser.contributions && loggedUser.contributions.paypal || '' %></textarea>
 
 					<div class="help-block">
-						Put PayPal Donate button widget in this field so users will be able to support your projects via
+						Put PayPal Donate button widget in this field so users will be able to contributions your projects via
 						<a href="https://www.paypal.com/">PayPal</a>
 					</div>
 				</div>
@@ -38,7 +38,7 @@
 				<label for="input-emailme" class="col-4 control-label">Email me a comment</label>
 
 				<div class="col-6">
-					<input type="checkbox" data-field="support.emailMe" id="input-emailMe" <%= loggedUser.support && loggedUser.support.emailme && 'checked' %>>
+					<input type="checkbox" data-field="contributions.emailMe" id="input-emailMe" <%= loggedUser.contributions && loggedUser.contributions.emailMe && 'checked' %>>
 				</div>
 				<div class="col-2 saved">
 					Saved!
@@ -48,7 +48,7 @@
 				<label for="input-code" class="col-4 control-label">Code</label>
 
 				<div class="col-6">
-					<input type="checkbox" id="input-code" data-field="support.code" <%= loggedUser.support && loggedUser.support.code && 'checked' %>>
+					<input type="checkbox" id="input-code" data-field="contributions.code" <%= loggedUser.contributions && loggedUser.contributions.code && 'checked' %>>
 				</div>
 				<div class="col-2 saved">
 					Saved!
@@ -58,9 +58,9 @@
 				<label for="input-other" class="col-4 control-label">Other</label>
 
 				<div class="col-6">
-					<textarea id="input-other" class="form-control" cols="30" rows="10" data-field="support.other"><%= loggedUser.support && loggedUser.support.other || '' %></textarea>
+					<textarea id="input-other" class="form-control" cols="30" rows="10" data-field="contributions.note"><%= loggedUser.contributions && loggedUser.contributions.note || '' %></textarea>
 					<div class="help-block">
-						Give users a note about how else they could support your projects
+						Give users a note about how else they could contributions your projects
 						<a href="https://www.paypal.com/">PayPal</a>
 					</div>
 
