@@ -36,6 +36,10 @@ module.exports = function (app) {
 		res.render('settings', { user: req.user, error: '' });
 	});
 
+	app.get('/widgets', ensureAuthenticated, function (req, res) {
+		res.render('widgets', { user: req.user, error: '' });
+	});
+
 	app.post('/settings/:field', ensureAuthenticated, function (req, res) {
 		var field = req.param('field').split('.')
 
