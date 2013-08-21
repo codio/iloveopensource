@@ -9,7 +9,7 @@
 	<a href="https://www.gittip.com/<%= contributions.gittip %>/">gittip</a>
 </div>
 <% } %>
-<% if (contributions.gittip) { %>
+<% if (contributions.flattr) { %>
 <div class="contribution flattr" data-toggle="tooltip" title="donate on Flattr">
 	<a href="https://flattr.com/profile/<%= contributions.flattr %>/things"><img src="https://flattr.com/_img/icons/flattr_logo_16.png" alt="flattr"/></a>
 </div>
@@ -38,5 +38,7 @@
 <% } %>
 <div class="clearfix"></div>
 <% } else { %>
-Would like to contribute something?
+<span class="btn btn-link want-contribute">
+	I would like to contribute to this project
+</span>
 <% } %>

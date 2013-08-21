@@ -8,27 +8,23 @@
 <body>
 <header>
 	<% if (isLoggedIn) { %>
-	<a href="/users/<%= loggedUser.username %>">
+	<span class="menu">
 		<img src="http://www.gravatar.com/avatar/<%= loggedUser.github.gravatar_id %>?s=20" alt="" class="img-rounded"/>
 		<%= loggedUser.displayName %>
-	</a>
+	</span>
 
-	<a href="/users/<%= loggedUser.username %>/editor">
+	<a href="/users/<%= loggedUser.username %>/editor" class="menu">
 		<i class="icon-edit"></i>
-		Projects
+		Supporters
 	</a>
-	<a href="/settings">
+	<a href="/settings" class="menu">
 		<i class="icon-cog"></i>
-		Settings
-	</a>
-	<a href="/widgets">
-		<i class="icon-paste"></i>
-		Widgets
+		Maintainers
 	</a>
 
-	<a href="/logout" class="pull-right">logout</a>
+	<a href="/logout" class="pull-right menu">logout</a>
 	<% } else { %>
-	<a href="/auth/github" class="pull-right">Join Now!</a>
+	<a href="/auth/github" class="pull-right menu">Join Now!</a>
 	<% } %>
 	<div class="clearfix"></div>
 </header>

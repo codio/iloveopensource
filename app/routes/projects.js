@@ -91,8 +91,8 @@ module.exports = function (app) {
 					'owner.githubId owner.contributions githubId _id owner.user')
 					.exec(function (error, projects) {
 						if (error) return cb(error)
-						cb(null, true)
 						result.projects = projects
+						cb(null, true)
 					})
 			},
 			function (cb) {
@@ -108,8 +108,8 @@ module.exports = function (app) {
 					'github.id contributions')
 					.exec(function (error, owners) {
 						if (error) return cb(error)
-						cb(null, true)
 						result.owners = owners
+						cb(null, true)
 					})
 			}
 		], function (error) {

@@ -13,6 +13,8 @@ var ProjectSchema = new Schema({
 	name: {type: String, required: true},
 	githubId: {type: Number, required: true, index: { unique: true }},
 	url: {type: String, required: true},
+	homepage: {type: String, trim: true},
+	description: {type: String, trim: true},
 	fork: Boolean,
 	owner: {
 		githubId: {type: Number, required: true, index: true},

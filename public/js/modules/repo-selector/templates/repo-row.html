@@ -1,5 +1,8 @@
-<div class="col repo-name">
-	<a href="<%= repo.url %>" class="icon-github-sign" target="_blank"></a>
+<div class="col repo-name <%= repo.homepage ? 'with-home' : '' %>">
+	<a href="<%= repo.url %>" class="icon-github-sign go-to" target="_blank"></a>
+	<% if (repo.homepage) { %>
+	<a href="<%= repo.homepage %>" class="icon-home go-to" target="_blank"></a>
+	<% } %>
 	<% if (repo.owner.user) { %>
 	<a href="/users/<%=repo.owner.username %>">
 		<%=repo.owner.username %>
@@ -15,6 +18,12 @@
 	<% } else { %>
 	<%=repo.name %>
 	<% } %>
+
+	<div class="description">
+		<% if (repo.description) { %>
+		<%= repo.description %>
+		<% } %>
+	</div>
 </div>
 <div class="col support-types">
 	<span class="support-type donating <%= repo.support.donating ? 'active' : '' %>" proxy-tap="toggle-support" data-type="donating" data-toggle="tooltip" data-toggle="tooltip" title="I'm donating"></span>
@@ -39,7 +48,7 @@
 		<a href="https://www.gittip.com/<%= contributions.gittip %>/">gittip</a>
 	</div>
 	<% } %>
-	<% if (contributions.gittip) { %>
+	<% if (contributions.flattr) { %>
 	<div class="contribution flattr" data-toggle="tooltip" title="donate on Flattr">
 		<a href="https://flattr.com/profile/<%= contributions.flattr %>/things"><img src="https://flattr.com/_img/icons/flattr_logo_16.png" alt="flattr"/></a>
 	</div>
@@ -68,6 +77,8 @@
 	<% } %>
 	<div class="clearfix"></div>
 	<% } else { %>
-	Would like to contribute something?
+	<span class="btn btn-link want-contribute">
+		I would like to contribute to this project
+	</span>
 	<% } %>
 </div>

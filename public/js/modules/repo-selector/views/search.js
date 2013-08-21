@@ -12,6 +12,10 @@ define(function (require) {
 	return RepoList.extend({
 		minLength: 5,
 		tpl: require('tpl!../templates/repo-search.html'),
+		initialize: function () {
+			RepoList.prototype.initialize.apply(this, arguments)
+			this.listenTo(this.collection, 'repos-loaded', this.renderRepos)
+		},
 		events: {
 			'keyup .search-string': 'triggerSearch',
 			'click .controls .support-type': 'toogleReposSupport',
@@ -50,9 +54,6 @@ define(function (require) {
 			if (!match) return toastr.warning('You have entered wrong URL')
 
 			this.collection.fetchRepo(match[3], match[4])
-				.done(function () {
-					self.renderRepos()
-				})
 				.fail(function () {
 					toastr.warning('Invalid Repo Url')
 				})
@@ -72,10 +73,8 @@ define(function (require) {
 			btn.button('loading')
 
 			this.collection.fetch({
-				data: {q: query+'+in:name'}
-			}).done(function () {
-					self.renderRepos()
-				})
+				data: {q: query + '+in:name'}
+			})
 				.fail(function () {
 					toastr.warning('Failed search attempt')
 				})

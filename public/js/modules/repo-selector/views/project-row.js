@@ -19,6 +19,7 @@ define(function (require) {
 			this.listenTo(this.model, 'sync', this.onSuccess)
 			this.listenTo(this.model, 'destroy', this.onDestroy)
 		},
+		removeWarning: 'If you do not check any icons, this item will be removed. OK?',
 		attributes: {
 			class: 'repo'
 		},
@@ -38,8 +39,8 @@ define(function (require) {
 			this.renderSupport()
 		},
 		updateSupport: function (type, val) {
-			if (!val && this.model.get('support').count() == 1 && confirm(alert)) {
-				return this.removeProject()
+			if (!val && this.model.get('support').count() == 1) {
+				window.confirm(this.removeWarning) && this.removeProject()
 			} else {
 				this.model.get('support').set(type, val)
 				this.model.save()
@@ -51,7 +52,7 @@ define(function (require) {
 		},
 		onDestroy: function () {
 			var support = this.model.get('support').flat()
-			_.each(support, function(val, key) {
+			_.each(support, function (val, key) {
 				support[key] = false
 			})
 			store().hub.trigger('support.set:' + this.model.id, support)
@@ -64,15 +65,9 @@ define(function (require) {
 		toggleSupport: function (event) {
 			var support = this.model.get('support'),
 				type = $(event.currentTarget).data().type,
-				val = !support.get(type),
-				alert = 'If you do not check any icons, this item will be removed. OK?'
+				val = !support.get(type)
 
-			if (!val && this.model.get('support').count() == 1) {
-				confirm(alert) && this.removeProject()
-			} else {
-				support.set(type, val)
-				this.model.save()
-			}
+			this.updateSupport(type, val)
 		}
 	});
 })

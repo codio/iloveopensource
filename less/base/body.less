@@ -10,7 +10,8 @@ header {
   i {
 	width: 1em;
   }
-  a {
+
+  .menu {
 	padding: 8px 12px;
 	display: inline-block;
   }
@@ -35,6 +36,7 @@ header {
 	.col {
 	  float: left;
 	  min-height: 28px;
+	  height: 100%;
 
 	  &.support-types {
 		width: 15%;
@@ -72,6 +74,10 @@ header {
 		  position: absolute;
 		  left: 2em;
 		}
+
+		.description {
+		  margin-left: -1em;
+		}
 	  }
 	}
 
@@ -83,11 +89,25 @@ header {
 	  padding-left: 2em;
 	  position: relative;
 
-	  .icon-github-sign {
+	  &.with-home {
+		min-height: 4.4em;
+	  }
+
+	  .go-to {
 		font-size: 1.5em;
 		position: absolute;
 		left: 0;
 		top: .2em;
+
+		&.icon-home {
+		  top: 1.6em
+		}
+	  }
+
+	  .description {
+		padding-top: 10px;
+		font-size: .8em;
+		line-height: 1.2;
 	  }
 	}
 

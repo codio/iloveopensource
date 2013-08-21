@@ -91,7 +91,7 @@ define(function (require) {
 
 						_.each(resp.owners, function (el) {
 							self.each(function (model) {
-								if (model.get('user')) return
+								if (model.get('owner').get('user')) return
 								if (model.get('owner').get('githubId') != el.github.id) return
 
 								model.set('contributions', el.contributions)
@@ -100,6 +100,7 @@ define(function (require) {
 						})
 
 
+						self.trigger('repos-loaded')
 						store().hub.trigger('repos-loaded', self, self.type)
 					})
 			})

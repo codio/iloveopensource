@@ -29,6 +29,8 @@ define(function (require) {
 				fork: repo.fork,
 				name: repo.name,
 				url: repo.html_url || repo.url,
+				description: repo.description,
+				homepage: repo.homepage,
 				owner: new Owner(repo.owner, {parse: true})
 			}
 

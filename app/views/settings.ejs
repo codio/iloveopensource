@@ -1,18 +1,58 @@
+<% titleBuilder.add('Settigns') %>
 <% include header.ejs %>
+<% var img = 'http://octodex.github.com/images/daftpunktocat-thomas.gif' %>
+<% var link = 'https://oss.krasniyrus.com/users/' + loggedUser.username %>
+<% var alt = 'Open Source Supporter' %>
 <section id="page-settings">
 	<form class="form-horizontal" role="form" method="post">
-		<fieldset class="col-6">
+		<fieldset>
+			<legend>
+				Embed
+			</legend>
+			<div class="form-group">
+				<label for="input-md" class="col-3 control-label">
+					<i class="icon-question-sign help col-1 text-right"></i>
+					MarkDown:
+				</label>
+
+				<div class="col-6">
+					<textarea id="input-md" class="form-control">[![Open Source Supporter](<%= img %>)](<%= link %>)</textarea>
+					<div class="help-block">
+						Copy and paste this into your Github README.md file  to attract Supporters to the "I Love Open Source" movement
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-html" class="col-3 control-label">
+					<i class="icon-question-sign help"></i>
+					HTML:
+				</label>
+
+				<div class="col-6">
+					<textarea id="input-html" class="form-control"><a href="<%= link %>"><img src="<%=img%>" alt="<%= alt %>"/></a></textarea>
+					<div class="help-block">
+						Copy and paste this into your web pages to attract Supporters to the “I Love Open Source” movement
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
 			<legend>
 				Preferred Support Types for Your Projects
 			</legend>
 			<div class="form-group">
-				<label for="input-gittip" class="col-4 control-label">Gittip:</label>
+				<label for="input-gittip" class="col-3 control-label">
+					<i class="icon-question-sign help"></i>
+					Gittip:
+				</label>
 
 				<div class="col-6">
 					<input type="text" class="form-control" name="contributions[gittip]" id="input-gittip" placeholder="Gittip username" data-field="contributions.gittip" value="<%= loggedUser.contributions && loggedUser.contributions.gittip  || '' %>">
 
-					<div class="help-block">Fill this field so users will be able to contributions your projects via
-						<a href="https://www.gittip.com/" tabindex="-1">GitTip</a></div>
+					<div class="help-block">
+						If you want to receive weekly payments through <a href="https://www.gittip.com/" tabindex="-1">GitTip</a>, enter your Gittip username here
+					</div>
 				</div>
 				<div class="col-2 saved">
 					Saved!
@@ -20,13 +60,18 @@
 			</div>
 
 			<div class="form-group">
-				<label for="input-flattr" class="col-4 control-label">Flattr Username:</label>
+				<label for="input-flattr" class="col-3 control-label">
+					<i class="icon-question-sign help"></i>
+					Flattr Username:
+				</label>
 
 				<div class="col-6">
 					<input type="text" class="form-control" name="contributions[flattr]" id="input-flattr" placeholder="Flattr username" data-field="contributions.flattr" value="<%= loggedUser.contributions && loggedUser.contributions.flattr || '' %>">
 
-					<div class="help-block">Fill this field so users will be able to contributions your projects via
-						<a href="https://flattr.com/">Flattr</a></div>
+					<div class="help-block">
+						Fill this field so users will be able to contributions your projects via
+						<a href="https://flattr.com/">Flattr</a>
+					</div>
 				</div>
 				<div class="col-2 saved">
 					Saved!
@@ -34,14 +79,17 @@
 			</div>
 
 			<div class="form-group">
-				<label for="input-paypal" class="col-4 control-label">Paypal Direct Donation:</label>
+				<label for="input-paypal" class="col-3 control-label">
+					<i class="icon-question-sign help"></i>
+					Paypal Direct Donation:
+				</label>
 
 				<div class="col-6">
-					<textarea name="contributions[paypal]" id="input-paypal" cols="30" rows="10" class="form-control" data-field="contributions.paypal"><%= loggedUser.contributions && loggedUser.contributions.paypal || '' %></textarea>
+					<textarea name="contributions[paypal]" id="input-paypal" class="form-control" data-field="contributions.paypal"><%= loggedUser.contributions && loggedUser.contributions.paypal || '' %></textarea>
 
 					<div class="help-block">
-						Put PayPal Donate button widget in this field so users will be able to contributions your projects via
-						<a href="https://www.paypal.com/">PayPal</a>
+						If you receive payment through a <a href="https://www.paypal.com/">PayPal</a> Donate button, paste the paypal HTML code button here and we will display it for you.
+						More info <a href="https://merchant.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=merchant%2Fdonations">here</a>
 					</div>
 				</div>
 				<div class="col-2 saved">
@@ -49,49 +97,65 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="input-emailme" class="col-4 control-label">Email me a comment</label>
+				<label for="input-emailme" class="col-3 control-label">
+					<i class="icon-question-sign help"></i>
+					Email me a comment
+				</label>
 
 				<div class="col-6">
 					<input type="checkbox" data-field="contributions.emailMe" id="input-emailMe" <%= loggedUser.contributions && loggedUser.contributions.emailMe && 'checked' %>>
+					<div class="help-block">
+						I would like people to be able to send comments to me. I Love Open Source will get the message from the user and email you the message. (requires the email field to be completed)
+					</div>
 				</div>
 				<div class="col-2 saved">
 					Saved!
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="input-code" class="col-4 control-label">Code</label>
+				<label for="input-code" class="col-3 control-label">
+					<i class="icon-question-sign help"></i>
+					Code
+				</label>
 
 				<div class="col-6">
 					<input type="checkbox" id="input-code" data-field="contributions.code" <%= loggedUser.contributions && loggedUser.contributions.code && 'checked' %>>
+					<div class="help-block">
+						I would like to actively encourage code contributions
+					</div>
 				</div>
 				<div class="col-2 saved">
 					Saved!
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="input-other" class="col-4 control-label">Other</label>
+				<label for="input-other" class="col-3 control-label">
+					<i class="icon-question-sign help"></i>
+					Other
+				</label>
 
 				<div class="col-6">
-					<textarea id="input-other" class="form-control" cols="30" rows="10" data-field="contributions.note"><%= loggedUser.contributions && loggedUser.contributions.note || '' %></textarea>
-					<div class="help-block">
-						Give users a note about how else they could contributions your projects
-						<a href="https://www.paypal.com/">PayPal</a>
-					</div>
+					<textarea id="input-other" class="form-control" data-field="contributions.note"><%= loggedUser.contributions && loggedUser.contributions.note || '' %></textarea>
 
+					<div class="help-block">
+						If there are any other donation or contribution details you want Supporters to see (bank details for wire transfers for example) then enter them here
+					</div>
 				</div>
 				<div class="col-2 saved">
 					Saved!
 				</div>
 			</div>
 		</fieldset>
-		<fieldset class="col-6">
+		<fieldset>
 			<legend>
 				Contact Information
 			</legend>
 			<div class="form-group">
-				<label for="input-email" class="col-3 control-label">Email address</label>
+				<label for="input-email" class="col-3 control-label">
+					Email address
+				</label>
 
-				<div class="col-7">
+				<div class="col-6">
 					<input type="email" name="email" class="form-control" id="input-email" placeholder="Email" data-field="email" value="<%= loggedUser.email || '' %>" required>
 				</div>
 				<div class="col-2 saved">
@@ -99,9 +163,11 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="input-twitter" class="col-3 control-label">Twitter</label>
+				<label for="input-twitter" class="col-3 control-label">
+					Twitter
+				</label>
 
-				<div class="col-7">
+				<div class="col-6">
 					<input type="text" name="twitterName" class="form-control" id="input-twitter" placeholder="Twitter" data-field="twitterName" value="<%= loggedUser.twitterName  || '' %>">
 				</div>
 				<div class="col-2 saved">
