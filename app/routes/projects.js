@@ -37,10 +37,10 @@ module.exports = function (app) {
 	app.delete('/user/projects/:id', ensureAuthenticated, function (req, res) {
 		if (!req.body || !req.body.id) return res.send('empty request')
 
-		Support.remove(_.extend(req.body.support, {
+		Support.remove({
 			'project': req.body.id,
 			'user': req.user._id
-		}), function (err, supporting) {
+		}, function (err, supporting) {
 			if (err) return res.send(400, err)
 
 			res.send('removed')
