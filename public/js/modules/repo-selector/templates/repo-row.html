@@ -3,13 +3,13 @@
 	<%= repo.owner.username %>/<%= repo.name %>
 </div>
 <div class="col support-types">
-	<span class="support-type donating <%= repo.support.donating ? 'active' : '' %>" proxy-tap="toggle-support" data-type="donating" title="I'm donating"></span>
-	<span class="support-type contributing <%= repo.support.contributing ? 'active' : '' %>" proxy-tap="toggle-support" data-type="contributing" title="I'm contributing"></span>
-	<span class="support-type supporting <%= repo.support.supporting ? 'active' : '' %>" proxy-tap="toggle-support" data-type="supporting" title="I'm supporting in other way"></span>
+	<span class="support-type donating <%= repo.support.donating ? 'active' : '' %>" proxy-tap="toggle-support" data-type="donating" data-toggle="tooltip" data-toggle="tooltip" title="I'm donating"></span>
+	<span class="support-type contributing <%= repo.support.contributing ? 'active' : '' %>" proxy-tap="toggle-support" data-type="contributing" data-toggle="tooltip" data-toggle="tooltip" title="I'm contributing"></span>
+	<span class="support-type supporting <%= repo.support.supporting ? 'active' : '' %>" proxy-tap="toggle-support" data-type="supporting" data-toggle="tooltip" title="I'm supporting in other way"></span>
 </div>
 <% if (obj.canDelete) { %>
 <div class="col-1">
-	<span class="btn btn-danger btn-small remove" proxy-tap="remove-repo" title="Remove repo">Remove</span>
+	<span class="btn btn-danger btn-small remove" proxy-tap="remove-repo" data-toggle="tooltip" title="Remove repo">Remove</span>
 </div>
 <% } %>
 <div class="col contribution-types">
@@ -21,34 +21,34 @@
 	</div>
 	<% } %>
 	<% if (contributions.gittip) { %>
-	<div class="contribution gittip">
+	<div class="contribution gittip" data-toggle="tooltip" title="donate on Gittip">
 		<a href="https://www.gittip.com/<%= contributions.gittip %>/">gittip</a>
 	</div>
 	<% } %>
 	<% if (contributions.gittip) { %>
-	<div class="contribution flattr">
+	<div class="contribution flattr" data-toggle="tooltip" title="donate on Flattr">
 		<a href="https://flattr.com/profile/<%= contributions.flattr %>/things"><img src="https://flattr.com/_img/icons/flattr_logo_16.png" alt="flattr"/></a>
 	</div>
 	<% } %>
 	<% if (contributions.note) { %>
-	<div class="contribution other">
-		<div data-html="true">
+	<div class="contribution other note-from-author" data-toggle="tooltip" title="comment from an author">
+		<div data-toggle="modal">
 			<i class="icon-info-sign"></i>
 		</div>
-		<div class="hidden">
-			<%- contributions.note %>
+		<div class="hidden content">
+			<%= contributions.note %>
 		</div>
 	</div>
 	<% } %>
 	<% if (contributions.emailMe) { %>
-	<div class="contribution email-me">
-		<i class="icon-envelope" data-toggle="modal" data-target="#email-to-author" title="send a comment to the author"></i>
+	<div class="contribution email-me email-to-author" data-toggle="tooltip" title="send a comment to the author">
+		<i class="icon-envelope" data-toggle="modal" data-target="#email-to-author"></i>
 	</div>
 	<% } %>
 	<% if (contributions.code) { %>
 	<div class="contribution code">
 		<a href="<%= repo.url %>" target="_blank">
-			<i class="icon-code" title="Contribute some code"></i>
+			<i class="icon-code" data-toggle="tooltip" title="Contribute some code"></i>
 		</a>
 	</div>
 	<% } %>

@@ -50,9 +50,9 @@
 				<%= repo.project.owner.username %>/<%= repo.project.name %>
 			</div>
 			<div class="col support-types">
-				<span class="support-type donating <%= repo.donating ? 'active' : '' %>" proxy-tap="toggle-support" data-type="donating" title="I'm donating"></span>
-				<span class="support-type contributing <%= repo.contributing ? 'active' : '' %>" proxy-tap="toggle-support" data-type="contributing" title="I'm contributing"></span>
-				<span class="support-type supporting <%= repo.supporting ? 'active' : '' %>" proxy-tap="toggle-support" data-type="supporting" title="I'm supporting in other way"></span>
+				<span class="support-type donating <%= repo.donating ? 'active' : '' %>" data-type="donating" data-toggle="tooltip" title="I'm donating"></span>
+				<span class="support-type contributing <%= repo.contributing ? 'active' : '' %>" data-type="contributing" data-toggle="tooltip" title="I'm contributing"></span>
+				<span class="support-type supporting <%= repo.supporting ? 'active' : '' %>" data-type="supporting" data-toggle="tooltip" title="I'm supporting in other way"></span>
 			</div>
 			<div class="col contribution-types">
 				<% var contributions = repo.project.owner.contributions; %>
@@ -61,24 +61,15 @@
 		</div>
 		<% }) %>
 	</div>
-	<div class="modal fade" id="email-to-author" tabindex="-1" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Send Comment To Author</h4>
-				</div>
-				<div class="modal-body">
-					<textarea class="form-control" rows="3"></textarea>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">Send</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	<% include email-to-author.ejs %>
+	<% include note-from-author.ejs %>
 </section>
-<script type="text/javascript" src="<%= jsPath %>/vendors/jquery/js/jquery.js"></script>
-<script type="text/javascript" src="<%= jsPath %>/bootstrap.js"></script>
+<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
+<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
+<script type="text/javascript">
+	require.config({
+		baseUrl: "<%=jsPath %>"
+	})
+	require(['plugins/activate-plugins'])
+</script>
 <% include footer.ejs %>

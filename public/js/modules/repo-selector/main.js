@@ -6,6 +6,7 @@
  */
 define(function (require) {
 	require('bootstrap')
+	require('plugins/activate-plugins')
 	var toastr = require('toastr')
 	var Layout = require('./views/layout')
 	var Repos = require('./collections/repos')
