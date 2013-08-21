@@ -6,6 +6,7 @@
  */
 define(function (require) {
 	require('backbone')
+	require('bootstrap')
 
 	var View = Backbone.View.extend({
 		events: {
@@ -31,7 +32,7 @@ define(function (require) {
 		setSuccess: function (field) {
 			var group = field.closest('.form-group')
 			group.removeClass('has-error').addClass('has-success')
-			group.find('.saved').show().fadeOut(3000, function() {
+			group.find('.saved').show().fadeOut(3000, function () {
 				group.removeClass('has-success')
 			})
 		},
@@ -54,5 +55,17 @@ define(function (require) {
 		var view = new View({
 			el: $('#page-settings')
 		})
+
+		view.$('.form-group')
+			.on('mouseover', '.help, .popover', function () {
+				var group = $(this).closest('.form-group'),
+					popover = group.find('.popover'),
+					help = group.find('.help')
+
+				popover.show().css('top', -(popover.outerHeight() / 2 + help.position().top - help.height()))
+			})
+			.on('mouseout', '.help, .popover', function () {
+				$(this).closest('.form-group').find('.popover').hide()
+			})
 	})
 })

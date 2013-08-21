@@ -8,7 +8,7 @@ var _ = require('lodash'),
 	mongoose = require('mongoose'),
 	async = require('async'),
 	ensureAuthenticated = require('../utils/ensure-auth')
-	Project = mongoose.model('Project'),
+Project = mongoose.model('Project'),
 	Support = mongoose.model('Support'),
 	User = mongoose.model('User')
 
@@ -27,9 +27,7 @@ module.exports = function (app) {
 	});
 
 	app.get('/users/:username/editor', ensureAuthenticated, function (req, res) {
-		Support.getSupportByUser(req.user._id, function (error, supports) {
-			res.render('repo-editor', { user: req.user, supports: supports });
-		})
+		res.render('repo-editor', { user: req.user });
 	});
 
 	app.get('/settings', ensureAuthenticated, function (req, res) {
@@ -59,7 +57,7 @@ module.exports = function (app) {
 				user[field[0]] = req.body.value
 			}
 
-			user.save(function(error) {
+			user.save(function (error) {
 				if (error) return res.send(400, 'Failed to update field');
 				res.send(200, 'Field saved');
 			})

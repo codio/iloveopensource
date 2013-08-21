@@ -8,7 +8,30 @@
 	padding-top: 6px;
   }
 
-  .help-block {
-	display: none;
+  .form-group {
+	position: relative;
+
+	.help-block {
+	  display: none;
+	}
+
+	.control-label {
+	  text-align: left;
+	  margin-left: 1em;
+	  width: 195px;
+	}
+
+	.help {
+	  position: absolute;
+	  left: 0em;
+	  font-size: 1.5em;
+	  top: 0.2em;
+	  cursor: pointer;
+	}
+
+	.popover {
+	  top: 50%;
+	  left: 1em;
+	}
   }
 }

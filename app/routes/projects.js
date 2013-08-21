@@ -59,6 +59,13 @@ module.exports = function (app) {
 		})
 	})
 
+	app.get('/user/projects', ensureAuthenticated, function (req, res) {
+		Support.getSupportByUser(req.user._id, function (error, supports) {
+			if (error) return res.send(400, 'Failed to retrieve your projects');
+			res.send(supports)
+		})
+	})
+
 	app.delete('/user/projects/:id', ensureAuthenticated, function (req, res) {
 		if (!req.body || !req.body.id) return res.send('empty request')
 

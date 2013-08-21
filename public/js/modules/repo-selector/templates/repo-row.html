@@ -55,17 +55,16 @@
 	<% } %>
 	<% if (contributions.note) { %>
 	<div class="contribution other note-from-author" data-toggle="tooltip" title="comment from an author">
-		<div data-toggle="modal">
-			<i class="icon-info-sign"></i>
-		</div>
+		<i class="icon-info-sign"></i>
+
 		<div class="hidden content">
 			<%= contributions.note %>
 		</div>
 	</div>
 	<% } %>
 	<% if (contributions.emailMe) { %>
-	<div class="contribution email-me email-to-author" data-toggle="tooltip" title="send a comment to the author">
-		<i class="icon-envelope" data-toggle="modal" data-target="#email-to-author"></i>
+	<div class="contribution email-me email-to-author" data-toggle="tooltip" title="send a comment to the author" data-project="<%= repo.githubId %>">
+		<i class="icon-envelope"></i>
 	</div>
 	<% } %>
 	<% if (contributions.code) { %>
@@ -77,7 +76,7 @@
 	<% } %>
 	<div class="clearfix"></div>
 	<% } else { %>
-	<span class="btn btn-link want-contribute">
+	<span class="btn btn-link want-contribute" data-toggle="modal" data-project="<%= repo.githubId %>">
 		I would like to contribute to this project
 	</span>
 	<% } %>
