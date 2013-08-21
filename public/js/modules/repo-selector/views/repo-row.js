@@ -11,34 +11,15 @@ define(function (require) {
 
 	return Backbone.View.extend({
 		initialize: function (options) {
-			this.listenTo(store().hub, 'changed:' + this.model.id, this.renderSupportChange)
-			this.listenTo(store().hub, 'removed:' + this.model.id, this.removeSupport)
+			this.listenTo(store().hub, 'support.set:' + this.model.id, this.updateSupport)
 			this.listenTo(store().hub, 'wakeup:' + this.model.id, this.unsetLoading)
 			this.listenTo(store().hub, 'sleep:' + this.model.id, this.setLoading)
-
-			if (this.model.isProject) {
-				this.listenTo(this.model, 'request', this.asleep)
-				this.listenTo(this.model, 'sync', this.awake)
-				this.listenTo(this.model, 'destroy', this.destroy)
-			}
 		},
 		attributes: {
 			class: 'repo'
 		},
 		events: {
-			'click .support-type': 'toggleSupport',
-			'click .remove': 'removeProject'
-		},
-		asleep: function () {
-			store().hub.trigger('sleep:' + this.model.id)
-		},
-		awake: function () {
-			store().hub.trigger('wakeup:' + this.model.id)
-		},
-		destroy: function () {
-			this.awake()
-			store().hub.trigger('removed:' + this.model.id)
-			this.remove()
+			'click .support-type': 'toggleSupport'
 		},
 		setLoading: function () {
 			this.undelegateEvents()
@@ -48,46 +29,29 @@ define(function (require) {
 			this.delegateEvents()
 			this.$el.css('opacity', 1)
 		},
-		removeProject: function () {
-			this.model.destroy()
+		updateSupport: function (support) {
+			this.model.get('support').set(support)
+			this.renderSupport()
 		},
-		renderSupportChange: function (type, value) {
-			this.$('.support-type.' + type).toggleClass('active', value)
-			this.model.get('support').set(type, value)
-
-			if (this.model.isProject) {
-				if (this.model.get('support').isEmpty()) {
-					this.model.destroy()
-				} else {
-					this.model.save()
-				}
-			}
-		},
-		removeSupport: function () {
-			this.$('.support-type').toggleClass('active', false)
-			this.model.get('support').clear()
-		},
-		toggleSupportByType: function (type, value) {
-			var support = this.model.get('support'),
-				val = typeof value === 'undefined' ? !support.get(type) : value,
-				alert = 'If you do not check any icons, this item will be removed. OK?'
-
-			if (!val && this.model.get('support').count() == 1 && !confirm(alert)) {
-				return
-			}
-
-			support.set(type, val)
-
-			store().hub.trigger('changed:' + this.model.id, type, this.model.get('support').get(type))
-
-			if (!this.model.isProject && !this.model.get('support').isEmpty()
-				&& !store().selected.get(this.model.id)
-				) {
-				store().selected.create(this.model.toJSON(), {parse: true})
-			}
+		renderSupport: function () {
+			var types = this.$('.support-type')
+			_.each(this.model.get('support').flat(), function (val, type) {
+				types.filter('.' + type).toggleClass('active', val)
+			})
 		},
 		toggleSupport: function (event) {
-			this.toggleSupportByType($(event.currentTarget).data().type)
+			var support = this.model.get('support'),
+				type = $(event.currentTarget).data().type,
+				val = !support.get(type),
+				exists = store().selected.get(this.model.id)
+
+			if (exists) {
+				store().hub.trigger('support.update:' + this.model.id, type, val)
+			} else {
+				var newModel = this.model.toJSON()
+				newModel.support[type] = val
+				store().selected.create(newModel, {parse: true})
+			}
 		},
 		render: function () {
 			this.model.get('fork') && this.$el.addClass('fork')

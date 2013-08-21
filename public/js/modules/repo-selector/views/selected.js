@@ -6,9 +6,9 @@
  */
 define(function (require) {
 	var RepoList = require('./repo-list')
-	var RepoRow = require('./repo-row')
 
 	return RepoList.extend({
+		RepoRow: require('./project-row'),
 		isProjectList: true,
 		tpl: require('tpl!../templates/selected.html'),
 		initialize: function () {

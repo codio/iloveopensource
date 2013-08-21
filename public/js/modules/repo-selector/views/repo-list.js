@@ -6,10 +6,10 @@
  */
 define(function (require) {
 	require('backbone')
-	var RepoRow = require('./repo-row')
 
 	return Backbone.View.extend({
 		tpl: require('tpl!../templates/repo-list.html'),
+		RepoRow: require('./repo-row'),
 		events: {
 			'click .load-more': 'loadMore',
 			'click .controls .support-type': 'toogleReposSupport'
@@ -41,7 +41,7 @@ define(function (require) {
 			}
 
 			this.collection.each(function (repo) {
-				var view = new RepoRow({model: repo})
+				var view = new this.RepoRow({model: repo})
 				this.repoRows.push(view)
 				view.render()
 			}, this)
@@ -50,7 +50,7 @@ define(function (require) {
 		},
 		renderRepo: function (repo) {
 			var list = this.$('.repos-list')
-			var view = new RepoRow({model: repo})
+			var view = new this.RepoRow({model: repo})
 			this.repoRows.push(view)
 			view.render()
 
