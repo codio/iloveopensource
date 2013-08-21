@@ -61,26 +61,44 @@ define(function (require) {
 				var repos = data.items || data
 				if (!_.isArray(repos)) repos = [repos]
 
-				var ids = _.unique(_.map(repos, function (el) {
+				var ownersIds = _.unique(_.map(repos, function (el) {
 					return el.owner.id
 				}))
 
-				if (!ids.length) {
+				var reposIds = _.unique(_.map(repos, function (el) {
+					return el.id
+				}))
+
+				if (!ownersIds.length && !reposIds.length) {
 					store().hub.trigger('repos-loaded', self, self.type)
 					return
 				}
 
 				$.post('/get-contributing-options', {
-					ids: ids
+					ownersIds: ownersIds,
+					reposIds: reposIds
 				})
-					.done(function (contributions) {
-						_.each(contributions, function (el) {
+					.done(function (resp) {
+						_.each(resp.projects, function (el) {
 							self.each(function (model) {
+								if (model.id != el.githubId) return
+
+								model.set('contributions', el.owner.contributions)
+								model.get('owner').set('user', el.owner.user)
+								model.set('_id', el._id)
+							})
+						})
+
+						_.each(resp.owners, function (el) {
+							self.each(function (model) {
+								if (model.get('user')) return
 								if (model.get('owner').get('githubId') != el.github.id) return
 
 								model.set('contributions', el.contributions)
+								model.get('owner').set('user', el._id)
 							})
 						})
+
 
 						store().hub.trigger('repos-loaded', self, self.type)
 					})

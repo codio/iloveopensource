@@ -1,6 +1,20 @@
 <div class="col repo-name">
 	<a href="<%= repo.url %>" class="icon-github-sign" target="_blank"></a>
-	<%= repo.owner.username %>/<%= repo.name %>
+	<% if (repo.owner.user) { %>
+	<a href="/users/<%=repo.owner.username %>">
+		<%=repo.owner.username %>
+	</a>
+	<% } else { %>
+	<%=repo.owner.username %>
+	<% } %>
+	&nbsp;/&nbsp;
+	<% if (repo._id) { %>
+	<a href="/projects/<%=repo._id %>">
+		<%=repo.name %>
+	</a>
+	<% } else { %>
+	<%=repo.name %>
+	<% } %>
 </div>
 <div class="col support-types">
 	<span class="support-type donating <%= repo.support.donating ? 'active' : '' %>" proxy-tap="toggle-support" data-type="donating" data-toggle="tooltip" data-toggle="tooltip" title="I'm donating"></span>

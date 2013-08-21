@@ -1,0 +1,60 @@
+#page-project {
+  .support-types {
+	width: 25%;
+
+	.support-type {
+	  cursor: default;
+	  width: 5em;
+	  text-align: right;
+	  padding: 0 .2em 0 1.5em;
+	  line-height: 26px;
+	  position: relative;
+
+	  &:before {
+		text-align: left;
+		opacity: 1;
+		position: absolute;
+		left: .2em;
+		top: 1.05em;
+		line-height: 1;
+	  }
+	}
+  }
+
+  .users {
+	padding: 20px;
+
+	.col {
+	  box-sizing: border-box;
+	  width: 33%;
+	  float: left;
+	  padding: 10px;
+
+	  &:nth-child(odd) {
+		background-color: #f5f5f5;
+		border: 1px solid #e3e3e3;
+		border-top: 0;
+		border-bottom: 0;
+	  }
+
+	  h4 {
+		text-align: center;
+	  }
+
+	  a {
+		&:after {
+		  content: ',';
+		  padding-right: 1.2em;
+
+		}
+
+		&:last-child {
+		  &:after {
+			content: '';
+		  }
+		}
+	  }
+	}
+
+  }
+}

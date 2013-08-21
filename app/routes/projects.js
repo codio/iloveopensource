@@ -7,6 +7,7 @@
 var _ = require('lodash'),
 	https = require('https'),
 	qs = require('querystring'),
+	async = require('async'),
 	mongoose = require('mongoose'),
 	ensureAuthenticated = require('../utils/ensure-auth'),
 	User = mongoose.model('User'),
@@ -15,6 +16,30 @@ var _ = require('lodash'),
 
 
 module.exports = function (app) {
+	app.get('/projects/:id', function (req, res) {
+		if (!req.param('id')) return res.send(400, 'empty request')
+
+		Project.findById(req.param('id'), function (err, project) {
+			if (err) return res.send(400, err);
+
+			async.parallel({
+				supporters: function (cb) {
+					Support.find({project: project._id, supporting: true}).populate('user').exec(cb)
+				},
+				contributors: function (cb) {
+					Support.find({project: project._id, contributing: true}).populate('user').exec(cb)
+				},
+				donators: function (cb) {
+					Support.find({project: project._id, donating: true}).populate('user').exec(cb)
+				}
+			}, function (error, resuilt) {
+				if (error) return res.send(500, err)
+
+				res.render('project', {project: project, users: resuilt})
+			})
+		})
+	})
+
 	app.put('/user/projects/:id', ensureAuthenticated, function (req, res) {
 		if (!req.body) return res.send('empty request')
 
@@ -48,20 +73,49 @@ module.exports = function (app) {
 	})
 
 	app.post('/get-contributing-options', function (req, res) {
-		if (!req.body.ids.length) return res.send('empty request')
+		if (!req.body.reposIds.length) return res.send('empty request')
 
-		var githubIds = _.map(req.body.ids, function (id) {
-			return (+id)
+		var result = {
+			projects: [],
+			owners: []
+		}
+
+		async.series([
+			function (cb) {
+				Project.find(
+					{
+						'githubId': { $in: _.map(req.body.reposIds, function (id) {
+							return (+id)
+						})}
+					},
+					'owner.githubId owner.contributions githubId _id owner.user')
+					.exec(function (error, projects) {
+						if (error) return cb(error)
+						cb(null, true)
+						result.projects = projects
+					})
+			},
+			function (cb) {
+				if (result.projects.length == req.body.reposIds.length) return cb(null, true)
+
+				User.find(
+					{
+						'github.id': { $in: _.map(req.body.ownersIds, function (id) {
+							return (+id)
+						})},
+						contributions: { $exists: 1 }
+					},
+					'github.id contributions')
+					.exec(function (error, owners) {
+						if (error) return cb(error)
+						cb(null, true)
+						result.owners = owners
+					})
+			}
+		], function (error) {
+			if (error) return res.send(500, 'Failed to retrieve projects')
+			res.send(result)
 		})
-
-		User.find(
-			{'github.id': { $in: githubIds }, contributions: { $exists: 1 }},
-			'github.id contributions',
-			function (err, users) {
-				if (err) return res.send(400, 'Failed to retrieve users');
-
-				res.send(users)
-			})
 	});
 
 	app.get('/git-request/*', ensureAuthenticated, function (req, res) {

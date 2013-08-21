@@ -47,15 +47,26 @@
 		<div class="repo <%= repo.project.fork ? 'fork' : '' %>">
 			<div class="col repo-name">
 				<a href="<%= repo.project.url %>" class="icon-github-sign" target="_blank"></a>
-				<%= repo.project.owner.username %>/<%= repo.project.name %>
+				<% if (repo.project.owner.user) { %>
+				<a href="/users/<%=repo.project.owner.username %>">
+					<%=repo.project.owner.username %>
+				</a>
+				<% } else { %>
+				<%=repo.project.owner.username %>
+				<% } %>
+				&nbsp;/&nbsp;
+				<a href="/projects/<%=repo.project._id %>">
+					<%=repo.project.name %>
+				</a>
 			</div>
 			<div class="col support-types">
-				<span class="support-type donating <%= repo.donating ? 'active' : '' %>" data-type="donating" data-toggle="tooltip" title="I'm donating"></span>
-				<span class="support-type contributing <%= repo.contributing ? 'active' : '' %>" data-type="contributing" data-toggle="tooltip" title="I'm contributing"></span>
-				<span class="support-type supporting <%= repo.supporting ? 'active' : '' %>" data-type="supporting" data-toggle="tooltip" title="I'm supporting in other way"></span>
+				<span class="support-type donating <%= repo.donating ? 'active' : '' %>" data-toggle="tooltip" title="I'm donating"></span>
+				<span class="support-type contributing <%= repo.contributing ? 'active' : '' %>" data-toggle="tooltip" title="I'm contributing"></span>
+				<span class="support-type supporting <%= repo.supporting ? 'active' : '' %>" data-toggle="tooltip" title="I'm supporting in other way"></span>
 			</div>
 			<div class="col contribution-types">
 				<% var contributions = repo.project.owner.contributions; %>
+				<% var projectUrl = repo.project.url; %>
 				<% include contributions.ejs %>
 			</div>
 		</div>
