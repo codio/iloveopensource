@@ -46,11 +46,11 @@ app.use(passport.session());
 require('./app/middleware/users')(app)
 app.use(app.router);
 require('./app/routes')(app)
-require('./app/middleware/errors')(app)
-
 // development only
 if ('development' == cfg.env) {
 	app.use(express.errorHandler());
+} else {
+	require('./app/middleware/errors')(app)
 }
 
 http.createServer(app).listen(app.get('port'), function () {

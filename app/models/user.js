@@ -20,6 +20,7 @@ var UserSchema = new Schema({
 	contributions: {
 		gittip: {type: String, trim: true},
 		paypal: {type: String, trim: true},
+		flattr: {type: String, trim: true},
 		note: {type: String, trim: true},
 		emailMe: Boolean,
 		code: Boolean

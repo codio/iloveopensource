@@ -12,7 +12,21 @@
 					<input type="text" class="form-control" name="contributions[gittip]" id="input-gittip" placeholder="Gittip username" data-field="contributions.gittip" value="<%= loggedUser.contributions && loggedUser.contributions.gittip  || '' %>">
 
 					<div class="help-block">Fill this field so users will be able to contributions your projects via
-						<a href="https://www.gittip.com/">GitTip</a></div>
+						<a href="https://www.gittip.com/" tabindex="-1">GitTip</a></div>
+				</div>
+				<div class="col-2 saved">
+					Saved!
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-flattr" class="col-4 control-label">Flattr Username:</label>
+
+				<div class="col-6">
+					<input type="text" class="form-control" name="contributions[flattr]" id="input-flattr" placeholder="Flattr username" data-field="contributions.flattr" value="<%= loggedUser.contributions && loggedUser.contributions.flattr || '' %>">
+
+					<div class="help-block">Fill this field so users will be able to contributions your projects via
+						<a href="https://flattr.com/">Flattr</a></div>
 				</div>
 				<div class="col-2 saved">
 					Saved!

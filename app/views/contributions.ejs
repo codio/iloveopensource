@@ -1,0 +1,42 @@
+<% if (!_.isEmpty(contributions)) { %>
+<% if (contributions.paypal) { %>
+<div class="contribution paypal">
+	<%- contributions.paypal %>
+</div>
+<% } %>
+<% if (contributions.gittip) { %>
+<div class="contribution gittip">
+	<a href="https://www.gittip.com/<%= contributions.gittip %>/">gittip</a>
+</div>
+<% } %>
+<% if (contributions.gittip) { %>
+<div class="contribution flattr">
+	<a href="https://flattr.com/profile/<%= contributions.flattr %>/things"><img src="https://flattr.com/_img/icons/flattr_logo_16.png" alt="flattr"/></a>
+</div>
+<% } %>
+<% if (contributions.note) { %>
+<div class="contribution other">
+	<div data-html="true">
+		<i class="icon-info-sign"></i>
+	</div>
+	<div class="hidden">
+		<%- contributions.note %>
+	</div>
+</div>
+<% } %>
+<% if (contributions.emailMe) { %>
+<div class="contribution email-me">
+	<i class="icon-envelope" data-toggle="modal" data-target="#email-to-author" title="send a comment to the author"></i>
+</div>
+<% } %>
+<% if (contributions.code) { %>
+<div class="contribution code">
+	<a href="<%= repo.project.url %>" target="_blank">
+		<i class="icon-code" title="Contribute some code"></i>
+	</a>
+</div>
+<% } %>
+<div class="clearfix"></div>
+<% } else { %>
+Would like to contribute something?
+<% } %>

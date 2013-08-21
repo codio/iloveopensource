@@ -55,43 +55,8 @@
 				<span class="support-type supporting <%= repo.supporting ? 'active' : '' %>" proxy-tap="toggle-support" data-type="supporting" title="I'm supporting in other way"></span>
 			</div>
 			<div class="col contribution-types">
-				<% if (!_.isEmpty(repo.project.owner.contributions)) { %>
-				<% if (repo.project.owner.contributions.paypal) { %>
-				<div class="contribution paypal">
-					<%- repo.project.owner.contributions.paypal %>
-				</div>
-				<% } %>
-				<% if (repo.project.owner.contributions.gittip) { %>
-				<div class="contribution gittip">
-					<a href="https://www.gittip.com/krasu/">gittip</a>
-				</div>
-				<% } %>
-				<% if (repo.project.owner.contributions.note) { %>
-				<div class="contribution other">
-					<div data-html="true">
-						<i class="icon-info-sign"></i>
-					</div>
-					<div class="hidden">
-						<%- repo.project.owner.contributions.note %>
-					</div>
-				</div>
-				<% } %>
-				<% if (repo.project.owner.contributions.emailMe) { %>
-				<div class="contribution email-me">
-					<i class="icon-envelope" data-toggle="modal" data-target="#email-to-author" title="send a comment to the author"></i>
-				</div>
-				<% } %>
-				<% if (repo.project.owner.contributions.code) { %>
-				<div class="contribution code">
-					<a href="<%= repo.project.url %>" target="_blank">
-						<i class="icon-code" title="Contribute some code"></i>
-					</a>
-				</div>
-				<% } %>
-				<div class="clearfix"></div>
-				<% } else { %>
-				Would like to contribute something?
-				<% } %>
+				<% var contributions = repo.project.owner.contributions; %>
+				<% include contributions.ejs %>
 			</div>
 		</div>
 		<% }) %>
