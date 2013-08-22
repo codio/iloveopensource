@@ -14,7 +14,8 @@
     "lodash": "latest",
     "connect-mongo": "~0.3.3",
     "async": "~0.2.9",
-    "sanitizer": "0.0.15"
+    "sanitizer": "0.0.15",
+    "nodemailer": "~0.5.2"
   },
   "devDependencies": {
     "grunt-contrib-less": "~0.6.4",

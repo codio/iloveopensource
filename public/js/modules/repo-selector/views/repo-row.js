@@ -59,6 +59,11 @@ define(function (require) {
 				repo: this.model.toJSON(),
 				canDelete: this.model.isProject
 			}))
+
+			if (!this.model.isProject) {
+				var projectData = this.model.toJSON()
+				this.$('.want-contribute, .email-to-author').data().projectData = this.model.toJSON()
+			}
 			return this
 		}
 	});

@@ -1,0 +1,16 @@
+<p>
+	User
+	<a href="<%= serverUrl %>/users/<%= user.username %>"><%= user.username %></a> want you to add some contribution ways for your project:
+	<a href="<%= serverUrl %>/projects/<%= project._id %>"><%= project.owner.username %> / <%= project.name %></a>
+</p>
+<p>
+	<b>Message from user:</b>
+	<%= message %>
+</p>
+<p>
+	<% if (project.owner.user) { %>
+	You can do it on this <a href="<%= serverUrl %>/settings">page</a>
+	<% } else { %>
+	User not registered yet, his <a href="https://github.com/<%= project.owner.username %>">github page</a>
+	<% } %>
+</p>

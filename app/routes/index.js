@@ -40,4 +40,5 @@ module.exports = function (app) {
 
 	require('./users')(app)
 	require('./projects')(app)
+	require('./emails')(app)
 };

@@ -34,11 +34,11 @@ ProjectSchema.statics.createIfNotExists = function (data, cb) {
 
 		if (project) return self.checkForOwner(project, cb)
 
-		project = new Project(data);
-
-		project.save(function (err) {
+		delete data._id
+		self.create(data, function (err, newProject) {
 			if (err) return cb('Failed to create project')
-			self.checkForOwner(project, cb)
+
+			self.checkForOwner(newProject, cb)
 		})
 	})
 }
@@ -59,7 +59,7 @@ ProjectSchema.statics.updateOwner = function (user, cb) {
 }
 
 ProjectSchema.statics.checkForOwner = function (project, cb) {
-	if (project.owner.user) return cb(null, project)
+	if (project.owner.user && project.owner.contributions) return cb(null, project)
 
 	User.findOne({'github.id': project.owner.githubId}, function (err, user) {
 		if (err) return cb('Failed to retrieve project owner')

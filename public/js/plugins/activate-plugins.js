@@ -4,9 +4,10 @@
  * Date: 8/21/13
  * Time: 7:21 AM
  */
-define(function(require) {
+define(function (require) {
 	require('jquery')
 	require('bootstrap')
+	var toastr = require('toastr')
 
 	$(function () {
 		var emailToAuthor = $('#email-to-author'),
@@ -19,23 +20,60 @@ define(function(require) {
 
 		$('body')
 			.on('click', '.email-to-author', function (event) {
-				emailToAuthor.modal('show').data().project = $(event.currentTarget).data().project
+				var el = $(event.currentTarget)
+				var textarea = emailToAuthor.find('textarea')
+				textarea.val(textarea.data().initText)
+
+				emailToAuthor.modal('show').data({
+					url: 'comment-for-author',
+					project: el.data().project,
+					projectData: el.data().projectData
+				})
 			})
 			.on('click', '.want-contribute', function (event) {
-				requestContribution.modal('show').data().project = $(event.currentTarget).data().project
+				var el = $(event.currentTarget)
+				var textarea = requestContribution.find('textarea')
+				textarea.val(textarea.data().initText)
+
+				requestContribution.modal('show').data({
+					url: 'request-contribution',
+					project: el.data().project,
+					projectData: el.data().projectData
+				})
 			})
 			.on('click', '.note-from-author', function (event) {
 				noteFromAuthor.find('.modal-body')
 					.html($(event.currentTarget).closest('.contribution').find('.content').html())
 				noteFromAuthor.modal('show')
-			});
+			})
+			.on('click', '.modal .send-email', function (event) {
+				var btn = $(event.currentTarget)
+				var modal = btn.closest('.modal')
+				var message = $.trim(modal.find('textarea').val())
 
-		requestContribution.on('click', 'send', function(event) {
-//			event
-//			var message
-//			$.post('/request-contribution', {
-//				message: requestContribution.find('textarea').val()
-//			})
-		})
+				if (!message) return toastr.warning('Message too short')
+				if (btn.attr('disabled')) return
+				btn.button('loading')
+
+				$.ajax({
+					type: 'POST',
+					contentType: 'application/json',
+					url: '/emails/' + modal.data().url + '/' + modal.data().project,
+					data: JSON.stringify({
+						message: message,
+						projectData: modal.data().projectData
+					})
+				})
+					.done(function () {
+						toastr.success('Message sent')
+						modal.modal('hide')
+					})
+					.fail(function (xhr) {
+						toastr.error(xhr.responseText)
+					})
+					.always(function () {
+						btn.button('reset')
+					})
+			})
 	})
 })

@@ -7,8 +7,8 @@
 var _ = require('lodash'),
 	mongoose = require('mongoose'),
 	async = require('async'),
-	ensureAuthenticated = require('../utils/ensure-auth')
-Project = mongoose.model('Project'),
+	ensureAuthenticated = require('../utils/ensure-auth'),
+	Project = mongoose.model('Project'),
 	Support = mongoose.model('Support'),
 	User = mongoose.model('User')
 

@@ -40,7 +40,7 @@ module.exports = function (app) {
 		})
 	})
 
-	app.put('/user/projects/:id', ensureAuthenticated, function (req, res) {
+	app.put('/user/projects/[0-9]+', ensureAuthenticated, function (req, res) {
 		if (!req.body) return res.send('empty request')
 
 		Project.createIfNotExists(req.body, function (err, project) {
@@ -66,7 +66,7 @@ module.exports = function (app) {
 		})
 	})
 
-	app.delete('/user/projects/:id', ensureAuthenticated, function (req, res) {
+	app.delete('/user/projects/[0-9]+', ensureAuthenticated, function (req, res) {
 		if (!req.body || !req.body.id) return res.send('empty request')
 
 		Support.remove({
@@ -125,6 +125,10 @@ module.exports = function (app) {
 		})
 	});
 
+	/*
+	 it would be pretty nice if we will move to server side git api requesting and saving repos in our base,
+	  before showing them to users but when I asking git from localhost it reqesting with huge delay (2-3 sec)
+	 */
 	app.get('/git-request/*', ensureAuthenticated, function (req, res) {
 		var path = req.params[0]
 		if (!path) return res.send(500, 'wrong request')
