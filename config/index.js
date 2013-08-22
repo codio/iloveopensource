@@ -36,9 +36,9 @@ config.jsPath = '/js/'
 
 config.emails = {
 	from: 'robo@ilos.com',
-	to: 'krasniyrus@gmail.com',
+	to: 'support@codio.com',
 	transport: nodemailer.createTransport('sendmail', {
-		path: '/usr/bin/ssmtp',
+		path: '/usr/sbin/sendmail',
 		args: ['-i', '-t']
 	})
 }
