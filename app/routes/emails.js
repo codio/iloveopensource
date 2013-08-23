@@ -104,7 +104,7 @@ function sendMessage(project, message, currentUser, template, subjectCb, userCb)
 			}
 
 			mailOptions.html = ejs.render(template, {
-				serverUrl: 'http://' + cfg.hostname,
+				serverUrl: cfg.fullUrl(),
 				user: currentUser,
 				project: project,
 				message: message
