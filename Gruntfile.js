@@ -7,7 +7,7 @@ module.exports = function (grunt) {
 					targetDir: './public/js/vendors/',
 					layout: 'byComponent',
 					install: true,
-					verbose: true,
+//					verbose: true,
 					cleanTargetDir: true,
 					cleanBowerDir: true
 				}
