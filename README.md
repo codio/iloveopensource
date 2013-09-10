@@ -24,3 +24,17 @@ This app uses LessCSS for it's CSS, and needs to be compiled to run in the brows
 This app uses bower as provider for vendors js:
 
  - `grunt bower` will install all dependencies.
+
+### Configuration
+
+Create file config.<your environment name>.js in ./config folder (environment by default is 'development').
+
+ - `./config/index.js` file showing list of all options
+ - `example.config.js` - skeleton for new configuration files
+
+
+### Running
+
+ - `node ./app.js` or `forever ./app.js` for development environment
+ - `NODE_ENV=production node ./app.js` for production environment
+
