@@ -1,28 +1,127 @@
-#login, #welcome {
-  position: absolute;
-  font-size: 200%;
-  padding: 60px 1em;
-  left: 50%;
-  margin-top: -100px;
-  top: 50%;
-  width: 100%;
-  display: block;
-  width: 550px;
-  height: 200px;
-  line-height: 70px;
-  margin-left: -225px;
-  text-align: center;
+html {
+  height: 100%;
 }
 
-#login {
-  padding-left: 3em;
+body.home {
+  height: 100%;
+  font-family: 'Quicksand';
+  font-weight: 400;
+  background: #666 url('/images/bg.png') repeat;
+  color: @gray-lighter;
 
-  &:after {
-	.icon(@github-sign);
-	font-size: 200%;
-	position: absolute;
-	left: .5em;
-	top: 50%;
-	margin-top: -0.7em;
+  #wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
+
+    .container {
+      background: transparent url('/images/bg-highlight.jpg') no-repeat center top;
+
+      #logo {
+        margin: 80px auto;
+        text-align: center;
+        display: block;
+      }
+
+      section {
+        h2 {
+          font: 46px 'Quicksand';
+          font-weight: 300;
+          color: @brand-info;
+          margin: 0 0 18px;
+          padding: 0 10px;
+        }
+
+        p {
+          line-height: 1.7em;
+          font-size: 15px;
+          font-weight: 300;
+          padding: 0 10px;
+        }
+
+        // Maintainers
+        &:first-child {
+          text-align: right;
+          border-right: 1px solid #666;
+        }
+
+        // Supporters
+        &:last-child {
+
+        }
+      }
+
+      #start {
+        margin: 33px auto 100px;
+        text-align: center;
+
+        #login {
+          text-align: left;
+          padding: 12px 49px 6px;
+          .clearfix;
+
+          i {
+            float: left;
+            font-size: 54px;
+            margin: 0 20px 6px 0;
+          }
+
+          span {
+            float: left;
+            display: block;
+            font-size: 30px;
+            font-weight: 400;
+            line-height: 0.85em;
+            margin-top: 5px;
+
+            small {
+              font-size: 14px;
+              display: block;
+              font-weight: 300;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  footer {
+    height: 60px;
+    text-elign: left;
+
+    img {
+      position: relative;
+      top: -2px;
+    }
+
+    .row {
+      .col-md-2 a {
+        text-align: center;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 300;
+
+        span, img {
+          .transition(opacity .50s linear);
+          opacity: 0.2;
+        }
+
+        img {
+          opacity: 0.4;
+        }
+
+        &:hover {
+          span, img {
+            opacity: 1;
+          }
+        }
+      }
+
+      div:last-child {
+        text-align: right;
+      }
+    }
   }
 }

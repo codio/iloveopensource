@@ -1,30 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title><%- titleBuilder.render() %></title>
-	<link rel="stylesheet" type="text/css" href="/css/main.css"/>
-</head>
-<body>
 <header>
-	<% if (isLoggedIn) { %>
-	<span class="menu">
-		<img src="http://www.gravatar.com/avatar/<%= loggedUser.github.gravatar_id %>?s=20" alt="" class="img-rounded"/>
-		<%= loggedUser.displayName %>
-	</span>
+  <% if (isLoggedIn) { %>
+  <span class="menu">
+    <img src="http://www.gravatar.com/avatar/<%= loggedUser.github.gravatar_id %>?s=20" alt="" class="img-rounded"/>
+    <%= loggedUser.displayName %>
+  </span>
 
-	<a href="/users/<%= loggedUser.username %>/editor" class="menu">
-		<i class="icon-edit"></i>
-		Supporters
-	</a>
-	<a href="/settings" class="menu">
-		<i class="icon-cog"></i>
-		Maintainers
-	</a>
+  <a href="/users/<%= loggedUser.username %>/editor" class="menu">
+    <i class="icon-edit"></i>
+    Supporters
+  </a>
+  <a href="/settings" class="menu">
+    <i class="icon-cog"></i>
+    Maintainers
+  </a>
 
-	<a href="/logout" class="pull-right menu">logout</a>
-	<% } else { %>
-	<a href="/auth/github" class="pull-right menu">Join Now!</a>
-	<% } %>
-	<div class="clearfix"></div>
+  <a href="/logout" class="pull-right menu">logout</a>
+  <% } else { %>
+  <a href="/auth/github" class="pull-right menu">Join Now!</a>
+  <% } %>
+  <div class="clearfix"></div>
 </header>
