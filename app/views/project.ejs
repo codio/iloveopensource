@@ -1,79 +1,83 @@
 <% titleBuilder.add(project.name) %>
 <% titleBuilder.add(project.owner.username) %>
-<% include parts/header.ejs %>
-<section id="page-project">
-	<div class="well repos-list">
-		<div class="repo">
-			<div class="col repo-name">
-				<a href="<%= project.url %>" class="icon-github-sign go-to" target="_blank"></a>
-				<% if (project.homepage) { %>
-				<a href="<%= project.homepage %>" class="icon-home go-to" target="_blank"></a>
-				<% } %>
 
-				<% if (project.owner.user) { %>
-				<a href="/users/<%=project.owner.username %>">
-					<%=project.owner.username %>
-				</a>
-				<% } else { %>
-				<%=project.owner.username %>
-				<% } %>
-				&nbsp;/&nbsp;
-				<a href="/projects/<%=project._id %>">
-					<%=project.name %>
-				</a>
+<% include parts/head.ejs %>
 
-				<div class="description">
-					<% if (project.description) { %>
-					<%- project.description %>
+<body>
+	<% include parts/header.ejs %>
+	<section id="page-project">
+		<div class="well repos-list">
+			<div class="repo">
+				<div class="col repo-name">
+					<a href="<%= project.url %>" class="icon-github go-to" target="_blank"></a>
+					<% if (project.homepage) { %>
+					<a href="<%= project.homepage %>" class="icon-home go-to" target="_blank"></a>
 					<% } %>
+
+					<% if (project.owner.user) { %>
+					<a href="/users/<%=project.owner.username %>">
+						<%=project.owner.username %>
+					</a>
+					<% } else { %>
+					<%=project.owner.username %>
+					<% } %>
+					&nbsp;/&nbsp;
+					<a href="/projects/<%=project._id %>">
+						<%=project.name %>
+					</a>
+
+					<div class="description">
+						<% if (project.description) { %>
+						<%- project.description %>
+						<% } %>
+					</div>
+				</div>
+
+				<div class="col contribution-types">
+					<% var contributions = project.owner.contributions; %>
+					<% var projectUrl = project.url; %>
+					<% var projectId = project._id; %>
+					<% include parts/contributions.ejs %>
+
+					<div class="col support-types">
+						<span class="support-type donating"><%= users.donators.length %></span>
+						<span class="support-type contributing"><%= users.contributors.length %></span>
+						<span class="support-type supporting"><%= users.supporters.length %></span>
+					</div>
 				</div>
 			</div>
+		</div>
 
-			<div class="col contribution-types">
-				<% var contributions = project.owner.contributions; %>
-				<% var projectUrl = project.url; %>
-				<% var projectId = project._id; %>
-				<% include parts/contributions.ejs %>
+		<div class="clearfix users">
+			<h3>People who support this project</h3>
 
-				<div class="col support-types">
-					<span class="support-type donating"><%= users.donators.length %></span>
-					<span class="support-type contributing"><%= users.contributors.length %></span>
-					<span class="support-type supporting"><%= users.supporters.length %></span>
-				</div>
+			<div class="col donators">
+				<h4>Donators</h4>
+				<% _.each(users.donators, function(support) { %>
+				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
+				<% }) %>
+			</div>
+			<div class="col contributors">
+				<h4>Contributors</h4>
+				<% _.each(users.contributors, function(support) { %>
+				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
+				<% }) %>
+			</div>
+			<div class="col supporters">
+				<h4>Supporters</h4>
+				<% _.each(users.supporters, function(support) { %>
+				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
+				<% }) %>
 			</div>
 		</div>
-	</div>
-
-	<div class="clearfix users">
-		<h3>People who support this project</h3>
-
-		<div class="col donators">
-			<h4>Donators</h4>
-			<% _.each(users.donators, function(support) { %>
-			<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
-			<% }) %>
-		</div>
-		<div class="col contributors">
-			<h4>Contributors</h4>
-			<% _.each(users.contributors, function(support) { %>
-			<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
-			<% }) %>
-		</div>
-		<div class="col supporters">
-			<h4>Supporters</h4>
-			<% _.each(users.supporters, function(support) { %>
-			<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
-			<% }) %>
-		</div>
-	</div>
-	<% include modals/index.ejs %>
-</section>
-<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
-<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
-<script type="text/javascript">
-	require.config({
-		baseUrl: "<%=jsPath %>"
-	})
-	require(['plugins/activate-plugins'])
-</script>
-<% include parts/footer.ejs %>
+		<% include modals/index.ejs %>
+	</section>
+	<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
+	<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
+	<script type="text/javascript">
+		require.config({
+			baseUrl: "<%=jsPath %>"
+		})
+		require(['plugins/activate-plugins'])
+	</script>
+	<% include parts/foot.ejs %>

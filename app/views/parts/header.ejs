@@ -1,30 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title><%- titleBuilder.render() %></title>
-	<link rel="stylesheet" type="text/css" href="/css/main.css"/>
-</head>
-<body>
-<header>
-	<% if (isLoggedIn) { %>
-	<span class="menu">
-		<img src="http://www.gravatar.com/avatar/<%= loggedUser.github.gravatar_id %>?s=20" alt="" class="img-rounded"/>
-		<%= loggedUser.displayName %>
-	</span>
+<header class="navbar navbar-inverse">
+  <div class="container">
 
-	<a href="/users/<%= loggedUser.username %>/editor" class="menu">
-		<i class="icon-edit"></i>
-		Supporters
-	</a>
-	<a href="/settings" class="menu">
-		<i class="icon-cog"></i>
-		Maintainers
-	</a>
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="../" class="navbar-brand"><img src="/images/logo-darkbg.png" width="72" alt=""></a>
+    </div>
 
-	<a href="/logout" class="pull-right menu">logout</a>
-	<% } else { %>
-	<a href="/auth/github" class="pull-right menu">Join Now!</a>
-	<% } %>
-	<div class="clearfix"></div>
+    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav" id="main-nav">
+        <% if (isLoggedIn) { %>
+          <li>
+            <a href="/users/<%= loggedUser.username %>/editor">Supporters</a>
+          </li>
+          <li>
+            <a href="/settings">Maintainers</a>
+          </li>
+        <% } %>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <% if (isLoggedIn) { %>
+          <li>
+            <a href="/users/<%= loggedUser.username %>">
+              <%= loggedUser.displayName %>
+              <img src="http://www.gravatar.com/avatar/<%= loggedUser.github.gravatar_id %>?s=18" class="gravatar">
+            </a>
+          </li>
+          <li><a href="/logout"><i class="icon-signout"></i></a></li>
+        <% } else { %>
+          <li><a href="/auth/github">Join Now!</a></li>
+        <% } %>
+      </ul>
+    </nav>
+
+  </div>
 </header>

@@ -1,5 +1,44 @@
+@import url('http://fonts.googleapis.com/css?family=Quicksand:300,400,700');
+
 @import "./vendors/font-awesome/font-awesome";
-@import (less) "./vendors/bootstrap.css";
+@import "./vendors/bootstrap/bootstrap";
+
+
+// Custom variables
+// ----------------
+
+@FontAwesomePath:    "/fonts";
+
+@gray-lighter:                      darken(#FFF, 13.5%); // #222
+@gray-light:                        darken(#FFF, 20%);   // #333
+@gray:                              darken(#FFF, 33.5%); // #555
+@gray-dark:                         darken(#FFF, 60%);   // #999
+@gray-darker:                       darken(#FFF, 93.5%); // #eee
+
+@brand-info:                        #59BAAF;
+@body-bg:                           #212B37;
+@text-color:                        @gray-lighter;
+@link-color:                        @brand-info;
+@link-hover-color:                  lighten(@link-color, 15%);
+
+@font-family-sans-serif:            "Quicksand", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+@nav-link-hover-bg:                 transparent;
+@nav-tabs-border-color:             #000;
+@nav-tabs-link-hover-border-color:  transparent;
+@nav-tabs-active-link-hover-border-color: transparent;
+
+@badge-bg:                          #000;
+@badge-font-weight:                 400;
+
+@table-bg-accent:                   lighten(@body-bg, 3%); // for striping
+@table-bg-hover:                    lighten(@body-bg, 5%);
+
+@legend-border-color:               #000;
+@legend-color:                      #ddd;
+@input-color:                       #666;
+
+
 @import (less) "../public/js/vendors/toastr/css/toastr.css";
 
 @import "./base/body";
