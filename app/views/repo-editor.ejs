@@ -1,6 +1,6 @@
 <% titleBuilder.add(user.username) %>
 <% titleBuilder.add('Repo Editor') %>
-<% include parts/header.ejs %>
+<% include parts/head.ejs %>
 <section id="repos-editor">
 	<section id="repos-selector">
 		<i class="icon-spinner icon-spin icon-large"></i> Loading
@@ -18,4 +18,4 @@
 
 	require(['modules/repo-selector/main'])
 </script>
-<% include parts/footer.ejs %>
+<% include parts/foot.ejs %>
