@@ -1,62 +1,59 @@
 section#repos-editor {
 
   .to-account {
-	margin-top: 20px;
+		margin-top: 20px;
   }
 
   section#repos-selector {
-	padding: 20px;
 
-	.nav-tabs {
+		.nav-tabs {
+		  li {
 
-	  li {
+				.icon-spinner {
+				  display: none;
+				}
 
-		.icon-spinner {
+				&.disabled {
+			  	.icon-spinner {
+						display: inline;
+			  	}
+				}
+
+				&.selected-repos {
+				  margin-right: 2em;
+				  a {
+						font-weight: 700;
+						text-transform: uppercase;
+				  }
+				}
+
+				.btn a {
+				  color: #fff;
+				  text-decoration: none;
+				}
+		  }
+		}
+
+		.search-form {
+		  margin: 20px 0;
+
+		  input {
+				width: 30em;
+				display: inline-block;
+		  }
+
+		  input, button {
+				margin-right: 2em;
+		  }
+		}
+
+		.query-too-short {
 		  display: none;
 		}
 
-		&.disabled {
-		  .icon-spinner {
-			display: inline;
-		  }
+		.repos-list {
+		  padding: 20px 0;
 		}
-
-		&.selected-repos {
-		  margin-right: 2em;
-		  a {
-			background-color: fade(#5bc0de, 20);
-			color: #000;
-		  }
-		}
-		
-		.btn a {
-		  color: #fff;
-		  text-decoration: none;
-		}
-	  }
-	}
-
-	.search-form {
-	  margin: 20px 0;
-
-	  input {
-		width: 30em;
-		display: inline-block;
-	  }
-
-	  input, button {
-		margin-right: 2em;
-	  }
-
-	}
-
-	.query-too-short {
-	  display: none;
-	}
-
-	.repos-list {
-	  padding-top: 20px;
-	}
   }
 }
 

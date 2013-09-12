@@ -1,96 +1,95 @@
 <% titleBuilder.add(user.username) %>
+
 <% include parts/head.ejs %>
-<section id="user-repos">
-	<div class="well">
-		<div class="row">
-			<a href="<%= user.github.html_url %>" class="col-1">
-				<img src="http://www.gravatar.com/avatar/<%= user.github.gravatar_id %>?s=80" alt="" class="img-rounded"/>
-			</a>
 
-			<div class="data col-4">
-				<p>
-					<%= user.displayName %>
-					<% if (user.displayName != user.username) { %>
-					&nbsp;(<%= user.username %>)
-					<% } %>
-				</p>
+<body>
+  <div id="wrap">
+    <% include parts/header.ejs %>
+    <div class="container">
 
-				<p><b>Type:</b> <%= user.github.type %></p>
-			</div>
-		</div>
-	</div>
+			<section id="user-repos">
+				<div class="">
+					<div class="row">
+						<a href="<%= user.github.html_url %>" class="col-lg-1">
+							<img src="http://www.gravatar.com/avatar/<%= user.github.gravatar_id %>?s=80" alt="" class="img-rounded"/>
+						</a>
 
-	<% if (!supports.length) { %>
-	<% if (isLoggedIn && loggedUser._id == user._id) { %>
-	<h4 class="text-center">
-		You didn't added any projects yet, want to add some?
-		<a class="btn btn-primary btn-lg" href="/users/<%= user.username %>/editor">Sure!</a>
-	</h4>
-	<% } else { %>
-	<h4 class="text-center">This user didn't added any projects yet</h4>
-	<% } %>
-	<% } %>
+						<div class="data col-lg-4">
+							<p>
+								<h3><%= user.displayName %></h3>
+								<% if (user.displayName != user.username) { %>
+								&nbsp;(<%= user.username %>)
+								<% } %>
+							</p>
 
-	<div class="repos-list">
-		<% if (supports.length) { %>
-		<div class="controls row">
-			<div class="col repo-name"></div>
-			<div class="col support-types text-center">
-				<b>How I contribute</b>
-			</div>
-			<div class="col contribution-types">
-				<b>Authors preferred method of contribution</b>
-			</div>
-		</div>
-		<% } %>
-		<% _.each(supports, function(repo) { %>
-		<div class="repo <%= repo.project.fork ? 'fork' : '' %>">
-			<div class="col repo-name">
-				<a href="<%= repo.project.url %>" class="icon-github-sign go-to" target="_blank"></a>
-				<% if (repo.project.homepage) { %>
-				<a href="<%= repo.project.homepage %>" class="icon-home go-to" target="_blank"></a>
-				<% } %>
-
-				<% if (repo.project.owner.user) { %>
-				<a href="/users/<%=repo.project.owner.username %>">
-					<%=repo.project.owner.username %>
-				</a>
-				<% } else { %>
-				<%=repo.project.owner.username %>
-				<% } %>
-				&nbsp;/&nbsp;
-				<a href="/projects/<%=repo.project._id %>">
-					<%=repo.project.name %>
-				</a>
-
-				<div class="description">
-					<% if (repo.project.description) { %>
-					<%- repo.project.description %>
-					<% } %>
+							<p><b>Type:</b> <%= user.github.type %></p>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div class="col support-types">
-				<span class="support-type donating <%= repo.donating ? 'active' : '' %>" data-toggle="tooltip" title="I'm donating"></span>
-				<span class="support-type contributing <%= repo.contributing ? 'active' : '' %>" data-toggle="tooltip" title="I'm contributing"></span>
-				<span class="support-type supporting <%= repo.supporting ? 'active' : '' %>" data-toggle="tooltip" title="I'm supporting in other way"></span>
-			</div>
-			<div class="col contribution-types">
-				<% var contributions = repo.project.owner.contributions; %>
-				<% var projectUrl = repo.project.url; %>
-				<% var projectId = repo.project._id; %>
-				<% include parts/contributions.ejs %>
-			</div>
-		</div>
-		<% }) %>
+
+				<% if (!supports.length) { %>
+					<% if (isLoggedIn && loggedUser._id == user._id) { %>
+						<h4 class="text-center">
+							You haven't added any projects yet. Want to add some?
+							<a class="btn btn-primary btn-lg" href="/users/<%= user.username %>/editor">Sure!</a>
+						</h4>
+					<% } else { %>
+						<h4 class="text-center">This user hasn't added any projects yet.</h4>
+					<% } %>
+				<% } %>
+
+				<div class="repos-list">
+					<% _.each(supports, function(repo) { %>
+					<div class="repo <%= repo.project.fork ? 'fork' : '' %>">
+						<div class="col repo-name">
+							<a href="<%= repo.project.url %>" class="icon-github go-to" target="_blank"></a>
+
+							<h4>
+								<% if (repo.project.owner.user) { %>
+									<a href="/users/<%=repo.project.owner.username %>"><%=repo.project.owner.username %></a>
+								<% } else { %>
+									<%=repo.project.owner.username %>
+								<% } %>
+								/
+								<a href="/projects/<%=repo.project._id %>">
+									<%=repo.project.name %>
+								</a>
+							</h4>
+
+							<div class="description">
+								<% if (repo.project.description) { %>
+									<%- repo.project.description %>
+								<% } %>
+							</div>
+						</div>
+
+						<div class="col support-types">
+							<span class="support-type donating <%= repo.donating ? 'active' : '' %>" data-toggle="tooltip" title="I'm donating"></span>
+							<span class="support-type contributing <%= repo.contributing ? 'active' : '' %>" data-toggle="tooltip" title="I'm contributing"></span>
+							<span class="support-type supporting <%= repo.supporting ? 'active' : '' %>" data-toggle="tooltip" title="I'm supporting in other way"></span>
+						</div>
+
+						<div class="col contribution-types">
+							<% var contributions = repo.project.owner.contributions; %>
+							<% var projectUrl = repo.project.url; %>
+							<% var projectId = repo.project._id; %>
+							<% include parts/contributions.ejs %>
+						</div>
+					</div>
+					<% }) %>
+				</div>
+				<% include modals/index.ejs %>
+			</section>
+			<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
+			<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
+			<script type="text/javascript">
+				require.config({
+					baseUrl: "<%=jsPath %>"
+				})
+				require(['plugins/activate-plugins'])
+			</script>
+
+	  </div>
 	</div>
-	<% include modals/index.ejs %>
-</section>
-<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
-<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
-<script type="text/javascript">
-	require.config({
-		baseUrl: "<%=jsPath %>"
-	})
-	require(['plugins/activate-plugins'])
-</script>
-<% include parts/foot.ejs %>
+
+	<% include parts/foot.ejs %>

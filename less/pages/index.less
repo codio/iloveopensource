@@ -1,139 +1,84 @@
-html {
-  height: 100%;
-}
-
 body.home {
-  height: 100%;
-  font-family: 'Quicksand';
-  font-weight: 400;
-  background: #666 url('/images/bg.png') repeat;
-  color: @gray-lighter;
 
   #wrap {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin: 0 auto -60px;
-    padding: 0 0 60px;
+    background: transparent url('/images/bg-highlight.jpg') no-repeat center top;
 
-    .container {
-      background: transparent url('/images/bg-highlight.jpg') no-repeat center top;
-
-      #logo {
-        margin: 80px auto;
-        text-align: center;
-        display: block;
-      }
-
-      section {
-        h2 {
-          font: 46px 'Quicksand';
-          font-weight: 300;
-          color: @brand-info;
-          margin: 0 0 18px;
-          padding: 0 10px;
-        }
-
-        p {
-          line-height: 1.7em;
-          font-size: 15px;
-          font-weight: 300;
-          padding: 0 10px;
-        }
-
-        // Maintainers
-        &:first-child {
-          text-align: right;
-          border-right: 1px solid #666;
-        }
-
-        // Supporters
-        &:last-child {
-
-        }
-      }
-
-      #start {
-        margin: 33px auto 100px;
-        text-align: center;
-
-        #login, #welcome {
-          text-align: left;
-          padding: 12px 49px 6px;
-          .clearfix;
-
-          i {
-            float: left;
-            font-size: 54px;
-            margin: 0 20px 6px 0;
-          }
-
-          span {
-            float: left;
-            display: block;
-            font-size: 30px;
-            font-weight: 400;
-            line-height: 0.85em;
-            margin-top: 5px;
-
-            small {
-              font-size: 14px;
-              display: block;
-              font-weight: 300;
-            }
-          }
-        }
-
-        #welcome {
-          padding: 20px 70px;
-          font-size: 18px;
-
-          i {
-            font-size: 20px;
-            float: none;
-            margin-left: 6px;
-            position: relative;
-            top: 1px;
-          }
-        }
-      }
-    }
-  }
-
-  footer {
-    height: 60px;
-    text-elign: left;
-
-    img {
-      position: relative;
-      top: -2px;
+    #logo {
+      margin: 80px auto;
+      text-align: center;
+      display: block;
     }
 
-    .row {
-      .col-md-2 a {
-        text-align: center;
-        color: #fff;
-        text-decoration: none;
+    section {
+      h2 {
+        font: 46px 'Quicksand';
         font-weight: 300;
+        color: @brand-info;
+        margin: 0 0 18px;
+        padding: 0 10px;
+      }
 
-        span, img {
-          .transition(opacity .50s linear);
-          opacity: 0.2;
+      p {
+        line-height: 1.7em;
+        font-size: 15px;
+        font-weight: 300;
+        padding: 0 10px;
+      }
+
+      // Maintainers
+      &:first-child {
+        text-align: right;
+        border-right: 1px solid #666;
+      }
+
+      // Supporters
+      &:last-child {
+
+      }
+    }
+
+    #start {
+      margin: 33px auto 100px;
+      text-align: center;
+
+      #login, #welcome {
+        text-align: left;
+        padding: 12px 49px 6px;
+        .clearfix;
+
+        i {
+          float: left;
+          font-size: 54px;
+          margin: 0 20px 6px 0;
         }
 
-        img {
-          opacity: 0.4;
-        }
+        span {
+          float: left;
+          display: block;
+          font-size: 30px;
+          font-weight: 400;
+          line-height: 0.85em;
+          margin-top: 5px;
 
-        &:hover {
-          span, img {
-            opacity: 1;
+          small {
+            font-size: 14px;
+            display: block;
+            font-weight: 300;
           }
         }
       }
 
-      div:last-child {
-        text-align: right;
+      #welcome {
+        padding: 20px 70px;
+        font-size: 18px;
+
+        i {
+          font-size: 20px;
+          float: none;
+          margin-left: 6px;
+          position: relative;
+          top: 1px;
+        }
       }
     }
   }

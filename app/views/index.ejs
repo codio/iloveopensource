@@ -22,7 +22,7 @@
       <div id="start">
         <% if (!user) { %>
           <a href="/auth/github" class="btn btn-info" id="login">
-          	<i class="icon-github-sign"></i>
+          	<i class="icon-github"></i>
             <span>Start here...<small>with your Github account</small></span>
           </a>
         <% } else { %>
@@ -35,21 +35,4 @@
     </div>
   </div>
 
-  <footer class="container">
-    <div class="row">
-      <div class="col-md-5">
-      </div>
-      <div class="col-md-2">
-        <a href="https://codio.com">
-          <span>built with</span>
-          <img src="/images/codio-icon.png" width="28" alt="">
-          <span>Codio</span>
-        </a>
-      </div>
-      <div class="col-md-5">
-      </div>
-    </div>
-  </footer>
-</body>
-
-<% include parts/foot.ejs %>
+  <% include parts/foot.ejs %>

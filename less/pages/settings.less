@@ -1,37 +1,33 @@
 #page-settings {
-  padding: 20px 40px;
+	legend {
+		font-weight: 200;
+		text-transform: uppercase;
+		font-size: 16px;
+		padding: 30px 0 8px;
+		margin-bottom: 28px;
+	}
 
   .saved {
-	display: none;
-	color: #468847;
-	line-height: 1.428571429;
-	padding-top: 6px;
+		display: none;
+		color: #468847;
+		line-height: 1.428571429;
+		padding-top: 6px;
+		text-align: left;
+  }
+
+  .col-lg-2 .saved {
+  	text-align: right;
   }
 
   .form-group {
-	position: relative;
+		.help-block {
+			color: #ddd;
+			font-weight: 200;
+			font-size: 12px;
+		}
 
-	.help-block {
-	  display: none;
-	}
-
-	.control-label {
-	  text-align: left;
-	  margin-left: 1em;
-	  width: 195px;
-	}
-
-	.help {
-	  position: absolute;
-	  left: 0em;
-	  font-size: 1.5em;
-	  top: 0.2em;
-	  cursor: pointer;
-	}
-
-	.popover {
-	  top: 50%;
-	  left: 1em;
-	}
+		.control-label {
+		  font-weight: 400;
+		}
   }
 }
