@@ -18,3 +18,4 @@ css/main.css
 config/config.*.js
 
 npm-debug.log
+*.sublime*
