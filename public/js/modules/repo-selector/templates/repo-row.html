@@ -8,7 +8,7 @@
 		<% } else { %>
 			<%= repo.owner.username %>
 		<% } %>
-		&nbsp;/&nbsp;
+		<span> / </span>
 		<% if (repo._id) { %>
 			<a href="/projects/<%=repo._id %>"><%=repo.name %></a>
 		<% } else { %>
