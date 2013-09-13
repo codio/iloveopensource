@@ -8,22 +8,20 @@
     <div class="container">
 
 			<section id="user-repos">
-				<div class="">
-					<div class="row">
-						<a href="<%= user.github.html_url %>" class="col-lg-1">
-							<img src="http://www.gravatar.com/avatar/<%= user.github.gravatar_id %>?s=80" alt="" class="img-rounded"/>
-						</a>
+				<div class="clearfix">
+					<a href="<%= user.github.html_url %>" class="pull-left">
+						<img src="http://www.gravatar.com/avatar/<%= user.github.gravatar_id %>?s=80" alt="" class="img-rounded"/>
+					</a>
 
-						<div class="data col-lg-4">
-							<p>
-								<h3><%= user.displayName %></h3>
-								<% if (user.displayName != user.username) { %>
-								&nbsp;(<%= user.username %>)
-								<% } %>
-							</p>
+					<div class="data pull-left">
+						<p>
+							<h3><%= user.displayName %></h3>
+							<% if (user.displayName != user.username) { %>
+							&nbsp;(<%= user.username %>)
+							<% } %>
+						</p>
 
-							<p><b>Type:</b> <%= user.github.type %></p>
-						</div>
+						<p><b>Type:</b> <%= user.github.type %></p>
 					</div>
 				</div>
 
@@ -64,9 +62,9 @@
 						</div>
 
 						<div class="col support-types">
-							<span class="support-type donating <%= repo.donating ? 'active' : '' %>" data-toggle="tooltip" title="I'm donating"></span>
-							<span class="support-type contributing <%= repo.contributing ? 'active' : '' %>" data-toggle="tooltip" title="I'm contributing"></span>
-							<span class="support-type supporting <%= repo.supporting ? 'active' : '' %>" data-toggle="tooltip" title="I'm supporting in other way"></span>
+							<span class="support-type donating <% if (!repo.donating) { %>"><% } else { %> active" data-toggle="tooltip" title="I'm donating"><% } %></span>
+							<span class="support-type contributing <% if (!repo.contributing) { %>"><% } else { %> active" data-toggle="tooltip" title="I'm contributing"><% } %></span>
+							<span class="support-type supporting <% if (!repo.supporting) { %>"><% } else { %> active" data-toggle="tooltip" title="I'm supporting in other way"><% } %></span>
 						</div>
 
 						<div class="col contribution-types">

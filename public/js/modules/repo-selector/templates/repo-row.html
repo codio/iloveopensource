@@ -29,7 +29,7 @@
 	<span class="support-type contributing <%= repo.support.contributing ? 'active' : '' %>" data-type="contributing" data-toggle="tooltip" data-toggle="tooltip" title="I'm contributing"></span>
 	<span class="support-type supporting <%= repo.support.supporting ? 'active' : '' %>" data-type="supporting" data-toggle="tooltip" title="I'm supporting in other way"></span>
 	<% if (obj.canDelete) { %>
-		<span class="btn btn-danger btn-small remove" proxy-tap="remove-repo" data-toggle="tooltip" title="Remove repo">Remove</span>
+		<span class="remove" data-toggle="tooltip" title="Remove repo"></span>
 	<% } %>
 </div>
 

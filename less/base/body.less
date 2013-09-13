@@ -3,8 +3,8 @@ html, body {
 }
 
 body {
-	font-weight: 400;
-	background: #666 url('/images/bg.png') repeat;
+  font-weight: 400;
+  background: #666 url('/images/bg.png') repeat;
 }
 
 #wrap {
@@ -15,7 +15,7 @@ body {
   padding: 0 0 60px;
 
   > .container {
-    margin-bottom: 70px;
+	margin-bottom: 70px;
   }
 }
 
@@ -25,39 +25,39 @@ body {
 
 header {
   .navbar-brand {
-    padding-top: 12px;
-    padding-right: 60px;
+	padding-top: 12px;
+	padding-right: 60px;
   }
 
   #main-nav {
-    font-weight: 300;
-    font-size: 16px;
+	font-weight: 300;
+	font-size: 16px;
   }
 
   i {
-		width: 1em;
+	width: 1em;
   }
 
   .icon-signout {
-    font-size: 18px;
-    position: relative;
-    top: 3px;
+	font-size: 18px;
+	position: relative;
+	top: 3px;
 
-    a & {
-      padding: 3px;
-    }
+	a & {
+	  padding: 3px;
+	}
   }
 
   .gravatar {
-    border-radius: 50%;
-    margin-left: 4px;
-    position: relative;
-    top: -1px;
+	border-radius: 50%;
+	margin-left: 4px;
+	position: relative;
+	top: -1px;
   }
 
   .menu {
-		padding: 8px 12px;
-		display: inline-block;
+	padding: 8px 12px;
+	display: inline-block;
   }
 }
 
@@ -67,180 +67,193 @@ footer {
   padding-top: 10px;
 
   img {
-    position: relative;
-    top: -2px;
+	position: relative;
+	top: -2px;
   }
 
-  .row {
-    .col-md-2 a {
-      text-align: center;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 300;
+  .copyright {
+	text-align: center;
+	a {
+	  text-align: center;
+	  color: #fff;
+	  text-decoration: none;
+	  font-weight: 300;
 
-      span, img {
-        .transition(opacity .50s linear);
-        opacity: 0.5;
-      }
+	  span, img {
+		.transition(opacity .50s linear);
+		opacity: 0.5;
+	  }
 
-      img {
-        opacity: 0.5;
-      }
+	  img {
+		opacity: 0.5;
+	  }
 
-      &:hover {
-        span, img {
-          opacity: 1;
-        }
-      }
-    }
-
-    div:last-child {
-      text-align: right;
-    }
+	  &:hover {
+		span, img {
+		  opacity: 1;
+		}
+	  }
+	}
   }
 }
 
 .repos-list {
   .controls, .repo {
-  	.clearfix;
+	.clearfix;
 
-  	.col {
-  	  float: left;
-  	  min-height: 28px;
-  	  height: 100%;
+	.col {
+	  float: left;
+	  min-height: 2em;
+	  height: 100%;
 
-  	  &.support-types {
-    		width: 15%;
-    		min-width: 110px;
-  	  }
+	  &.support-types {
+		width: 30%;
+		min-width: 210px;
+		padding: 0 2em;
+	  }
 
-  	  &.repo-name {
-    		width: 30%;
-    		min-width: 220px;
-    		line-height: 2em;
-  	  }
+	  &.repo-name {
+		width: 30%;
+		min-width: 220px;
+		line-height: 2em;
+	  }
 
-  	  &.contribution-types {
-    		margin-left: 5%;
-    		width: 40%;
-    		min-width: 220px;
-  	  }
-  	}
+	  &.contribution-types {
+		width: 40%;
+		min-width: 220px;
+	  }
+	}
   }
 
   .load-more {
-		margin-top: 20px;
+	margin-top: 20px;
   }
 
   .repo {
-  	padding: 20px 10px;
-    border-bottom: 1px solid #222;
-  	position: relative;
-    font-weight: 300;
+	padding: 20px 10px;
+	border-bottom: 1px solid #222;
+	position: relative;
+	font-weight: 300;
 
-  	&.fork {
-  	  .repo-name {
-    		padding-left: 3em;
+	&.fork {
+	  .repo-name {
+		padding-left: 3em;
 
-    		&:before {
-    		  .icon(@code-fork);
-    		  position: absolute;
-    		  left: 2em;
-    		}
-  	  }
-  	}
+		&:before {
+		  .icon(@code-fork);
+		  position: absolute;
+		  left: 2em;
+		}
+	  }
+	}
 
-  	&:nth-child(even) {
-  	  background-color: @table-bg-accent;
-  	}
+	&:nth-child(even) {
+	  background-color: @table-bg-accent;
+	}
 
-    &:hover {
-      background-color: @table-bg-hover;
-    }
+	&:hover {
+	  background-color: @table-bg-hover;
+	}
 
-  	.repo-name {
-  	  padding-left: 2em;
-  	  position: relative;
+	.repo-name {
+	  padding-left: 2em;
+	  position: relative;
 
-      h4 {
-        font-size: 16px;
-        margin: 5px 0;
-      }
+	  h4 {
+		font-size: 16px;
+		margin: 5px 0;
+	  }
 
-  	  &.with-home {
-  		  min-height: 4.4em;
-  	  }
+	  &.with-home {
+		min-height: 4.4em;
+	  }
 
-  	  .go-to {
-    		font-size: 1.5em;
-    		position: absolute;
-    		left: 0;
-    		top: .2em;
+	  .go-to {
+		font-size: 1.5em;
+		position: absolute;
+		left: 0;
+		top: .2em;
 
-    		&.icon-github:hover {
-    		  text-decoration: none;
-    		}
-  	  }
+		&.icon-github:hover {
+		  text-decoration: none;
+		}
+	  }
 
-  	  .description {
-    		padding-top: 2px;
-    		font-size: .8em;
-    		line-height: 1.4;
-  	  }
-  	}
+	  .description {
+		padding-top: 2px;
+		font-size: .8em;
+		line-height: 1.4;
+	  }
+	}
 
-  	.col.contribution-types {
-  	  .contribution {
-    		margin: 0 1em;
-    		font-size: 1.2em;
-    		float: left;
-    		cursor: pointer;
+	.col.contribution-types {
+	  .contribution {
+		margin: 0 1em;
+		font-size: 1.2em;
+		float: left;
+		cursor: pointer;
 
-    		&.paypal {
-    		  margin-top: 3px;
-    		}
-  	  }
-  	}
+		&.paypal {
+		  margin-top: 3px;
+		}
+	  }
+	}
 
-  	.col.support-types {
-  	  .support-type {
-    		cursor: pointer;
-    		border-radius: 5px;
-    		width: 2em;
-    		height: 2em;
-    		display: block;
-    		position: relative;
-    		border: 2px solid #000;
-    		float: left;
-    		margin: 0 1em;
+	.col.support-types {
 
-    		&.active {
-    		  &:before {
-    			 opacity: 1;
-    		  }
-    		}
+	  .support-type {
+		cursor: pointer;
+		border-radius: 5px;
+		width: 2em;
+		height: 2em;
+		display: block;
+		position: relative;
+		border: 2px solid #000;
+		border-color: fade(#000, 40);
+		float: left;
+		margin: 0 .5em;
 
-    		&:before {
-    		  opacity: .5;
-    		  position: absolute;
-    		  top: 50%;
-    		  margin-top: -.7em;
-    		  text-align: center;
-    		  width: 100%;
-    		}
+		&.active {
+		  border-color: #000;
 
-    		&.contributing:before {
-    		  .icon(@group);
-    		}
+		  &:before {
+			opacity: 1;
+		  }
+		}
 
-    		&.donating:before {
-    		  .icon(@usd);
-    		}
+		&:before {
+		  opacity: .5;
+		  position: absolute;
+		  top: 50%;
+		  margin-top: -.7em;
+		  text-align: center;
+		  width: 100%;
+		}
 
-    		&.supporting:before {
-    		  .icon(@heart);
-    		}
-  	  }
-  	}
+		&.contributing:before {
+		  .icon(@group);
+		}
+
+		&.donating:before {
+		  .icon(@usd);
+		}
+
+		&.supporting:before {
+		  .icon(@heart);
+		}
+	  }
+
+	  .remove {
+		.support-type;
+		opacity: 1;
+		border-color: #000;
+
+		&:before {
+		  .icon(@remove);
+		  color: #f33;
+		  opacity: 1;
+		}
+	  }
+	}
   }
 }

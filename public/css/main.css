@@ -9448,32 +9448,32 @@ footer img {
   top: -2px;
 }
 
-footer .row .col-md-2 a {
+footer .copyright {
+  text-align: center;
+}
+
+footer .copyright a {
   text-align: center;
   color: #fff;
   text-decoration: none;
   font-weight: 300;
 }
 
-footer .row .col-md-2 a span,
-footer .row .col-md-2 a img {
+footer .copyright a span,
+footer .copyright a img {
   -webkit-transition: opacity 0.5s linear;
   -o-transition: opacity 0.5s linear;
   transition: opacity 0.5s linear;
   opacity: 0.5;
 }
 
-footer .row .col-md-2 a img {
+footer .copyright a img {
   opacity: 0.5;
 }
 
-footer .row .col-md-2 a:hover span,
-footer .row .col-md-2 a:hover img {
+footer .copyright a:hover span,
+footer .copyright a:hover img {
   opacity: 1;
-}
-
-footer .row div:last-child {
-  text-align: right;
 }
 
 .repos-list .controls:before,
@@ -9509,14 +9509,15 @@ footer .row div:last-child {
 .repos-list .controls .col,
 .repos-list .repo .col {
   float: left;
-  min-height: 28px;
+  min-height: 2em;
   height: 100%;
 }
 
 .repos-list .controls .col.support-types,
 .repos-list .repo .col.support-types {
-  width: 15%;
-  min-width: 110px;
+  width: 30%;
+  min-width: 210px;
+  padding: 0 2em;
 }
 
 .repos-list .controls .col.repo-name,
@@ -9528,7 +9529,6 @@ footer .row div:last-child {
 
 .repos-list .controls .col.contribution-types,
 .repos-list .repo .col.contribution-types {
-  margin-left: 5%;
   width: 40%;
   min-width: 220px;
 }
@@ -9619,8 +9619,13 @@ footer .row div:last-child {
   display: block;
   position: relative;
   border: 2px solid #000;
+  border-color: rgba(0, 0, 0, 0.4);
   float: left;
-  margin: 0 1em;
+  margin: 0 .5em;
+}
+
+.repos-list .repo .col.support-types .support-type.active {
+  border-color: #000;
 }
 
 .repos-list .repo .col.support-types .support-type.active:before {
@@ -9664,6 +9669,81 @@ footer .row div:last-child {
   -webkit-font-smoothing: antialiased;
   *margin-right: .3em;
   content: "\f004";
+}
+
+.repos-list .repo .col.support-types .remove {
+  cursor: pointer;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  width: 2em;
+  height: 2em;
+  display: block;
+  position: relative;
+  border: 2px solid #000;
+  border-color: rgba(0, 0, 0, 0.4);
+  float: left;
+  margin: 0 .5em;
+  opacity: 1;
+  border-color: #000;
+}
+
+.repos-list .repo .col.support-types .remove.active {
+  border-color: #000;
+}
+
+.repos-list .repo .col.support-types .remove.active:before {
+  opacity: 1;
+}
+
+.repos-list .repo .col.support-types .remove:before {
+  opacity: .5;
+  position: absolute;
+  top: 50%;
+  margin-top: -0.7em;
+  text-align: center;
+  width: 100%;
+}
+
+.repos-list .repo .col.support-types .remove.contributing:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f0c0";
+}
+
+.repos-list .repo .col.support-types .remove.donating:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f155";
+}
+
+.repos-list .repo .col.support-types .remove.supporting:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f004";
+}
+
+.repos-list .repo .col.support-types .remove:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f00d";
+  color: #f33;
+  opacity: 1;
 }
 
 #repos-editor .to-account {
@@ -9712,10 +9792,6 @@ footer .row div:last-child {
 
 #repos-editor #repos-selector .repos-list {
   padding: 20px 0;
-}
-
-#repos-editor #selected-repos .repos-list .repo .col.support-types {
-  min-width: 280px;
 }
 
 #page-project .support-types {
@@ -9778,21 +9854,25 @@ footer .row div:last-child {
   content: '';
 }
 
-section#user-repos {
+#user-repos {
   margin-top: 20px;
 }
 
-section#user-repos .repos-list {
+#user-repos .data {
+  margin-left: 20px;
+}
+
+#user-repos .repos-list {
   padding: 20px 0;
 }
 
-section#user-repos .repos-list .col.support-types .support-type {
+#user-repos .repos-list .col.support-types .support-type {
   cursor: default;
   border: 0;
   opacity: 0;
 }
 
-section#user-repos .repos-list .col.support-types .support-type.active {
+#user-repos .repos-list .col.support-types .support-type.active {
   opacity: 1;
 }
 
