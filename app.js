@@ -22,6 +22,7 @@ var passport = require('./app/middleware/passport')
 app.locals._ = require('lodash');
 app.locals.titleBuilder = require('./app/utils/title-builder');
 app.locals.jsPath = cfg.jsPath;
+app.locals.siteUrl = cfg.fullUrl();
 
 // all environments
 app.set('port', cfg.port);

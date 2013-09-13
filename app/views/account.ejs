@@ -37,6 +37,13 @@
 				<% } %>
 
 				<div class="repos-list">
+					<% if (supports.length) { %>
+					<div class="header">
+						<div class="col repo-name"></div>
+						<div class="col support-types">I am supporting</div>
+						<div class="col contribution-types">Types of contributions welcomed by Maintainer</div>
+					</div>
+					<% } %>
 					<% _.each(supports, function(repo) { %>
 					<div class="repo <%= repo.project.fork ? 'fork' : '' %>">
 						<div class="col repo-name">

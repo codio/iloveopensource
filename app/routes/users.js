@@ -31,11 +31,7 @@ module.exports = function (app) {
 	});
 
 	app.get('/settings', ensureAuthenticated, function (req, res) {
-		res.render('settings', { user: req.user, error: '' });
-	});
-
-	app.get('/widgets', ensureAuthenticated, function (req, res) {
-		res.render('widgets', { user: req.user, error: '' });
+		res.render('settings', { user: req.user, error: ''});
 	});
 
 	app.post('/settings/:field', ensureAuthenticated, function (req, res) {

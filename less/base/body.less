@@ -98,8 +98,10 @@ footer {
 }
 
 .repos-list {
-  .controls, .repo {
+  .header, .repo {
 	.clearfix;
+	padding: 20px 10px;
+	border-bottom: 1px solid #222;
 
 	.col {
 	  float: left;
@@ -108,19 +110,30 @@ footer {
 
 	  &.support-types {
 		width: 30%;
-		min-width: 210px;
 		padding: 0 2em;
 	  }
 
 	  &.repo-name {
+		padding-left: 2em;
 		width: 30%;
-		min-width: 220px;
 		line-height: 2em;
 	  }
 
 	  &.contribution-types {
 		width: 40%;
-		min-width: 220px;
+	  }
+	}
+  }
+
+  .header {
+	padding: 0px 10px;
+
+	.col {
+	  text-align: left;
+	  padding-left: .5em;
+
+	  &.support-types {
+		padding-left: 2.5em;
 	  }
 	}
   }
@@ -130,8 +143,6 @@ footer {
   }
 
   .repo {
-	padding: 20px 10px;
-	border-bottom: 1px solid #222;
 	position: relative;
 	font-weight: 300;
 
@@ -156,7 +167,6 @@ footer {
 	}
 
 	.repo-name {
-	  padding-left: 2em;
 	  position: relative;
 
 	  h4 {
@@ -188,7 +198,7 @@ footer {
 
 	.col.contribution-types {
 	  .contribution {
-		margin: 0 1em;
+		margin: 0 .5em;
 		font-size: 1.2em;
 		float: left;
 		cursor: pointer;

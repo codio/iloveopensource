@@ -9476,9 +9476,15 @@ footer .copyright a:hover img {
   opacity: 1;
 }
 
-.repos-list .controls:before,
+.repos-list .header,
+.repos-list .repo {
+  padding: 20px 10px;
+  border-bottom: 1px solid #222;
+}
+
+.repos-list .header:before,
 .repos-list .repo:before,
-.repos-list .controls:after,
+.repos-list .header:after,
 .repos-list .repo:after {
   content: " ";
   /* 1 */
@@ -9486,14 +9492,14 @@ footer .copyright a:hover img {
   /* 2 */
 }
 
-.repos-list .controls:after,
+.repos-list .header:after,
 .repos-list .repo:after {
   clear: both;
 }
 
-.repos-list .controls:before,
+.repos-list .header:before,
 .repos-list .repo:before,
-.repos-list .controls:after,
+.repos-list .header:after,
 .repos-list .repo:after {
   content: " ";
   /* 1 */
@@ -9501,36 +9507,47 @@ footer .copyright a:hover img {
   /* 2 */
 }
 
-.repos-list .controls:after,
+.repos-list .header:after,
 .repos-list .repo:after {
   clear: both;
 }
 
-.repos-list .controls .col,
+.repos-list .header .col,
 .repos-list .repo .col {
   float: left;
   min-height: 2em;
   height: 100%;
 }
 
-.repos-list .controls .col.support-types,
+.repos-list .header .col.support-types,
 .repos-list .repo .col.support-types {
   width: 30%;
-  min-width: 210px;
   padding: 0 2em;
 }
 
-.repos-list .controls .col.repo-name,
+.repos-list .header .col.repo-name,
 .repos-list .repo .col.repo-name {
+  padding-left: 2em;
   width: 30%;
-  min-width: 220px;
   line-height: 2em;
 }
 
-.repos-list .controls .col.contribution-types,
+.repos-list .header .col.contribution-types,
 .repos-list .repo .col.contribution-types {
   width: 40%;
-  min-width: 220px;
+}
+
+.repos-list .header {
+  padding: 0px 10px;
+}
+
+.repos-list .header .col {
+  text-align: left;
+  padding-left: .5em;
+}
+
+.repos-list .header .col.support-types {
+  padding-left: 2.5em;
 }
 
 .repos-list .load-more {
@@ -9538,8 +9555,6 @@ footer .copyright a:hover img {
 }
 
 .repos-list .repo {
-  padding: 20px 10px;
-  border-bottom: 1px solid #222;
   position: relative;
   font-weight: 300;
 }
@@ -9569,7 +9584,6 @@ footer .copyright a:hover img {
 }
 
 .repos-list .repo .repo-name {
-  padding-left: 2em;
   position: relative;
 }
 
@@ -9600,7 +9614,7 @@ footer .copyright a:hover img {
 }
 
 .repos-list .repo .col.contribution-types .contribution {
-  margin: 0 1em;
+  margin: 0 .5em;
   font-size: 1.2em;
   float: left;
   cursor: pointer;
@@ -9797,6 +9811,8 @@ footer .copyright a:hover img {
 #page-project .support-types {
   width: 100%;
   float: none;
+  max-width: 100%;
+  padding: 0;
 }
 
 #page-project .support-types .support-type {

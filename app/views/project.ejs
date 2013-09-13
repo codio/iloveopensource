@@ -52,19 +52,19 @@
 			<h3>People who support this project</h3>
 
 			<div class="col donators">
-				<h4>Donators</h4>
+				<h4>Cash Donors</h4>
 				<% _.each(users.donators, function(support) { %>
 				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
 				<% }) %>
 			</div>
 			<div class="col contributors">
-				<h4>Contributors</h4>
+				<h4>Code Contributors</h4>
 				<% _.each(users.contributors, function(support) { %>
 				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
 				<% }) %>
 			</div>
 			<div class="col supporters">
-				<h4>Supporters</h4>
+				<h4>Vocal Supporters</h4>
 				<% _.each(users.supporters, function(support) { %>
 				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
 				<% }) %>
