@@ -9666,52 +9666,56 @@ footer .row div:last-child {
   content: "\f004";
 }
 
-section#repos-editor .to-account {
+#repos-editor .to-account {
   margin-top: 20px;
 }
 
-section#repos-editor section#repos-selector .nav-tabs li .icon-spinner {
+#repos-editor #repos-selector .nav-tabs li .icon-spinner {
   display: none;
 }
 
-section#repos-editor section#repos-selector .nav-tabs li.disabled .icon-spinner {
+#repos-editor #repos-selector .nav-tabs li.disabled .icon-spinner {
   display: inline;
 }
 
-section#repos-editor section#repos-selector .nav-tabs li.selected-repos {
+#repos-editor #repos-selector .nav-tabs li.selected-repos {
   margin-right: 2em;
 }
 
-section#repos-editor section#repos-selector .nav-tabs li.selected-repos a {
+#repos-editor #repos-selector .nav-tabs li.selected-repos a {
   font-weight: 700;
   text-transform: uppercase;
 }
 
-section#repos-editor section#repos-selector .nav-tabs li .btn a {
+#repos-editor #repos-selector .nav-tabs li .btn a {
   color: #fff;
   text-decoration: none;
 }
 
-section#repos-editor section#repos-selector .search-form {
+#repos-editor #repos-selector .search-form {
   margin: 20px 0;
 }
 
-section#repos-editor section#repos-selector .search-form input {
+#repos-editor #repos-selector .search-form input {
   width: 30em;
   display: inline-block;
 }
 
-section#repos-editor section#repos-selector .search-form input,
-section#repos-editor section#repos-selector .search-form button {
+#repos-editor #repos-selector .search-form input,
+#repos-editor #repos-selector .search-form button {
   margin-right: 2em;
 }
 
-section#repos-editor section#repos-selector .query-too-short {
+#repos-editor #repos-selector .query-too-short {
   display: none;
 }
 
-section#repos-editor section#repos-selector .repos-list {
+#repos-editor #repos-selector .repos-list {
   padding: 20px 0;
+}
+
+#repos-editor #selected-repos .repos-list .repo .col.support-types {
+  min-width: 280px;
 }
 
 #page-project .support-types {
@@ -9756,7 +9760,6 @@ section#repos-editor section#repos-selector .repos-list {
 }
 
 #page-project .users .col:nth-child(odd) {
-  background-color: #f5f5f5;
   border: 1px solid #e3e3e3;
   border-top: 0;
   border-bottom: 0;

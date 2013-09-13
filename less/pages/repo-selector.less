@@ -1,59 +1,63 @@
-section#repos-editor {
+#repos-editor {
 
   .to-account {
-		margin-top: 20px;
+	margin-top: 20px;
   }
 
-  section#repos-selector {
+  #repos-selector {
 
-		.nav-tabs {
-		  li {
+	.nav-tabs {
+	  li {
 
-				.icon-spinner {
-				  display: none;
-				}
-
-				&.disabled {
-			  	.icon-spinner {
-						display: inline;
-			  	}
-				}
-
-				&.selected-repos {
-				  margin-right: 2em;
-				  a {
-						font-weight: 700;
-						text-transform: uppercase;
-				  }
-				}
-
-				.btn a {
-				  color: #fff;
-				  text-decoration: none;
-				}
-		  }
-		}
-
-		.search-form {
-		  margin: 20px 0;
-
-		  input {
-				width: 30em;
-				display: inline-block;
-		  }
-
-		  input, button {
-				margin-right: 2em;
-		  }
-		}
-
-		.query-too-short {
+		.icon-spinner {
 		  display: none;
 		}
 
-		.repos-list {
-		  padding: 20px 0;
+		&.disabled {
+		  .icon-spinner {
+			display: inline;
+		  }
 		}
+
+		&.selected-repos {
+		  margin-right: 2em;
+		  a {
+			font-weight: 700;
+			text-transform: uppercase;
+		  }
+		}
+
+		.btn a {
+		  color: #fff;
+		  text-decoration: none;
+		}
+	  }
+	}
+
+	.search-form {
+	  margin: 20px 0;
+
+	  input {
+		width: 30em;
+		display: inline-block;
+	  }
+
+	  input, button {
+		margin-right: 2em;
+	  }
+	}
+
+	.query-too-short {
+	  display: none;
+	}
+
+	.repos-list {
+	  padding: 20px 0;
+	}
+  }
+
+  #selected-repos .repos-list .repo .col.support-types {
+	min-width: 280px;
   }
 }
 

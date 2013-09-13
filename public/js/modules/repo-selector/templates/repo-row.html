@@ -28,13 +28,10 @@
 	<span class="support-type donating <%= repo.support.donating ? 'active' : '' %>" data-type="donating" data-toggle="tooltip" data-toggle="tooltip" title="I'm donating"></span>
 	<span class="support-type contributing <%= repo.support.contributing ? 'active' : '' %>" data-type="contributing" data-toggle="tooltip" data-toggle="tooltip" title="I'm contributing"></span>
 	<span class="support-type supporting <%= repo.support.supporting ? 'active' : '' %>" data-type="supporting" data-toggle="tooltip" title="I'm supporting in other way"></span>
-</div>
-
-<% if (obj.canDelete) { %>
-	<div class="col-1">
+	<% if (obj.canDelete) { %>
 		<span class="btn btn-danger btn-small remove" proxy-tap="remove-repo" data-toggle="tooltip" title="Remove repo">Remove</span>
-	</div>
-<% } %>
+	<% } %>
+</div>
 
 <div class="col contribution-types">
 	<% var contributions = repo.contributions %>
