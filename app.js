@@ -12,7 +12,7 @@ var http = require('http'),
 	mongoose = require('mongoose'),
 	app = express();
 
-mongoose.connect('mongodb://' + cfg.mongodb.host + '/' + cfg.mongodb.name)
+mongoose.connect(cfg.mongodbUri)
 
 // Bootstrap models
 require('./app/models')
