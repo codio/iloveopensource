@@ -4,11 +4,30 @@
 <% include parts/head.ejs %>
 
 <body>
-	<% include parts/header.ejs %>
-	<section id="page-project">
+<% include parts/header.ejs %>
+<section id="page-project">
+	<div class="container">
+		<% if (!isLoggedIn) { %>
+		<div class="welcome">
+			Welcome to I Love Open Source. You may make a donation by clicking below. If you sign in , you can add an I Love Open Source page to your site as well, showing which Open Source projects you use and helping to get recognition for those projects.
+
+			<a href="/auth/github" class="btn btn-info login">
+				<i class="icon-github"></i>
+				<span>Sign in with GitHub</small></span>
+			</a>
+		</div>
+		<% } %>
+
 		<div class="repos-list">
+			<div class="header">
+				<div class="header">
+					<div class="col repo-name"></div>
+					<div class="col support-types">Select to indicate support</div>
+					<div class="col contribution-types">Click below to donate</div>
+				</div>
+			</div>
 			<div class="repo">
-				<div class="col repo-name">
+				<div class="col repo-name <%= project.homepage ? 'with-home' : '' %>">
 					<a href="<%= project.url %>" class="icon-github go-to" target="_blank"></a>
 					<% if (project.homepage) { %>
 					<a href="<%= project.homepage %>" class="icon-home go-to" target="_blank"></a>
@@ -33,17 +52,17 @@
 					</div>
 				</div>
 
+				<div class="col support-types">
+					<span class="support-type donating"></span>
+					<span class="support-type contributing"></span>
+					<span class="support-type supporting"></span>
+				</div>
+
 				<div class="col contribution-types">
 					<% var contributions = project.owner.contributions; %>
 					<% var projectUrl = project.url; %>
 					<% var projectId = project._id; %>
 					<% include parts/contributions.ejs %>
-
-					<div class="col support-types">
-						<span class="support-type donating"><%= users.donators.length %></span>
-						<span class="support-type contributing"><%= users.contributors.length %></span>
-						<span class="support-type supporting"><%= users.supporters.length %></span>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -52,32 +71,33 @@
 			<h3>People who support this project</h3>
 
 			<div class="col donators">
-				<h4>Cash Donors</h4>
+				<h4>Cash Donors <%= users.donators.length ? '('+users.donators.length+')' : '' %></h4>
 				<% _.each(users.donators, function(support) { %>
 				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
 				<% }) %>
 			</div>
 			<div class="col contributors">
-				<h4>Code Contributors</h4>
+				<h4>Code Contributors <%= users.contributors.length ? '('+users.contributors.length+')' : '' %></h4>
 				<% _.each(users.contributors, function(support) { %>
 				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
 				<% }) %>
 			</div>
 			<div class="col supporters">
-				<h4>Vocal Supporters</h4>
+				<h4>Vocal Supporters <%= users.supporters.length ? '('+users.supporters.length+')' : '' %></h4>
 				<% _.each(users.supporters, function(support) { %>
 				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
 				<% }) %>
 			</div>
 		</div>
-		<% include modals/index.ejs %>
-	</section>
-	<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
-	<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
-	<script type="text/javascript">
-		require.config({
-			baseUrl: "<%=jsPath %>"
-		})
-		require(['plugins/activate-plugins'])
-	</script>
-	<% include parts/foot.ejs %>
+	</div>
+	<% include modals/index.ejs %>
+</section>
+<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
+<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
+<script type="text/javascript">
+	require.config({
+		baseUrl: "<%=jsPath %>"
+	})
+	require(['plugins/activate-plugins'])
+</script>
+<% include parts/foot.ejs %>

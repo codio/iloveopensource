@@ -27,8 +27,29 @@
 		<div class="btn btn-primary">
 			<a href="/users/<%= currentUserName %>">Preview</a>
 		</div>
+		<div class="btn btn-info share-trigger" data-alt-text="Hide">
+			Share
+		</div>
 	</li>
 </ul>
+<div class="share">
+	<div class="help">
+		Please copy and paste the Markdown or HTML link into your site. This is very important as it publicly expresses your support and encourages others to do so as well.
+	</div>
+
+	<div class="form-group">
+		<label for="input-md" class="col-lg-2 control-label">MarkDown:</label>
+		<div class="col-lg-9">
+			<input id="input-md" class="form-control" disabled="" value="[![Open Source Supporter](http://ilos.dev:3000/images/logo-lightbg.png)](http://ilos.dev:3000/users/krasu)">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="input-html" class="col-lg-2 control-label">HTML:</label>
+		<div class="col-lg-9">
+			<input id="input-html" class="form-control" disabled="" value="&lt;a href=&quote;http://ilos.dev:3000/users/krasu&quote;&gt;&lt;img src=&quote;http://ilos.dev:3000/images/logo-lightbg.png&quote; alt="Open Source Supporter"/&gt;&lt;/a&gt;">
+		</div>
+	</div>
+</div>
 <div class="tab-content">
 	<div class="tab-pane" id="own-repos"></div>
 	<div class="tab-pane" id="starred-repos"></div>

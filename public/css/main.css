@@ -9778,82 +9778,109 @@ footer .copyright a:hover img {
   background: #666666 url('/images/bg.png') repeat;
 }
 
-#repos-editor .to-account {
-  margin-top: 20px;
-}
-
-#repos-editor #repos-selector .nav-tabs li .icon-spinner {
+#repos-selector .nav-tabs li .icon-spinner {
   display: none;
 }
 
-#repos-editor #repos-selector .nav-tabs li.disabled .icon-spinner {
+#repos-selector .nav-tabs li.disabled .icon-spinner {
   display: inline;
 }
 
-#repos-editor #repos-selector .nav-tabs li.selected-repos {
+#repos-selector .nav-tabs li.selected-repos {
   margin-right: 2em;
 }
 
-#repos-editor #repos-selector .nav-tabs li.selected-repos a {
+#repos-selector .nav-tabs li.selected-repos a {
   font-weight: 700;
   text-transform: uppercase;
 }
 
-#repos-editor #repos-selector .nav-tabs li .btn a {
+#repos-selector .nav-tabs li .btn {
+  margin-left: 20px;
+}
+
+#repos-selector .nav-tabs li .btn a {
   color: #fff;
   text-decoration: none;
 }
 
-#repos-editor #repos-selector .search-form {
+#repos-selector .share {
+  display: none;
+  margin-bottom: 4em;
+  border-bottom: 1px solid #000;
+}
+
+#repos-selector .share .help {
+  font-size: 1.1em;
+  color: #FFF;
+  padding: 20px 15px;
+}
+
+#repos-selector .share .form-group {
+  margin-bottom: 1em;
+}
+
+#repos-selector .share .form-group:before,
+#repos-selector .share .form-group:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+
+#repos-selector .share .form-group:after {
+  clear: both;
+}
+
+#repos-selector .share .form-group:before,
+#repos-selector .share .form-group:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+
+#repos-selector .share .form-group:after {
+  clear: both;
+}
+
+#repos-selector .search-form {
   margin: 20px 0;
 }
 
-#repos-editor #repos-selector .search-form input {
+#repos-selector .search-form input {
   width: 30em;
   display: inline-block;
 }
 
-#repos-editor #repos-selector .search-form input,
-#repos-editor #repos-selector .search-form button {
+#repos-selector .search-form input,
+#repos-selector .search-form button {
   margin-right: 2em;
 }
 
-#repos-editor #repos-selector .query-too-short {
+#repos-selector .query-too-short {
   display: none;
 }
 
-#repos-editor #repos-selector .repos-list {
+#repos-selector .repos-list {
   padding: 20px 0;
 }
 
-#page-project .support-types {
-  width: 100%;
-  float: none;
-  max-width: 100%;
-  padding: 0;
-}
-
-#page-project .support-types .support-type {
-  cursor: default;
-  width: 5em;
-  text-align: right;
-  padding: 0 .2em 0 1.5em;
-  line-height: 26px;
+#page-project .welcome {
+  padding: 20px;
+  font-size: 1.3em;
+  color: #FFF;
   position: relative;
+  width: 960px;
+  margin: auto;
+  padding-right: 200px;
 }
 
-#page-project .support-types .support-type:before {
-  text-align: left;
-  opacity: 1;
+#page-project .welcome .login {
   position: absolute;
-  left: .2em;
-  top: 1.05em;
-  line-height: 1;
-}
-
-#page-project .contribution-types {
-  float: right;
-  width: auto;
+  right: 0px;
+  top: 50%;
+  margin-top: -24px;
 }
 
 #page-project .users {
@@ -9873,10 +9900,6 @@ footer .copyright a:hover img {
   border: 1px solid #e3e3e3;
   border-top: 0;
   border-bottom: 0;
-}
-
-#page-project .users .col h4 {
-  text-align: center;
 }
 
 #page-project .users .col a:after {

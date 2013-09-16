@@ -16,7 +16,7 @@ define(function (require) {
 
 	return Backbone.View.extend({
 		events: {
-			'click #save-changes': 'saveChanges'
+			'click .share-trigger': 'toggleShare'
 		},
 		initialize: function () {
 			this.listenTo(store().hub, 'repos-loaded', this.renderRepoList)
@@ -27,22 +27,19 @@ define(function (require) {
 		updateSelectedCount: function (model, collection) {
 			this.$('#selected-count').text(collection.length)
 		},
-		saveChanges: function () {
-			var btn = $('#save-changes')
-			if (btn.attr('disabled')) return
+		toggleShare: function () {
+			var btn = this.$('.share-trigger'),
+				altText = btn.data().altText,
+				el = this.$('.share')
 
-			btn.attr('disabled', true)
+			if (!el.is(':visible')) {
+				el.slideDown()
+			} else {
+				el.slideUp()
+			}
 
-			store().selected.save()
-				.done(function () {
-					toastr.success('All changes saved!', 'Success!')
-				})
-				.fail(function (xhr) {
-					toastr.error(xhr.responseText, 'Error!')
-				})
-				.always(function () {
-					btn.attr('disabled', false)
-				})
+			btn.data().altText = btn.text()
+			btn.text(altText)
 		},
 		render: function () {
 			var self = this

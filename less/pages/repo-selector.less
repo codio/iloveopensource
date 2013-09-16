@@ -1,59 +1,74 @@
-#repos-editor {
+#repos-selector {
 
-  .to-account {
-	margin-top: 20px;
-  }
+  .nav-tabs {
+	li {
 
-  #repos-selector {
+	  .icon-spinner {
+		display: none;
+	  }
 
-	.nav-tabs {
-	  li {
-
+	  &.disabled {
 		.icon-spinner {
-		  display: none;
+		  display: inline;
 		}
+	  }
 
-		&.disabled {
-		  .icon-spinner {
-			display: inline;
-		  }
+	  &.selected-repos {
+		margin-right: 2em;
+		a {
+		  font-weight: 700;
+		  text-transform: uppercase;
 		}
+	  }
 
-		&.selected-repos {
-		  margin-right: 2em;
-		  a {
-			font-weight: 700;
-			text-transform: uppercase;
-		  }
-		}
+	  .btn {
+		margin-left: 20px;
 
-		.btn a {
+		a {
 		  color: #fff;
 		  text-decoration: none;
 		}
 	  }
 	}
+  }
 
-	.search-form {
-	  margin: 20px 0;
+  .share {
+	display: none;
+	margin-bottom: 4em;
+	border-bottom: 1px solid #000;
 
-	  input {
-		width: 30em;
-		display: inline-block;
-	  }
-
-	  input, button {
-		margin-right: 2em;
-	  }
+	.help {
+	  font-size: 1.1em;
+	  color: #FFF;
+	  padding: 20px 15px;
 	}
 
-	.query-too-short {
-	  display: none;
-	}
-
-	.repos-list {
-	  padding: 20px 0;
+	.form-group {
+	  .clearfix;
+	  margin-bottom: 1em;
 	}
   }
+
+  .search-form {
+	margin: 20px 0;
+
+	input {
+	  width: 30em;
+	  display: inline-block;
+	}
+
+	input, button {
+	  margin-right: 2em;
+	}
+  }
+
+  .query-too-short {
+	display: none;
+  }
+
+  .repos-list {
+	padding: 20px 0;
+  }
 }
+
 
