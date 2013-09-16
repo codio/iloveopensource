@@ -9651,7 +9651,7 @@ footer .copyright a:hover img {
 }
 
 .repos-list .repo .col.support-types .support-type.active {
-  border-color: #000;
+  border-color: rgba(255, 153, 0, 0.5);
 }
 
 .repos-list .repo .col.support-types .support-type.active:before {
@@ -9715,7 +9715,7 @@ footer .copyright a:hover img {
 }
 
 .repos-list .repo .col.support-types .remove.active {
-  border-color: #000;
+  border-color: rgba(255, 153, 0, 0.5);
 }
 
 .repos-list .repo .col.support-types .remove.active:before {
