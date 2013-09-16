@@ -16,7 +16,8 @@ define(function (require) {
 
 	return Backbone.View.extend({
 		events: {
-			'click .share-trigger': 'toggleShare'
+			'click .share-trigger': 'toggleShare',
+			'click .share input': 'selectAll'
 		},
 		initialize: function () {
 			this.listenTo(store().hub, 'repos-loaded', this.renderRepoList)
@@ -26,6 +27,10 @@ define(function (require) {
 		},
 		updateSelectedCount: function (model, collection) {
 			this.$('#selected-count').text(collection.length)
+		},
+		selectAll: function(event) {
+			console.log($(event.currentTarget))
+			$(event.currentTarget).select();
 		},
 		toggleShare: function () {
 			var btn = this.$('.share-trigger'),
