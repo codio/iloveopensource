@@ -41,7 +41,7 @@
 					<div class="header">
 						<div class="col repo-name"></div>
 						<div class="col support-types">I am supporting</div>
-						<div class="col contribution-types">Types of contributions welcomed by Maintainer</div>
+						<div class="col contribution-types">Types of contributions welcomed by Maintainer <br> <small>(you can contribute by clicking below)</small></div>
 					</div>
 					<% } %>
 					<% _.each(supports, function(repo) { %>
@@ -69,9 +69,9 @@
 						</div>
 
 						<div class="col support-types">
-							<span class="support-type donating <% if (!repo.donating) { %>"><% } else { %> active" data-toggle="tooltip" title="I'm donating"><% } %></span>
-							<span class="support-type contributing <% if (!repo.contributing) { %>"><% } else { %> active" data-toggle="tooltip" title="I'm contributing"><% } %></span>
-							<span class="support-type supporting <% if (!repo.supporting) { %>"><% } else { %> active" data-toggle="tooltip" title="I'm supporting in other way"><% } %></span>
+							<span class="support-type donating <% if (!repo.donating) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m donating cash"><% } %></span>
+							<span class="support-type contributing <% if (!repo.contributing) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m contributing code"><% } %></span>
+							<span class="support-type supporting <% if (!repo.supporting) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m a vocal supporter"><% } %></span>
 						</div>
 
 						<div class="col contribution-types">

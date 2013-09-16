@@ -5,17 +5,17 @@
 </div>
 <% } %>
 <% if (contributions.gittip) { %>
-<div class="contribution gittip" data-toggle="tooltip" title="donate on Gittip">
-	<a href="https://www.gittip.com/<%= contributions.gittip %>/">gittip</a>
+<div class="contribution gittip" data-toggle="tooltip" title="Donate to Gittip">
+	<a href="https://www.gittip.com/<%= contributions.gittip %>/" target="_blank">gittip</a>
 </div>
 <% } %>
 <% if (contributions.flattr) { %>
-<div class="contribution flattr" data-toggle="tooltip" title="donate on Flattr">
-	<a href="https://flattr.com/profile/<%= contributions.flattr %>/things"><img src="https://flattr.com/_img/icons/flattr_logo_16.png" alt="flattr"/></a>
+<div class="contribution flattr" data-toggle="tooltip" title="Donate to Flattr">
+	<a href="https://flattr.com/profile/<%= contributions.flattr %>/things" target="_blank"><img src="https://flattr.com/_img/icons/flattr_logo_16.png" alt="flattr"/></a>
 </div>
 <% } %>
 <% if (contributions.note) { %>
-<div class="contribution other note-from-author" data-toggle="tooltip" title="comment from an author">
+<div class="contribution other note-from-author" data-toggle="tooltip" title="Message from the repo Maintainer">
 	<div data-toggle="modal">
 		<i class="icon-info-sign"></i>
 	</div>
@@ -25,14 +25,14 @@
 </div>
 <% } %>
 <% if (contributions.emailMe) { %>
-<div class="contribution email-me email-to-author" data-toggle="tooltip" title="send a comment to the author" data-project="<%= projectId %>">
+<div class="contribution email-me email-to-author" data-toggle="tooltip" title="Send a donation related message to the Maintainer" data-project="<%= projectId %>">
 	<i class="icon-envelope" data-toggle="modal" data-target="#email-to-author"></i>
 </div>
 <% } %>
 <% if (contributions.code) { %>
 <div class="contribution code">
 	<a href="<%= projectUrl %>" target="_blank">
-		<i class="icon-code" data-toggle="tooltip" title="Contribute some code"></i>
+		<i class="icon-code" data-toggle="tooltip" title="Maintainer would really like code contributions"></i>
 	</a>
 </div>
 <% } %>

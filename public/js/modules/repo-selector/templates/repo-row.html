@@ -25,9 +25,9 @@
 </div>
 
 <div class="col support-types">
-	<span class="support-type donating <%= repo.support.donating ? 'active' : '' %>" data-type="donating" data-toggle="tooltip" data-toggle="tooltip" title="I'm donating"></span>
-	<span class="support-type contributing <%= repo.support.contributing ? 'active' : '' %>" data-type="contributing" data-toggle="tooltip" data-toggle="tooltip" title="I'm contributing"></span>
-	<span class="support-type supporting <%= repo.support.supporting ? 'active' : '' %>" data-type="supporting" data-toggle="tooltip" title="I'm supporting in other way"></span>
+	<span class="support-type donating <%= repo.support.donating ? 'active' : '' %>" data-type="donating" data-toggle="tooltip" data-toggle="tooltip" title="I’m donating cash"></span>
+	<span class="support-type contributing <%= repo.support.contributing ? 'active' : '' %>" data-type="contributing" data-toggle="tooltip" data-toggle="tooltip" title="I’m contributing code"></span>
+	<span class="support-type supporting <%= repo.support.supporting ? 'active' : '' %>" data-type="supporting" data-toggle="tooltip" title="I’m a vocal supporter"></span>
 	<% if (obj.canDelete) { %>
 		<span class="remove" data-toggle="tooltip" title="Remove repo"></span>
 	<% } %>
@@ -44,19 +44,19 @@
 		<% } %>
 
 		<% if (contributions.gittip) { %>
-			<div class="contribution gittip" data-toggle="tooltip" title="donate on Gittip">
-				<a href="https://www.gittip.com/<%= contributions.gittip %>/">gittip</a>
+			<div class="contribution gittip" data-toggle="tooltip" title="Donate to Gittip">
+				<a href="https://www.gittip.com/<%= contributions.gittip %>/" target="_blank">gittip</a>
 			</div>
 		<% } %>
 
 		<% if (contributions.flattr) { %>
-			<div class="contribution flattr" data-toggle="tooltip" title="donate on Flattr">
-				<a href="https://flattr.com/profile/<%= contributions.flattr %>/things"><img src="https://flattr.com/_img/icons/flattr_logo_16.png" alt="flattr"/></a>
+			<div class="contribution flattr" data-toggle="tooltip" title="Donate to Flattr">
+				<a href="https://flattr.com/profile/<%= contributions.flattr %>/things" target="_blank"><img src="https://flattr.com/_img/icons/flattr_logo_16.png" alt="flattr"/></a>
 			</div>
 		<% } %>
 
 		<% if (contributions.note) { %>
-			<div class="contribution other note-from-author" data-toggle="tooltip" title="comment from an author">
+			<div class="contribution other note-from-author" data-toggle="tooltip" title="Message from the repo Maintainer">
 				<i class="icon-info-sign"></i>
 
 				<div class="hidden content">
@@ -66,7 +66,7 @@
 		<% } %>
 
 		<% if (contributions.emailMe) { %>
-			<div class="contribution email-me email-to-author" data-toggle="tooltip" title="send a comment to the author" data-project="<%= repo._id || '' %>">
+			<div class="contribution email-me email-to-author" data-toggle="tooltip" title="Send a donation related message to the Maintainer" data-project="<%= repo._id || '' %>">
 				<i class="icon-envelope"></i>
 			</div>
 		<% } %>
@@ -74,7 +74,7 @@
 		<% if (contributions.code) { %>
 			<div class="contribution code">
 				<a href="<%= repo.url %>" target="_blank">
-					<i class="icon-code" data-toggle="tooltip" title="Contribute some code"></i>
+					<i class="icon-code" data-toggle="tooltip" title="Maintainer would really like code contributions"></i>
 				</a>
 			</div>
 		<% } %>
