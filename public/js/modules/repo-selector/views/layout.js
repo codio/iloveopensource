@@ -29,7 +29,6 @@ define(function (require) {
 			this.$('#selected-count').text(collection.length)
 		},
 		selectAll: function(event) {
-			console.log($(event.currentTarget))
 			$(event.currentTarget).select();
 		},
 		toggleShare: function () {
