@@ -61,8 +61,10 @@ define(function (require) {
 			}))
 
 			if (!this.model.isProject) {
-				var projectData = this.model.toJSON()
-				this.$('.want-contribute, .email-to-author').data().projectData = this.model.toJSON()
+				var projectData = this.model.toJSON(),
+					els = this.$('.want-contribute, .email-to-author')
+
+				if (els.length) els.data().projectData = this.model.toJSON()
 			}
 			return this
 		}

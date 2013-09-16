@@ -32,8 +32,6 @@ define(function (require) {
 			})
 			.on('click', '.want-contribute', function (event) {
 				var el = $(event.currentTarget)
-				var textarea = requestContribution.find('textarea')
-				textarea.val(textarea.data().initText)
 
 				requestContribution.modal('show').data({
 					url: 'request-contribution',

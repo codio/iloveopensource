@@ -19,3 +19,4 @@ config/config.*.js
 
 npm-debug.log
 *.sublime*
+.idea/

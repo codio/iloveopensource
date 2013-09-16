@@ -190,8 +190,12 @@ footer {
 		left: 0;
 		top: .2em;
 
-		&.icon-github:hover {
+		&:hover {
 		  text-decoration: none;
+		}
+
+		&.icon-home {
+		  margin-top: 1.2em;
 		}
 	  }
 
@@ -225,7 +229,7 @@ footer {
 		display: block;
 		position: relative;
 		border: 2px solid #000;
-		border-color: fade(#000, 40);
+		border-color: fade(#ccc, 10);
 		float: left;
 		margin: 0 .5em;
 
@@ -233,6 +237,7 @@ footer {
 		  border-color: #000;
 
 		  &:before {
+			color: #ff9900;
 			opacity: 1;
 		  }
 		}
@@ -272,4 +277,8 @@ footer {
 	  }
 	}
   }
+}
+
+.modal-content {
+  background: #666 url('/images/bg.png') repeat;
 }

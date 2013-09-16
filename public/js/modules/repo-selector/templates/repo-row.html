@@ -2,6 +2,10 @@
 
 	<a href="<%= repo.url %>" class="icon-github go-to" target="_blank"></a>
 
+	<% if (repo.homepage) { %>
+	<a href="<%= repo.homepage %>" class="icon-home go-to" target="_blank"></a>
+	<% } %>
+
 	<h4>
 		<% if (repo.owner.user) { %>
 			<a href="/users/<%=repo.owner.username %>"><%=repo.owner.username %></a>
@@ -45,7 +49,7 @@
 
 		<% if (contributions.gittip) { %>
 			<div class="contribution gittip" data-toggle="tooltip" title="Donate to Gittip">
-				<a href="https://www.gittip.com/<%= contributions.gittip %>/" target="_blank">gittip</a>
+				<a href="https://www.gittip.com/<%= contributions.gittip %>/" target="_blank"><img src="/images/gittip.png" alt="gittip"/></a>
 			</div>
 		<% } %>
 
