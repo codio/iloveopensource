@@ -9915,6 +9915,19 @@ footer .copyright a:hover img {
   margin-top: 20px;
 }
 
+#user-repos .welcome {
+  position: relative;
+  width: 60%;
+  right: 0;
+  padding: 0 20px 20px;
+  font-size: 1.3em;
+  color: #FFF;
+}
+
+#user-repos .welcome .login {
+  margin-top: 5px;
+}
+
 #user-repos .data {
   margin-left: 20px;
 }
