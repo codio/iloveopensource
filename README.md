@@ -1,7 +1,7 @@
 I Love Open Source
 =====================
 
-![ilos](https://github.com/codio/iloveopensource/blob/master/public/images/logo-lightbg.png)
+![ilos](https://github.com/codio/iloveopensource/blob/master/public/images/logo-lightbg.png?raw=true)
 
 Proclaim your support for your favourite Open Source projects
 
