@@ -84,5 +84,5 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 	grunt.registerTask('build', ['less', 'autoprefixer']);
 	grunt.registerTask('build:prod', ['less', 'autoprefixer', 'cssmin', 'requirejs']);
-	grunt.registerTask('heroku:', 'build:prod');
+	grunt.registerTask('heroku:', ['bower','build:prod']);
 };
