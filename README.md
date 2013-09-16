@@ -8,8 +8,8 @@ Please go to http://iloveopensource.io to find out more.
 ##Purpose
 I Love Open Source is a way of encouraging users of Open Source code to express their gratitude by either making a simple acknowledgement, or by making an actual donation.
 
-##I Love Open Source Acknowledgements
-This what we hope eeryone end up doing : "We have used various Open Source technologies in the making of I Love Open Source. Click on the link below to see what we are using. It's a great way of acknowledging their hard work."
+##Our "I Love Open Source Acknowledgements"
+We've used various Open Source technologies in the making of I Love Open Source. Click on the link below so you can see who we're saying thanks to.
 
 ![ilos](https://github.com/codio/iloveopensource/blob/master/public/images/logo-lightbg.png?raw=true)
 
