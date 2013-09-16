@@ -39,7 +39,7 @@ app.use(express.cookieParser(cfg.sessionSecret));
 app.use(express.session({
 	secret: cfg.sessionSecret,
 	store: new MongoStore({
-		db: cfg.mongodb.name
+		url: cfg.mongodbUri
 	})
 }));
 app.use(passport.initialize());
