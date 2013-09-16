@@ -18,26 +18,23 @@ config.env = process.env.NODE_ENV || 'development';
 config.isDev = config.env === 'development';
 
 //config.hostname used to create site links
-config.hostname = 'localhost';
+config.hostname = 'iloveopensource.io';
 //config.isHttps used to create site links
 config.isHttps = false;
 //config.usePort used to create site links
 config.usePort = false;
-//config.mongodb connection settings
-config.mongodb = {
-	name: 'oss',
-	host: 'localhost'
-}
+//config.mongodb connection Uri string
+config.mongodbUri = process.env.MONGOHQ_URL || 'mongodb://localhost/ilos'
 //config.github app settings
 config.github = {
-	clientId: 'clientId',
-	clientSecret: 'clientSecret'
+	clientId: process.env.GITHUB_CLIENT_ID || '',
+	clientSecret: process.env.GITHUB_CLIENT_SECRET || ''
 }
 //config.emails.from - name of sender
 //config.emails.to - email of support
 //config.emails.transport - nodemailer email transport
 config.emails = {
-	from: 'robo@ilos.com',
+	from: 'robo@'+config.hostname,
 	to: 'support@codio.com',
 	transport: nodemailer.createTransport('sendmail', {
 		path: '/usr/sbin/sendmail',
@@ -45,11 +42,11 @@ config.emails = {
 	})
 }
 //config.sessionSecret to hash sessions
-config.sessionSecret = 's,dfjsklfj3k45j34k5kjLKj87093476ukvj jlk';
+config.sessionSecret = process.env.SESSION_SECRET || 's,dfjsklfj3k45j34k5kjLKj87093476ukvj jlk';
 //config.port on which app should run
-config.port = '8080';
+config.port = process.env.PORT || '5000';
 //config.port on which app should run
-config.jsPath = '/js/'
+config.jsPath = '/js/build/'
 
 config.fullUrl = function () {
 	return 'http'
