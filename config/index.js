@@ -18,7 +18,7 @@ config.env = process.env.NODE_ENV || 'development';
 config.isDev = config.env === 'development';
 
 //config.hostname used to create site links
-config.hostname = 'iloveopensource.io';
+config.hostname = process.env.HOSTNAME || 'iloveopensource.io';
 //config.isHttps used to create site links
 config.isHttps = false;
 //config.usePort used to create site links
