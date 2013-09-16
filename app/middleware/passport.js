@@ -20,7 +20,8 @@ passport.deserializeUser(function (obj, done) {
 	});
 });
 
-var callbackUrl = cfg.fullUrl()+'/auth/github/callback'
+var callbackUrl = cfg.fullUrl() + '/auth/github/callback'
+console.log('Github callback url is', callbackUrl)
 
 passport.use(new GitHubStrategy({
 		clientID: cfg.github.clientId,
