@@ -1,9 +1,19 @@
 I Love Open Source
 =====================
 
+Proclaim your support for your favourite Open Source projects and help OS developers feel the love.
+
+Please go to http://iloveopensource.io to find out more.
+
+##Purpose
+I Love Open Source is a way of encouraging users of Open Source code to express their gratitude by either making a simple acknowledgement, or by making an actual donation.
+
+##Our "I Love Open Source Acknowledgements"
+We've used various Open Source technologies in the making of I Love Open Source. Click on the link below so you can see who we're saying thanks to.
+
 ![ilos](https://github.com/codio/iloveopensource/blob/master/public/images/logo-lightbg.png?raw=true)
 
-Proclaim your support for your favourite Open Source projects
+#For Developers
 
 ## Getting Started
 
