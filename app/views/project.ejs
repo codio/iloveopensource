@@ -67,28 +67,28 @@
 		<div class="clearfix users">
 			<h3>People who support this project</h3>
 
-			<div class="col donators">
+			<div class="col donating">
 				<h4>
 					<span class="support-type donating active"></span>
-					Cash Donors (<%= users.donators.length %>)
+					Cash Donors (<span class="counter"><%= users.donators.length %></span>)
 				</h4>
 				<% _.each(users.donators, function(support) { %>
 				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
 				<% }) %>
 			</div>
-			<div class="col contributors">
+			<div class="col contributing">
 				<h4>
 					<span class="support-type contributing active"></span>
-					Code Contributors (<%= users.contributors.length %>)
+					Code Contributors (<span class="counter"><%= users.contributors.length %></span>)
 				</h4>
 				<% _.each(users.contributors, function(support) { %>
 				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
 				<% }) %>
 			</div>
-			<div class="col supporters">
+			<div class="col supporting">
 				<h4>
 					<span class="support-type supporting active"></span>
-					Vocal Supporters (<%= users.supporters.length %>)
+					Vocal Supporters (<span class="counter"><%= users.supporters.length %></span>)
 				</h4>
 				<% _.each(users.supporters, function(support) { %>
 				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
@@ -104,6 +104,7 @@
 	require.config({
 		baseUrl: "<%=jsPath %>"
 	})
+	window.currentUserName = '<%= isLoggedIn && loggedUser.username %>'
 	require(['modules/project/main'])
 </script>
 <% include parts/foot.ejs %>
