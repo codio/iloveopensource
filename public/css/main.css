@@ -9518,6 +9518,68 @@ form .form-group .control-label {
   font-weight: 400;
 }
 
+.support-type {
+  cursor: pointer;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  width: 2em;
+  height: 2em;
+  display: block;
+  position: relative;
+  border: 2px solid #000;
+  border-color: rgba(204, 204, 204, 0.1);
+  float: left;
+  margin: 0 .5em;
+}
+
+.support-type.active {
+  border-color: rgba(255, 153, 0, 0.5);
+}
+
+.support-type.active:before {
+  color: #ff9900;
+  opacity: 1;
+}
+
+.support-type:before {
+  opacity: .5;
+  position: absolute;
+  top: 50%;
+  margin-top: -0.7em;
+  text-align: center;
+  width: 100%;
+}
+
+.support-type.contributing:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f0c0";
+}
+
+.support-type.donating:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f155";
+}
+
+.support-type.supporting:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f004";
+}
+
 .repos-list .header,
 .repos-list .repo {
   padding: 20px 10px;
@@ -9670,68 +9732,6 @@ form .form-group .control-label {
   margin-top: 3px;
 }
 
-.repos-list .repo .col.support-types .support-type {
-  cursor: pointer;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  width: 2em;
-  height: 2em;
-  display: block;
-  position: relative;
-  border: 2px solid #000;
-  border-color: rgba(204, 204, 204, 0.1);
-  float: left;
-  margin: 0 .5em;
-}
-
-.repos-list .repo .col.support-types .support-type.active {
-  border-color: rgba(255, 153, 0, 0.5);
-}
-
-.repos-list .repo .col.support-types .support-type.active:before {
-  color: #ff9900;
-  opacity: 1;
-}
-
-.repos-list .repo .col.support-types .support-type:before {
-  opacity: .5;
-  position: absolute;
-  top: 50%;
-  margin-top: -0.7em;
-  text-align: center;
-  width: 100%;
-}
-
-.repos-list .repo .col.support-types .support-type.contributing:before {
-  font-family: FontAwesome;
-  font-weight: normal;
-  font-style: normal;
-  text-decoration: inherit;
-  -webkit-font-smoothing: antialiased;
-  *margin-right: .3em;
-  content: "\f0c0";
-}
-
-.repos-list .repo .col.support-types .support-type.donating:before {
-  font-family: FontAwesome;
-  font-weight: normal;
-  font-style: normal;
-  text-decoration: inherit;
-  -webkit-font-smoothing: antialiased;
-  *margin-right: .3em;
-  content: "\f155";
-}
-
-.repos-list .repo .col.support-types .support-type.supporting:before {
-  font-family: FontAwesome;
-  font-weight: normal;
-  font-style: normal;
-  text-decoration: inherit;
-  -webkit-font-smoothing: antialiased;
-  *margin-right: .3em;
-  content: "\f004";
-}
-
 .repos-list .repo .col.support-types .remove {
   cursor: pointer;
   -webkit-border-radius: 5px;
@@ -9745,7 +9745,7 @@ form .form-group .control-label {
   float: left;
   margin: 0 .5em;
   opacity: 1;
-  border-color: #000;
+  border: 0;
 }
 
 .repos-list .repo .col.support-types .remove.active {
@@ -9806,6 +9806,12 @@ form .form-group .control-label {
   content: "\f00d";
   color: #f33;
   opacity: 1;
+}
+
+#repos-selector .is-empty.message {
+  text-align: center;
+  padding-top: 30px;
+  font-size: 22px;
 }
 
 #repos-selector .nav-tabs li .icon-spinner {
@@ -9917,6 +9923,17 @@ form .form-group .control-label {
   margin-top: -24px;
 }
 
+#page-project h4 {
+  padding-left: 1em;
+}
+
+#page-project h4 .support-type {
+  cursor: default;
+  font-size: 75%;
+  border: 0;
+  margin: -0.15em 0 0 -2em;
+}
+
 #page-project .users {
   padding: 20px;
 }
@@ -9931,7 +9948,6 @@ form .form-group .control-label {
 }
 
 #page-project .users .col:nth-child(odd) {
-  border: 1px solid #e3e3e3;
   border-top: 0;
   border-bottom: 0;
 }

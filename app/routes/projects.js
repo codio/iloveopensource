@@ -31,11 +31,19 @@ module.exports = function (app) {
 				},
 				donators: function (cb) {
 					Support.find({project: project._id, donating: true}).populate('user').exec(cb)
+				},
+				userSupport: function (cb) {
+					if (!req.user) return cb(null, {})
+					Support.findOne({project: project._id, user: req.user._id}).exec(cb)
 				}
-			}, function (error, resuilt) {
+			}, function (error, result) {
 				if (error) return res.send(500, err)
 
-				res.render('project', {project: project, users: resuilt})
+				res.render('project', {
+					project: project,
+					users: _.omit(result, 'userSupport'),
+					userSupport: result.userSupport
+				})
 			})
 		})
 	})
@@ -55,6 +63,27 @@ module.exports = function (app) {
 				project = project.toObject()
 				project.support = supporting
 				res.send(project)
+			})
+		})
+	})
+
+	app.get('/subscribe/:type(supporting|donating|contributing)/:id/:state', ensureAuthenticated, function (req, res) {
+		var type = req.param('type')
+		var id = req.param('id')
+		if (!type || !id) return res.send(500, 'empty request')
+
+		var data = {}
+		data[type] = req.param('state') == 'true'
+
+		Project.findById(id, function (err) {
+			if (err) return res.send(400, 'project not found');
+
+			Support.update({
+				'project': id,
+				'user': req.user._id
+			}, { $set: data }, {upsert: true}, function (err) {
+				if (err) return res.send(500, 'Failed to update your support')
+				res.send('ok')
 			})
 		})
 	})

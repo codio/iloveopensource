@@ -61,7 +61,7 @@ define(function (require) {
 				hasMore: this.collection.hasMore
 			}))
 
-			this.checkIsEmpty && this.checkIsEmpty()
+			this.checkIsEmpty()
 			this.renderRepos()
 			this.$('[data-toggle="popover"]').popover({
 				container: 'body',

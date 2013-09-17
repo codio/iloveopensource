@@ -1,3 +1,46 @@
+.support-type {
+  cursor: pointer;
+  border-radius: 5px;
+  width: 2em;
+  height: 2em;
+  display: block;
+  position: relative;
+  border: 2px solid #000;
+  border-color: fade(#ccc, 10);
+  float: left;
+  margin: 0 .5em;
+
+  &.active {
+	border-color: fade(#ff9900, 50);
+
+	&:before {
+	  color: #ff9900;
+	  opacity: 1;
+	}
+  }
+
+  &:before {
+	opacity: .5;
+	position: absolute;
+	top: 50%;
+	margin-top: -.7em;
+	text-align: center;
+	width: 100%;
+  }
+
+  &.contributing:before {
+	.icon(@group);
+  }
+
+  &.donating:before {
+	.icon(@usd);
+  }
+
+  &.supporting:before {
+	.icon(@heart);
+  }
+}
+
 .repos-list {
   .header, .repo {
 	.clearfix;
@@ -116,53 +159,10 @@
 
 	.col.support-types {
 
-	  .support-type {
-		cursor: pointer;
-		border-radius: 5px;
-		width: 2em;
-		height: 2em;
-		display: block;
-		position: relative;
-		border: 2px solid #000;
-		border-color: fade(#ccc, 10);
-		float: left;
-		margin: 0 .5em;
-
-		&.active {
-		  border-color: fade(#ff9900, 50);
-
-		  &:before {
-			color: #ff9900;
-			opacity: 1;
-		  }
-		}
-
-		&:before {
-		  opacity: .5;
-		  position: absolute;
-		  top: 50%;
-		  margin-top: -.7em;
-		  text-align: center;
-		  width: 100%;
-		}
-
-		&.contributing:before {
-		  .icon(@group);
-		}
-
-		&.donating:before {
-		  .icon(@usd);
-		}
-
-		&.supporting:before {
-		  .icon(@heart);
-		}
-	  }
-
 	  .remove {
 		.support-type;
 		opacity: 1;
-		border-color: #000;
+		border: 0;
 
 		&:before {
 		  .icon(@remove);

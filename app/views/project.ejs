@@ -50,9 +50,9 @@
 				</div>
 
 				<div class="col support-types">
-					<span class="support-type donating"></span>
-					<span class="support-type contributing"></span>
-					<span class="support-type supporting"></span>
+					<span class="support-type donating <%= userSupport.donating ? 'active' : '' %>" data-type="donating" data-toggle="tooltip" title="I’m donating cash"></span>
+					<span class="support-type contributing <%= userSupport.contributing ? 'active' : '' %>" data-type="contributing" data-toggle="tooltip" title="I’m contributing code"></span>
+					<span class="support-type supporting <%= userSupport.supporting ? 'active' : '' %>" data-type="supporting" data-toggle="tooltip" title="I’m a vocal supporter"></span>
 				</div>
 
 				<div class="col donate-methods">
@@ -68,19 +68,28 @@
 			<h3>People who support this project</h3>
 
 			<div class="col donators">
-				<h4>Cash Donors <%= users.donators.length ? '('+users.donators.length+')' : '' %></h4>
+				<h4>
+					<span class="support-type donating active"></span>
+					Cash Donors (<%= users.donators.length %>)
+				</h4>
 				<% _.each(users.donators, function(support) { %>
 				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
 				<% }) %>
 			</div>
 			<div class="col contributors">
-				<h4>Code Contributors <%= users.contributors.length ? '('+users.contributors.length+')' : '' %></h4>
+				<h4>
+					<span class="support-type contributing active"></span>
+					Code Contributors (<%= users.contributors.length %>)
+				</h4>
 				<% _.each(users.contributors, function(support) { %>
 				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
 				<% }) %>
 			</div>
 			<div class="col supporters">
-				<h4>Vocal Supporters <%= users.supporters.length ? '('+users.supporters.length+')' : '' %></h4>
+				<h4>
+					<span class="support-type supporting active"></span>
+					Vocal Supporters (<%= users.supporters.length %>)
+				</h4>
 				<% _.each(users.supporters, function(support) { %>
 				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
 				<% }) %>
@@ -95,6 +104,6 @@
 	require.config({
 		baseUrl: "<%=jsPath %>"
 	})
-	require(['plugins/activate-plugins'])
+	require(['modules/project/main'])
 </script>
 <% include parts/foot.ejs %>

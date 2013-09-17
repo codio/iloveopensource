@@ -29,8 +29,8 @@
 </div>
 
 <div class="col support-types">
-	<span class="support-type donating <%= repo.support.donating ? 'active' : '' %>" data-type="donating" data-toggle="tooltip" data-toggle="tooltip" title="I’m donating cash"></span>
-	<span class="support-type contributing <%= repo.support.contributing ? 'active' : '' %>" data-type="contributing" data-toggle="tooltip" data-toggle="tooltip" title="I’m contributing code"></span>
+	<span class="support-type donating <%= repo.support.donating ? 'active' : '' %>" data-type="donating" data-toggle="tooltip" title="I’m donating cash"></span>
+	<span class="support-type contributing <%= repo.support.contributing ? 'active' : '' %>" data-type="contributing" data-toggle="tooltip" title="I’m contributing code"></span>
 	<span class="support-type supporting <%= repo.support.supporting ? 'active' : '' %>" data-type="supporting" data-toggle="tooltip" title="I’m a vocal supporter"></span>
 	<% if (obj.canDelete) { %>
 		<span class="remove" data-toggle="tooltip" title="Remove repo"></span>
