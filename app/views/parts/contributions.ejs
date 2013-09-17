@@ -15,13 +15,13 @@
 		<a href="https://flattr.com/profile/<%= donateMethods.flattr %>/things" target="_blank"><img src="https://flattr.com/_img/icons/flattr_logo_16.png" alt="flattr"/></a>
 	</div>
 	<% } %>
-	<% if (donateMethods.note) { %>
+	<% if (donateMethods.other) { %>
 	<div class="contribution other note-from-author" data-toggle="tooltip" title="Message from the repo Maintainer">
 		<div data-toggle="modal">
 			<i class="icon-info-sign"></i>
 		</div>
 		<div class="hidden content">
-			<%- donateMethods.note %>
+			<%- donateMethods.other %>
 		</div>
 	</div>
 	<% } %>

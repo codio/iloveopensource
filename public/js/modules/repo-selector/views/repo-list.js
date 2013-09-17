@@ -63,23 +63,17 @@ define(function (require) {
 
 			this.checkIsEmpty()
 			this.renderRepos()
-			this.$('[data-toggle="popover"]').popover({
-				container: 'body',
-				title: 'Note from Author',
-				content: function () {
-					return $(this).next().html()
-				}
-			})
-
-
 			return this
 		},
 		checkIsEmpty: function () {
-			var el = this.$('.is-empty.message')
+			var el = this.$('.is-empty.message'),
+			 list = this.$('.repos-list')
 
 			if (this.collection.length) {
+				list.removeClass('hidden')
 				el.addClass('hidden')
 			} else {
+				list.addClass('hidden')
 				el.removeClass('hidden')
 			}
 		}
