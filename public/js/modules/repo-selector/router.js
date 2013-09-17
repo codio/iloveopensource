@@ -10,10 +10,12 @@ define(function (require) {
 
 	return Backbone.Router.extend({
 		routes: {
-			'settings/:project': 'settings'
+			'*actions': 'selected'
 		},
-		settings: function (project) {
-			store().layout.showSettings(project)
+		selected: function (hash) {
+			hash = hash || 'selected-repos'
+			var el = store().layout.$('.nav a[href="#' + hash + '"]')
+			el.tab('show')
 		}
 	});
 })

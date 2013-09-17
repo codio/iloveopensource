@@ -7,9 +7,11 @@
 define(function (require) {
 	require('bootstrap')
 	require('plugins/activate-plugins')
+
 	var toastr = require('toastr')
 	var Layout = require('./views/layout')
 	var Repos = require('./collections/repos')
+	var Router = require('./router')
 	var Search = require('./collections/search')
 	var Projects = require('./collections/projects')
 	var store = require('store').getNamespace('repo-selector')
@@ -39,9 +41,12 @@ define(function (require) {
 
 			})
 
-			new Layout({
+			store().layout = new Layout({
 				el: $('body')
 			})
+
+			store().router = new Router()
+			Backbone.history.start();
 		})
 	})
 })

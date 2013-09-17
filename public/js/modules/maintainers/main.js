@@ -9,7 +9,6 @@ define(function (require) {
 
 	var toastr = require('toastr')
 	var Layout = require('./views/layout')
-	var Router = require('./router')
 	var Projects = require('./collections/projects')
 	var store = require('store').getNamespace('maintainer')
 
@@ -19,12 +18,10 @@ define(function (require) {
 		store().notify = toastr
 
 		store().projects.fetch().done(function () {
-//			store().router = new Router()
 			store().layout = new Layout({
 				el: $('#maintainers')
 			})
 			store().layout.showProjects()
-//			Backbone.history.start();
 		})
 	})
 })
