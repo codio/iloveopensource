@@ -6,7 +6,7 @@
  */
 define(function (require) {
 	require('backbone')
-	var store = require('store').getNamespace('maintainer')
+	var store = require('store').getNamespace('repo-selector')
 
 	return Backbone.Router.extend({
 		routes: {

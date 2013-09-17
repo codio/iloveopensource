@@ -40,9 +40,9 @@ module.exports = function (app) {
 				if (error) return res.send(500, err)
 
 				res.render('project', {
-					project: project,
+					project: project.toJSON(),
 					users: _.omit(result, 'userSupport'),
-					userSupport: result.userSupport
+					userSupport: result.userSupport || {}
 				})
 			})
 		})
