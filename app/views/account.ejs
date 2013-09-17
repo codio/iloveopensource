@@ -2,110 +2,104 @@
 
 <% include parts/head.ejs %>
 
-<body>
-<div id="wrap">
-	<% include parts/header.ejs %>
-	<div class="container">
+<div class="container">
 
-		<section id="user-repos">
-			<div class="clearfix">
-				<a href="<%= user.github.html_url %>" class="pull-left">
-					<img src="http://www.gravatar.com/avatar/<%= user.github.gravatar_id %>?s=80" alt="" class="img-rounded"/>
+	<section id="user-repos">
+		<div class="clearfix">
+			<a href="<%= user.github.html_url %>" class="pull-left">
+				<img src="http://www.gravatar.com/avatar/<%= user.github.gravatar_id %>?s=80" alt="" class="img-rounded"/>
+			</a>
+
+			<div class="data pull-left">
+				<p>
+
+				<h3><%= user.displayName %></h3>
+				<% if (user.displayName != user.username) { %>
+				&nbsp;(<%= user.username %>)
+				<% } %>
+				</p>
+			</div>
+
+			<% if (!isLoggedIn) { %>
+			<div class="welcome pull-right">
+				<p>
+					These are the Open Source projects that we use in our project. We hope that other Open Source and commercial projects will add their own “I Love Open Source” page to their site.
+				</p>
+				<a href="/auth/github" class="btn btn-info login">
+					<i class="icon-github"></i>
+					<span>Sign in with GitHub</small></span>
 				</a>
-
-				<div class="data pull-left">
-					<p>
-
-					<h3><%= user.displayName %></h3>
-					<% if (user.displayName != user.username) { %>
-					&nbsp;(<%= user.username %>)
-					<% } %>
-					</p>
-				</div>
-
-				<% if (!isLoggedIn) { %>
-				<div class="welcome pull-right">
-					<p>
-						These are the Open Source projects that we use in our project. We hope that other Open Source and commercial projects will add their own “I Love Open Source” page to their site.
-					</p>
-					<a href="/auth/github" class="btn btn-info login">
-						<i class="icon-github"></i>
-						<span>Sign in with GitHub</small></span>
-					</a>
-				</div>
-				<% } %>
 			</div>
-
-			<% if (!supports.length) { %>
-			<% if (isLoggedIn && loggedUser._id == user._id) { %>
-			<h4 class="text-center">
-				You haven't added any projects yet. Want to add some?
-				<a class="btn btn-primary btn-lg" href="/users/<%= user.username %>/editor">Sure!</a>
-			</h4>
-			<% } else { %>
-			<h4 class="text-center">This user hasn't added any projects yet.</h4>
 			<% } %>
-			<% } %>
+		</div>
 
-			<div class="repos-list">
-				<% if (supports.length) { %>
-				<div class="header">
-					<div class="col repo-name"></div>
-					<div class="col support-types"></div>
-					<div class="col contribution-types">Click below to donate</div>
-				</div>
-				<% } %>
-				<% _.each(supports, function(repo) { %>
-				<div class="repo <%= repo.project.fork ? 'fork' : '' %>">
-					<div class="col repo-name">
-						<a href="<%= repo.project.url %>" class="icon-github go-to" target="_blank"></a>
+		<% if (!supports.length) { %>
+		<% if (isLoggedIn && loggedUser._id == user._id) { %>
+		<h4 class="text-center">
+			You haven't added any projects yet. Want to add some?
+			<a class="btn btn-primary btn-lg" href="/supporter">Sure!</a>
+		</h4>
+		<% } else { %>
+		<h4 class="text-center">This user hasn't added any projects yet.</h4>
+		<% } %>
+		<% } %>
 
-						<h4>
-							<% if (repo.project.owner.user) { %>
-							<a href="/users/<%=repo.project.owner.username %>"><%=repo.project.owner.username %></a>
-							<% } else { %>
-							<%=repo.project.owner.username %>
-							<% } %>
-							/
-							<a href="/projects/<%=repo.project._id %>">
-								<%=repo.project.name %>
-							</a>
-						</h4>
-
-						<div class="description">
-							<% if (repo.project.description) { %>
-							<%- repo.project.description %>
-							<% } %>
-						</div>
-					</div>
-
-					<div class="col support-types">
-						<span class="support-type donating <% if (!repo.donating) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m donating cash"><% } %></span>
-						<span class="support-type contributing <% if (!repo.contributing) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m contributing code"><% } %></span>
-						<span class="support-type supporting <% if (!repo.supporting) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m a vocal supporter"><% } %></span>
-					</div>
-
-					<div class="col contribution-types">
-						<% var contributions = repo.project.owner.contributions; %>
-						<% var projectUrl = repo.project.url; %>
-						<% var projectId = repo.project._id; %>
-						<% include parts/contributions.ejs %>
-					</div>
-				</div>
-				<% }) %>
+		<div class="repos-list">
+			<% if (supports.length) { %>
+			<div class="header">
+				<div class="col repo-name"></div>
+				<div class="col support-types"></div>
+				<div class="col contribution-types">Click below to donate</div>
 			</div>
-			<% include modals/index.ejs %>
-		</section>
-		<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
-		<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
-		<script type="text/javascript">
-			require.config({
-				baseUrl: "<%=jsPath %>"
-			})
-			require(['plugins/activate-plugins'])
-		</script>
+			<% } %>
+			<% _.each(supports, function(repo) { %>
+			<div class="repo <%= repo.project.fork ? 'fork' : '' %>">
+				<div class="col repo-name">
+					<a href="<%= repo.project.url %>" class="icon-github go-to" target="_blank"></a>
 
-	</div>
+					<h4>
+						<% if (repo.project.owner.user) { %>
+						<a href="/users/<%=repo.project.owner.username %>"><%=repo.project.owner.username %></a>
+						<% } else { %>
+						<%=repo.project.owner.username %>
+						<% } %>
+						/
+						<a href="/projects/<%=repo.project._id %>">
+							<%=repo.project.name %>
+						</a>
+					</h4>
+
+					<div class="description">
+						<% if (repo.project.description) { %>
+						<%- repo.project.description %>
+						<% } %>
+					</div>
+				</div>
+
+				<div class="col support-types">
+					<span class="support-type donating <% if (!repo.donating) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m donating cash"><% } %></span>
+					<span class="support-type contributing <% if (!repo.contributing) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m contributing code"><% } %></span>
+					<span class="support-type supporting <% if (!repo.supporting) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m a vocal supporter"><% } %></span>
+				</div>
+
+				<% var donateMethods = repo.project.donateMethods; %>
+				<% var projectUrl = repo.project.url; %>
+				<% var projectId = repo.project._id; %>
+				<% include parts/contributions.ejs %>
+			</div>
+			<% }) %>
+		</div>
+		<% include modals/index.ejs %>
+	</section>
+	<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
+	<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
+	<script type="text/javascript">
+		require.config({
+			baseUrl: "<%=jsPath %>"
+		})
+		require(['plugins/activate-plugins'])
+	</script>
+
 </div>
 
 <% include parts/foot.ejs %>

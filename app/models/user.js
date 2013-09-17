@@ -7,7 +7,6 @@
 
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
-var sanitizer = require('sanitizer')
 
 var UserSchema = new Schema({
 	username: { type: String, required: true, index: { unique: true }, trim: true },
@@ -16,16 +15,6 @@ var UserSchema = new Schema({
 	type: String,
 	displayName: {type: String, trim: true},
 	twitterName: {type: String, trim: true},
-
-	contributions: {
-		gittip: {type: String, trim: true},
-		paypal: {type: String, trim: true},
-		flattr: {type: String, trim: true},
-		note: {type: String, trim: true},
-		emailMe: Boolean,
-		code: Boolean
-	},
-
 	github: {},
 	provider: { type: String, default: '' },
 	authToken: { type: String, default: '' }
@@ -39,20 +28,5 @@ UserSchema.post('save', function (doc) {
 	var Project = mongoose.model('Project')
 	Project.updateOwner(doc)
 })
-
-UserSchema.pre('validate', function (next, done) {
-	var reg = /^https:\/\/www.paypal(objects)?.com\//
-	if (this.support && this.support.paypal) {
-		if (this.support.paypal) {
-			this.support.paypal = sanitizer.sanitize(this.support.paypal, function (value) {
-				return  value.match(reg) ? value : ''
-			})
-		}
-		if (this.support.other) {
-			this.support.other = sanitizer.sanitize(this.support.other)
-		}
-	}
-	next();
-});
 
 mongoose.model('User', UserSchema);

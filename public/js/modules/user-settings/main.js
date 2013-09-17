@@ -12,7 +12,6 @@ define(function (require) {
 		events: {
 			'change [data-field]': 'updateField',
 			'focus [data-field]': 'resetField'
-
 		},
 		updateField: function (event) {
 			var el = $(event.currentTarget),

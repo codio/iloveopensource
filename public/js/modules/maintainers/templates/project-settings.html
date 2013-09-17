@@ -1,0 +1,115 @@
+<% var siteUrl = window.location.host %>
+<% var img = siteUrl + '/images/logo-lightbg.png' %>
+<% var link = siteUrl +'/projects/' + project._id %>
+<% var alt = 'I Love Open Source' %>
+<% project.donateMethods = project.donateMethods || {} %>
+
+<form class="form-horizontal" role="form" method="post">
+	<fieldset>
+		<legend>Embed</legend>
+
+		<div class="form-group">
+			<label for="input-md" class="col-sm-2 control-label">MarkDown:</label>
+
+			<div class="col-sm-9">
+				<input id="input-md" class="form-control embed" readonly type="text" value="[![<%= alt %>](<%= img %>)](<%= link %>)">
+
+				<p class="help-block">Copy and paste this into your Github README.md file to attract Supporters to the "I Love Open Source" movement.</p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-html" class="col-sm-2 control-label">HTML:</label>
+
+			<div class="col-sm-9">
+				<input id="input-html" class="form-control embed" readonly type="text" value='<a href="<%= link %>"><img src="<%=img%>" alt="<%= alt %>"/></a>'>
+
+				<p class="help-block">Copy and paste this into your web pages to attract Supporters to the “I Love Open Source” movement.</p>
+			</div>
+		</div>
+	</fieldset>
+
+	<fieldset>
+		<legend>Preferred Support Types for Your Projects</legend>
+
+		<div class="form-group">
+			<label for="input-gittip" class="col-sm-2 control-label">Gittip:</label>
+
+			<div class="col-sm-4">
+				<input type="text" class="form-control" name="gittip" id="input-gittip" placeholder="Gittip username" data-field="gittip" value="<%= project.donateMethods.gittip  || '' %>">
+
+				<p class="help-block">If you want to receive weekly payments through
+					<a href="https://www.gittip.com/" tabindex="-1">GitTip</a>, enter your Gittip username here.
+				</p>
+			</div>
+
+			<div class="col-sm-6 saved">Saved!</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-flattr" class="col-sm-2 control-label">Flattr Username:</label>
+
+			<div class="col-sm-4">
+				<input type="text" class="form-control" name="flattr" id="input-flattr" placeholder="Flattr username" data-field="flattr" value="<%= project.donateMethods.flattr || '' %>">
+
+				<p class="help-block">Fill this field so users will be able to donateMethods your projects via
+					<a href="https://flattr.com/">Flattr</a>.</p>
+			</div>
+
+			<div class="col-sm-6 saved">Saved!</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-paypal" class="col-sm-2 control-label">Paypal Donation:</label>
+
+			<div class="col-sm-6">
+				<textarea name="paypal" id="input-paypal" class="form-control" data-field="paypal"><%= project.donateMethods.paypal || '' %></textarea>
+
+				<p class="help-block">If you receive payment through a
+					<a href="https://www.paypal.com/">PayPal</a> Donate button, paste the paypal HTML code button here and we will display it for you. More info
+					<a href="https://merchant.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=merchant%2Fdonations">here</a>.
+				</p>
+			</div>
+
+			<div class="col-sm-4 saved">Saved!</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-6 col-sm-offset-2">
+				<div class="checkbox">
+					<label for="input-emailMe">
+						<input type="checkbox" data-field="emailMe" id="input-emailMe" <%= project.donateMethods.emailMe && 'checked' %>> I would like people to be able to send comments to me.
+					</label>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="saved">Saved!</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-6 col-sm-offset-2">
+				<div class="checkbox">
+					<label for="input-code">
+						<input type="checkbox" id="input-code" data-field="code" <%= project.donateMethods.code && 'checked' %>> I would like to actively encourage code contributions
+					</label>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="saved">Saved!</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-other" class="col-sm-2 control-label">Other:</label>
+
+			<div class="col-sm-6">
+				<textarea id="input-other" class="form-control" data-field="note"><%= project.donateMethods.note || '' %></textarea>
+
+				<p class="help-block">If there are any other donation or contribution details you want Supporters to see (bank details for wire transfers for example) then enter them here.</p>
+			</div>
+
+			<div class="col-sm-4 saved">Saved!</div>
+		</div>
+	</fieldset>
+</form>

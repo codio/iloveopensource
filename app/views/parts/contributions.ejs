@@ -1,44 +1,47 @@
-<% if (!_.isEmpty(contributions)) { %>
-<% if (contributions.paypal) { %>
-<div class="contribution paypal">
-	<%- contributions.paypal %>
-</div>
-<% } %>
-<% if (contributions.gittip) { %>
-<div class="contribution gittip" data-toggle="tooltip" title="Donate via Gittip">
-	<a href="https://www.gittip.com/<%= contributions.gittip %>/" target="_blank"><img src="/images/gittip.png" alt="gittip"/></a>
-</div>
-<% } %>
-<% if (contributions.flattr) { %>
-<div class="contribution flattr" data-toggle="tooltip" title="Donate via Flattr">
-	<a href="https://flattr.com/profile/<%= contributions.flattr %>/things" target="_blank"><img src="https://flattr.com/_img/icons/flattr_logo_16.png" alt="flattr"/></a>
-</div>
-<% } %>
-<% if (contributions.note) { %>
-<div class="contribution other note-from-author" data-toggle="tooltip" title="Message from the repo Maintainer">
-	<div data-toggle="modal">
-		<i class="icon-info-sign"></i>
+<% donateMethods = donateMethods || {} %>
+<div class="col donate-methods">
+	<% if (donateMethods.paypal) { %>
+	<div class="contribution paypal" data-toggle="tooltip" title="Donate via PayPal">
+		<%- donateMethods.paypal %>
 	</div>
-	<div class="hidden content">
-		<%- contributions.note %>
+	<% } %>
+	<% if (donateMethods.gittip) { %>
+	<div class="contribution gittip" data-toggle="tooltip" title="Donate via Gittip">
+		<a href="https://www.gittip.com/<%= donateMethods.gittip %>/" target="_blank"><img src="/images/gittip.png" alt="gittip"/></a>
 	</div>
+	<% } %>
+	<% if (donateMethods.flattr) { %>
+	<div class="contribution flattr" data-toggle="tooltip" title="Donate via Flattr">
+		<a href="https://flattr.com/profile/<%= donateMethods.flattr %>/things" target="_blank"><img src="https://flattr.com/_img/icons/flattr_logo_16.png" alt="flattr"/></a>
+	</div>
+	<% } %>
+	<% if (donateMethods.note) { %>
+	<div class="contribution other note-from-author" data-toggle="tooltip" title="Message from the repo Maintainer">
+		<div data-toggle="modal">
+			<i class="icon-info-sign"></i>
+		</div>
+		<div class="hidden content">
+			<%- donateMethods.note %>
+		</div>
+	</div>
+	<% } %>
+	<% if (donateMethods.emailMe) { %>
+	<div class="contribution email-me email-to-author" data-toggle="tooltip" title="Send a donation related message to the Maintainer" data-project="<%= projectId %>">
+		<i class="icon-envelope" data-toggle="modal" data-target="#email-to-author"></i>
+	</div>
+	<% } %>
+	<% if (donateMethods.code) { %>
+	<div class="contribution code">
+		<a href="<%= projectUrl %>" target="_blank">
+			<i class="icon-code" data-toggle="tooltip" title="Maintainer would really like code contributions"></i>
+		</a>
+	</div>
+	<% } %>
+	<div class="clearfix"></div>
+
+	<% if (!_(donateMethods).values().compact().value().length) { %>
+	<span class="btn btn-link want-contribute" data-toggle="modal" data-project="<%= projectId %>">
+		I would like to donate to this project
+	</span>
+	<% } %>
 </div>
-<% } %>
-<% if (contributions.emailMe) { %>
-<div class="contribution email-me email-to-author" data-toggle="tooltip" title="Send a donation related message to the Maintainer" data-project="<%= projectId %>">
-	<i class="icon-envelope" data-toggle="modal" data-target="#email-to-author"></i>
-</div>
-<% } %>
-<% if (contributions.code) { %>
-<div class="contribution code">
-	<a href="<%= projectUrl %>" target="_blank">
-		<i class="icon-code" data-toggle="tooltip" title="Maintainer would really like code contributions"></i>
-	</a>
-</div>
-<% } %>
-<div class="clearfix"></div>
-<% } else { %>
-<span class="btn btn-link want-contribute" data-toggle="modal" data-project="<%= projectId %>">
-	I would like to donate to this project
-</span>
-<% } %>

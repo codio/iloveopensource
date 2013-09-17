@@ -1,38 +1,37 @@
+<% var noHead = true %>
+<% var bodyClass = 'home' %>
 <% include parts/head.ejs %>
+<div class="container">
 
-<body class="home">
-  <div id="wrap">
-    <div class="container">
+	<img src="/images/logo-darkbg.png" alt="I Love Open Source" id="logo">
 
-      <img src="/images/logo-darkbg.png" alt="I Love Open Source" id="logo">
+	<div class="row show-grid">
+		<section class="col-md-4 col-md-offset-2">
+			<h2>Maintainers</h2>
 
-      <div class="row show-grid">
-        <section class="col-md-4 col-md-offset-2">
-          <h2>Maintainers</h2>
-          <p>All you do is sign in with Github and then tell us how you would like people to support your efforts (we've got various options as standard). Then grab the button widget and drop it into your README file or your site.</p>
-        </section>
+			<p>All you do is sign in with Github and then tell us how you would like people to support your efforts (we've got various options as standard). Then grab the button widget and drop it into your README file or your site.</p>
+		</section>
 
-        <section class="col-md-4">
-          <h2>Supporters</h2>
-          <p>If you use Open Source software, then giving vocal support really makes a difference to that Open Source Project as well as the open source community as a whole. We make it really easy for you to say what projects you use in your applications.</p>
-          <a href="" class="btn"></a>
-        </section>
-      </div>
+		<section class="col-md-4">
+			<h2>Supporters</h2>
 
-      <div id="start">
-        <% if (!user) { %>
-          <a href="/auth/github" class="btn btn-info" id="login">
-          	<i class="icon-github"></i>
-            <span>Start here...<small>with your Github account</small></span>
-          </a>
-        <% } else { %>
-          <a href="/users/<%= user.username %>/editor" class="btn btn-info" id="welcome">
-          	Welcome back <%= user.username %>! <i class="icon-signin"></i>
-          </a>
-        <% } %>
-      </div>
+			<p>If you use Open Source software, then giving vocal support really makes a difference to that Open Source Project as well as the open source community as a whole. We make it really easy for you to say what projects you use in your applications.</p>
+			<a href="" class="btn"></a>
+		</section>
+	</div>
 
-    </div>
-  </div>
+	<div id="start">
+		<% if (!user) { %>
+		<a href="/auth/github" class="btn btn-info" id="login">
+			<i class="icon-github"></i>
+			<span>Start here...<small>with your Github account</small></span>
+		</a>
+		<% } else { %>
+		<a href="/supporter" class="btn btn-info" id="welcome">
+			Welcome back <%= user.username %>! <i class="icon-signin"></i>
+		</a>
+		<% } %>
+	</div>
+</div>
 
-  <% include parts/foot.ejs %>
+<% include parts/foot.ejs %>

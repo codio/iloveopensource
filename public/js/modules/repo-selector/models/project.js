@@ -8,7 +8,6 @@ define(function (require) {
 	require('backbone')
 	var Repo = require('./repo')
 	var Support = require('./support')
-	var Owner = require('./owner')
 
 	return Repo.extend({
 		idAttribute: 'githubId',
@@ -21,12 +20,10 @@ define(function (require) {
 						contributing: entity.contributing,
 						donating: entity.donating,
 						supporting: entity.supporting
-					},
-					contributions: entity.project.owner.contributions
+					}
 				})
 			}
 
-			result.owner = new Owner(result.owner)
 			result.support = new Support(result.support)
 
 			return result;

@@ -2,9 +2,6 @@
 <% titleBuilder.add(project.owner.username) %>
 
 <% include parts/head.ejs %>
-
-<body>
-<% include parts/header.ejs %>
 <section id="page-project">
 	<div class="container">
 		<% if (!isLoggedIn) { %>
@@ -58,8 +55,8 @@
 					<span class="support-type supporting"></span>
 				</div>
 
-				<div class="col contribution-types">
-					<% var contributions = project.owner.contributions; %>
+				<div class="col donate-methods">
+					<% var donateMethods = project.donateMethods; %>
 					<% var projectUrl = project.url; %>
 					<% var projectId = project._id; %>
 					<% include parts/contributions.ejs %>

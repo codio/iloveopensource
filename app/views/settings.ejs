@@ -1,140 +1,74 @@
 <% titleBuilder.add('Settings') %>
 
 <% include parts/head.ejs %>
+<div class="container">
 
-<body>
-  <div id="wrap">
-    <% include parts/header.ejs %>
-    <div class="container">
+	<% var img = siteUrl + '/images/logo-lightbg.png' %>
+	<% var link = siteUrl +'/users/' + loggedUser.username %>
+	<% var alt = 'Open Source Supporter' %>
 
-			<% var img = siteUrl + '/images/logo-lightbg.png' %>
-			<% var link = siteUrl +'/users/' + loggedUser.username %>
-			<% var alt = 'Open Source Supporter' %>
+	<section id="page-settings">
+		<form class="form-horizontal" role="form" method="post">
 
-			<section id="page-settings">
-				<form class="form-horizontal" role="form" method="post">
+			<fieldset>
+				<legend>Embed</legend>
 
-					<fieldset>
-						<legend>Embed</legend>
+				<div class="form-group">
+					<label for="input-md" class="col-lg-2 control-label">MarkDown:</label>
 
-						<div class="form-group">
-							<label for="input-md" class="col-lg-2 control-label">MarkDown:</label>
-							<div class="col-lg-9">
-								<textarea id="input-md" class="form-control" disabled>[![Open Source Supporter](<%= img %>)](<%= link %>)</textarea>
-								<p class="help-block">Copy and paste this into your Github README.md file to attract Supporters to the "I Love Open Source" movement.</p>
-							</div>
-						</div>
+					<div class="col-lg-9">
+						<textarea id="input-md" class="form-control" disabled>[![Open Source Supporter](<%= img %>)](<%= link %>)</textarea>
 
-						<div class="form-group">
-							<label for="input-html" class="col-lg-2 control-label">HTML:</label>
-							<div class="col-lg-9">
-								<textarea id="input-html" class="form-control" disabled><a href="<%= link %>"><img src="<%=img%>" alt="<%= alt %>"/></a></textarea>
-								<p class="help-block">Copy and paste this into your web pages to attract Supporters to the “I Love Open Source” movement.</p>
-							</div>
-						</div>
-					</fieldset>
+						<p class="help-block">Copy and paste this into your Github README.md file to attract Supporters to the "I Love Open Source" movement.</p>
+					</div>
+				</div>
 
-					<fieldset>
-						<legend>Preferred Support Types for Your Projects</legend>
+				<div class="form-group">
+					<label for="input-html" class="col-lg-2 control-label">HTML:</label>
 
-						<div class="form-group">
-							<label for="input-gittip" class="col-lg-2 control-label">Gittip:</label>
-							<div class="col-lg-4">
-								<input type="text" class="form-control" name="contributions[gittip]" id="input-gittip" placeholder="Gittip username" data-field="contributions.gittip" value="<%= loggedUser.contributions && loggedUser.contributions.gittip  || '' %>">
-								<p class="help-block">If you want to receive weekly payments through <a href="https://www.gittip.com/" tabindex="-1">GitTip</a>, enter your Gittip username here.</p>
-							</div>
+					<div class="col-lg-9">
+						<textarea id="input-html" class="form-control" disabled><a href="<%= link %>"><img src="<%=img%>" alt="<%= alt %>"/></a></textarea>
 
-							<div class="col-lg-6 saved">Saved!</div>
-						</div>
+						<p class="help-block">Copy and paste this into your web pages to attract Supporters to the “I Love Open Source” movement.</p>
+					</div>
+				</div>
+			</fieldset>
 
-						<div class="form-group">
-							<label for="input-flattr" class="col-lg-2 control-label">Flattr Username:</label>
-							<div class="col-lg-4">
-								<input type="text" class="form-control" name="contributions[flattr]" id="input-flattr" placeholder="Flattr username" data-field="contributions.flattr" value="<%= loggedUser.contributions && loggedUser.contributions.flattr || '' %>">
-								<p class="help-block">Fill this field so users will be able to contributions your projects via <a href="https://flattr.com/">Flattr</a>.</p>
-							</div>
+			<fieldset>
+				<legend>Contact Information</legend>
+				<div class="form-group">
+					<label for="input-email" class="col-lg-2 control-label">Email address:</label>
 
-							<div class="col-lg-6 saved">Saved!</div>
-						</div>
+					<div class="col-lg-4">
+						<input type="email" name="email" class="form-control" id="input-email" placeholder="Email" data-field="email" value="<%= loggedUser.email || '' %>" required>
+					</div>
 
-						<div class="form-group">
-							<label for="input-paypal" class="col-lg-2 control-label">Paypal Donation:</label>
-							<div class="col-lg-6">
-								<textarea name="contributions[paypal]" id="input-paypal" class="form-control" data-field="contributions.paypal"><%= loggedUser.contributions && loggedUser.contributions.paypal || '' %></textarea>
-								<p class="help-block">If you receive payment through a <a href="https://www.paypal.com/">PayPal</a> Donate button, paste the paypal HTML code button here and we will display it for you. More info <a href="https://merchant.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=merchant%2Fdonations">here</a>.</p>
-							</div>
+					<div class="col-lg-6 saved">Saved!</div>
+				</div>
 
-							<div class="col-lg-4 saved">Saved!</div>
-						</div>
+				<div class="form-group">
+					<label for="input-twitter" class="col-lg-2 control-label">Twitter:</label>
 
-						<div class="form-group">
-							<div class="col-lg-2"><div class="saved">Saved!</div></div>
-							<div class="col-lg-10">
-								<div class="checkbox">
-									<label for="input-emailme">
-										<input type="checkbox" data-field="contributions.emailMe" id="input-emailMe" <%= loggedUser.contributions && loggedUser.contributions.emailMe && 'checked' %>> I would like people to be able to send comments to me.
-									</label>
-								</div>
-							</div>
-						</div>
+					<div class="col-lg-4">
+						<input type="text" name="twitterName" class="form-control" id="input-twitter" placeholder="Twitter" data-field="twitterName" value="<%= loggedUser.twitterName  || '' %>">
+					</div>
 
-						<div class="form-group">
-							<div class="col-lg-2"><div class="saved">Saved!</div></div>
-							<div class="col-lg-10">
-								<div class="checkbox">
-									<label for="input-emailme">
-										<input type="checkbox" id="input-code" data-field="contributions.code" <%= loggedUser.contributions && loggedUser.contributions.code && 'checked' %>> I would like to actively encourage code contributions
-									</label>
-								</div>
-							</div>
-						</div>
+					<div class="col-lg-6 saved">Saved!</div>
+				</div>
+			</fieldset>
 
-						<div class="form-group">
-							<label for="input-other" class="col-lg-2 control-label">Other:</label>
-							<div class="col-lg-6">
-								<textarea id="input-other" class="form-control" data-field="contributions.note"><%= loggedUser.contributions && loggedUser.contributions.note || '' %></textarea>
-								<p class="help-block">If there are any other donation or contribution details you want Supporters to see (bank details for wire transfers for example) then enter them here.</p>
-							</div>
+		</form>
+	</section>
 
-							<div class="col-lg-4 saved">Saved!</div>
-						</div>
-					</fieldset>
+	<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
+	<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
+	<script type="text/javascript">
+		require.config({
+			baseUrl: "<%=jsPath %>"
+		})
 
-					<fieldset>
-						<legend>Contact Information</legend>
-						<div class="form-group">
-							<label for="input-email" class="col-lg-2 control-label">Email address:</label>
-							<div class="col-lg-4">
-								<input type="email" name="email" class="form-control" id="input-email" placeholder="Email" data-field="email" value="<%= loggedUser.email || '' %>" required>
-							</div>
+		require(['modules/user-settings/main'])
+	</script>
+</div>
 
-							<div class="col-lg-6 saved">Saved!</div>
-						</div>
-
-						<div class="form-group">
-							<label for="input-twitter" class="col-lg-2 control-label">Twitter:</label>
-							<div class="col-lg-4">
-								<input type="text" name="twitterName" class="form-control" id="input-twitter" placeholder="Twitter" data-field="twitterName" value="<%= loggedUser.twitterName  || '' %>">
-							</div>
-
-							<div class="col-lg-6 saved">Saved!</div>
-						</div>
-					</fieldset>
-
-				</form>
-			</section>
-
-			<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
-			<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
-			<script type="text/javascript">
-				require.config({
-					baseUrl: "<%=jsPath %>"
-				})
-
-				require(['modules/user-settings/main'])
-			</script>
-
-	  </div>
-	</div>
-
-	<% include parts/foot.ejs %>
+<% include parts/foot.ejs %>

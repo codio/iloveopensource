@@ -12,9 +12,6 @@ define(function (require) {
 	return Repos.extend({
 		path: 'search/repositories',
 		type: 'search',
-		parse: function (res) {
-			return res.items || res
-		},
 		fetchRepo: function (owner, name) {
 			var path = this.path, self = this
 			this.path = 'repos/' + owner + '/' + name

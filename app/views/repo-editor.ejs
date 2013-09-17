@@ -2,33 +2,26 @@
 <% titleBuilder.add('Repo Editor') %>
 
 <% include parts/head.ejs %>
+<div class="container">
 
-<body>
-  <div id="wrap">
-    <% include parts/header.ejs %>
-    <div class="container">
+	<section id="repos-editor">
+		<section id="repos-selector">
+			<i class="icon-spinner icon-spin icon-large"></i> Loading
+		</section>
+	</section>
 
-      <section id="repos-editor">
-      	<section id="repos-selector">
-      		<i class="icon-spinner icon-spin icon-large"></i> Loading
-      	</section>
-      </section>
+	<% include modals/index.ejs %>
 
-      <% include modals/index.ejs %>
+	<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
+	<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
+	<script type="text/javascript">
+		require.config({
+			baseUrl: "<%=jsPath %>"
+		})
+		window.currentUserName = '<%= loggedUser.username %>'
 
-      <script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
-      <script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
-      <script type="text/javascript">
-      	require.config({
-      		baseUrl: "<%=jsPath %>"
-      	})
-      	window.accessToken = '<%= loggedUser.authToken %>'
-      	window.currentUserName = '<%= loggedUser.username %>'
+		require(['modules/repo-selector/main'])
+	</script>
+</div>
 
-      	require(['modules/repo-selector/main'])
-      </script>
-
-    </div>
-  </div>
-
-  <% include parts/foot.ejs %>
+<% include parts/foot.ejs %>

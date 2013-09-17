@@ -8,7 +8,6 @@ define(function (require) {
 	require('backbone')
 	var store = require('store').getNamespace('repo-selector')
 	var Support = require('./support')
-	var Owner = require('./owner')
 
 	return Backbone.Model.extend({
 		idAttribute: 'githubId',
@@ -20,27 +19,16 @@ define(function (require) {
 		toJSON: function () {
 			var obj = Backbone.Model.prototype.toJSON.apply(this, arguments)
 			obj.support = obj.support.toJSON()
-			obj.owner = obj.owner.toJSON()
 			return obj
 		},
 		parse: function (repo) {
-			var result = {
-				githubId: repo.id,
-				fork: repo.fork,
-				name: repo.name,
-				url: repo.html_url || repo.url,
-				description: repo.description,
-				homepage: repo.homepage,
-				owner: new Owner(repo.owner, {parse: true})
-			}
-
-			var exists = store().selected.get(result.githubId)
+			var exists = store().selected.get(repo.githubId)
 			if (exists) {
 				repo.support = exists.get('support').toJSON()
 			}
-			result.support = new Support(repo.support)
+			repo.support = new Support(repo.support)
 
-			return result;
+			return repo;
 		},
 		destroy: function (options) {
 			options = options ? _.clone(options) : {};

@@ -1,0 +1,35 @@
+<div class="col repo-name <%= project.homepage ? 'with-home' : '' %>">
+
+	<a href="<%= project.url %>" class="icon-github go-to" target="_blank"></a>
+
+	<% if (project.homepage) { %>
+	<a href="<%= project.homepage %>" class="icon-home go-to" target="_blank"></a>
+	<% } %>
+
+	<h4>
+		<% if (project.owner.user) { %>
+		<a href="/users/<%=project.owner.username %>"><%=project.owner.username %></a>
+		<% } else { %>
+		<%= project.owner.username %>
+		<% } %>
+		<span> / </span>
+		<% if (project._id) { %>
+		<a href="/projects/<%=project._id %>"><%=project.name %></a>
+		<% } else { %>
+		<%= project.name %>
+		<% } %>
+	</h4>
+
+	<div class="description">
+		<% if (project.description) { %>
+		<%= project.description %>
+		<% } %>
+	</div>
+</div>
+
+<span class="btn btn-primary pull-right settings-toggler" data-alt-text="Hide Settings">
+	Settings
+</span>
+
+<div class="clearfix"></div>
+<div class="settings"></div>

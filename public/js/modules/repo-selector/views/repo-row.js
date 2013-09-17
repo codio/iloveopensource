@@ -8,6 +8,7 @@ define(function (require) {
 	require('backbone')
 	var store = require('store').getNamespace('repo-selector')
 	var tpl = require('tpl!../templates/repo-row.html')
+	var DonateMethods = require('common/views/donate-methods')
 
 	return Backbone.View.extend({
 		initialize: function (options) {
@@ -60,12 +61,19 @@ define(function (require) {
 				canDelete: this.model.isProject
 			}))
 
+			this.donateMethods = new DonateMethods({
+				model: this.model,
+				needHelp: true
+			})
+			this.donateMethods.render().$el.insertAfter(this.$('.support-types'))
+
 			if (!this.model.isProject) {
 				var projectData = this.model.toJSON(),
 					els = this.$('.want-contribute, .email-to-author')
 
 				if (els.length) els.data().projectData = this.model.toJSON()
 			}
+
 			return this
 		}
 	});

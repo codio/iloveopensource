@@ -8,3 +8,8 @@
 
 	<link rel="stylesheet" type="text/css" href="/css/main.css"/>
 </head>
+<body class="<%= typeof bodyClass != 'undefined' ? bodyClass : ''%>">
+<div id="wrap">
+	<% if (typeof noHead == 'undefined') { %>
+	<% include header.ejs %>
+	<% } %>
