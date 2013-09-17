@@ -1,4 +1,5 @@
 <% titleBuilder.add(user.username) %>
+<% var isCurrentUser = isLoggedIn && loggedUser._id.toString() == user._id.toString() %>
 
 <% include parts/head.ejs %>
 
@@ -17,6 +18,9 @@
 				<% if (user.displayName != user.username) { %>
 				&nbsp;(<%= user.username %>)
 				<% } %>
+				<% if (isCurrentUser) { %>
+				<a href="/settings">Settings</a>
+				<% } %>
 				</p>
 			</div>
 
@@ -34,7 +38,7 @@
 		</div>
 
 		<% if (!supports.length) { %>
-		<% if (isLoggedIn && loggedUser._id == user._id) { %>
+		<% if (isCurrentUser) { %>
 		<h4 class="text-center">
 			You haven't added any projects yet. Want to add some?
 			<a class="btn btn-primary btn-lg" href="/supporter">Sure!</a>

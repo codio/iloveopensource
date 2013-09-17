@@ -11,7 +11,11 @@ define(function (require) {
 	var View = Backbone.View.extend({
 		events: {
 			'change [data-field]': 'updateField',
-			'focus [data-field]': 'resetField'
+			'focus [data-field]': 'resetField',
+			'click .embed': 'selectAlltext'
+		},
+		selectAllText: function(event) {
+			$(event.currentTarget).select()
 		},
 		updateField: function (event) {
 			var el = $(event.currentTarget),

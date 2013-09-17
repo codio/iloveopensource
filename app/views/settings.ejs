@@ -5,7 +5,7 @@
 
 	<% var img = siteUrl + '/images/logo-lightbg.png' %>
 	<% var link = siteUrl +'/users/' + loggedUser.username %>
-	<% var alt = 'Open Source Supporter' %>
+	<% var alt = 'I Love Open Source' %>
 
 	<section id="page-settings">
 		<form class="form-horizontal" role="form" method="post">
@@ -17,7 +17,7 @@
 					<label for="input-md" class="col-lg-2 control-label">MarkDown:</label>
 
 					<div class="col-lg-9">
-						<textarea id="input-md" class="form-control" disabled>[![Open Source Supporter](<%= img %>)](<%= link %>)</textarea>
+						<input type="text" id="input-md" class="form-control" readonly value="[![<%= alt %>](<%= img %>)](<%= link %>)">
 
 						<p class="help-block">Copy and paste this into your Github README.md file to attract Supporters to the "I Love Open Source" movement.</p>
 					</div>
@@ -27,7 +27,7 @@
 					<label for="input-html" class="col-lg-2 control-label">HTML:</label>
 
 					<div class="col-lg-9">
-						<textarea id="input-html" class="form-control" disabled><a href="<%= link %>"><img src="<%=img%>" alt="<%= alt %>"/></a></textarea>
+						<input type="text" id="input-html" class="form-control" readonly value='<a href="<%= link %>"><img src="<%=img%>" alt="<%= alt %>"/></a>'>
 
 						<p class="help-block">Copy and paste this into your web pages to attract Supporters to the “I Love Open Source” movement.</p>
 					</div>
