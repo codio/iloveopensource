@@ -41,9 +41,13 @@
 <% } %>
 
 <% if (obj.needHelp && !_(donateMethods).values().compact().value().length) { %>
+<% if (obj.customHelp) { %>
+<%= obj.customHelp %>
+<% } else { %>
 <span class="btn btn-link want-contribute" data-toggle="modal" data-project="<%= project._id || '' %>">
 	I would like to donate to this project
 </span>
+<% } %>
 <% } %>
 
 <div class="clearfix"></div>

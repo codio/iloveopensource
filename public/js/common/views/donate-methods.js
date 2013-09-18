@@ -16,7 +16,8 @@ define(function (require) {
 			this.$el.html(tpl({
 				project: this.model.toJSON(),
 				donateMethods: this.model.get('donateMethods') || {},
-				needHelp: this.options.needHelp
+				needHelp: this.options.needHelp,
+				customHelp: this.options.customHelp
 			}))
 			return this
 		}
