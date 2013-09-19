@@ -7,36 +7,48 @@
 define(function (require) {
 	require('backbone')
 	var store = require('store').getNamespace('maintainer')
+	var io = require('socket.io')
+	var tpl = require('tpl!../templates/list.html')
+	var Group = require('./group')
 
 	return Backbone.View.extend({
-		tpl: require('tpl!../templates/list.html'),
-		RepoRow: require('./project'),
 		events: {
 			'click .update-projects-info': 'updateProjects'
 		},
 		initialize: function () {
-			this.repoRows = []
+			this.groups = []
 			this.collection = store().projects
+			this.listenTo(store().projects, 'sync', this.showProjects)
+			this.listenTo(store().projects, 'request', this.showLoading)
 		},
-		renderRepos: function () {
+		showProjects: function () {
+			this.$('.loading').hide()
+			this.$('.content').slideDown()
+			this.render()
+		},
+		showLoading: function () {
+			this.$('.loading').show()
+			this.$('.content').slideUp()
+		},
+		renderGroups: function () {
 			var list = this.$('.repos-list')
-			_.invoke(this.repoRows, 'remove')
-			this.repoRows = []
+			_.invoke(this.groups, 'remove')
+			this.groups = []
 
-			this.checkIsEmpty()
 			if (!this.collection.length) return
 
 			this.collection.each(function (repo) {
-				var view = new this.RepoRow({model: repo})
-				this.repoRows.push(view)
+				var view = new Group({model: repo})
+				this.groups.push(view)
 				view.render()
 			}, this)
 
-			list.removeClass('hidden').append(_.pluck(this.repoRows, 'el'))
+			list.removeClass('hidden').append(_.pluck(this.groups, 'el'))
 		},
 		render: function () {
-			this.$el.html(this.tpl())
-			this.renderRepos()
+			this.$('.content').html(tpl())
+			this.renderGroups()
+			this.checkIsEmpty()
 			return this
 		},
 		updateProjects: function (event) {

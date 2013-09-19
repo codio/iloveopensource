@@ -19,6 +19,9 @@ define(function (require) {
 		});
 
 		$('body')
+			.on('click', 'input.embed', function (event) {
+				$(event.currentTarget).select()
+			})
 			.on('click', '.email-to-author', function (event) {
 				var el = $(event.currentTarget)
 				var textarea = emailToAuthor.find('textarea')

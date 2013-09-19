@@ -8,8 +8,8 @@ define(function (require) {
 	require('bootstrap')
 
 	var toastr = require('toastr')
-	var Layout = require('./views/layout')
-	var Projects = require('./collections/projects')
+	var Layout = require('./views/list')
+	var Projects = require('./collections/project-groups')
 	var store = require('store').getNamespace('maintainer')
 
 	$(function () {

@@ -9906,6 +9906,40 @@ form .form-group .control-label {
   display: none;
 }
 
+#maintainers .group .group-header {
+  color: #FFF;
+  border-bottom: 1px #CCC solid;
+  padding: 1em;
+  position: relative;
+  cursor: pointer;
+}
+
+#maintainers .group .group-header:after {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f151";
+  position: absolute;
+  right: 1em;
+}
+
+#maintainers .group.folded .group-header:after {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f150";
+}
+
+#maintainers .group.folded .projects {
+  display: none;
+}
+
 #maintainers .projects-updater {
   margin: 20px 0;
 }

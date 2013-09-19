@@ -40,6 +40,10 @@ define(function (require) {
 
 			return this
 		},
+		remove: function() {
+			this.donateMethods.remove()
+			Backbone.View.prototype.remove.apply(this, arguments)
+		},
 		toggleSettings: function () {
 			var btn = this.$('.settings-toggler'),
 				altText = btn.data().altText,

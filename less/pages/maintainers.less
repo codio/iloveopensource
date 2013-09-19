@@ -5,6 +5,31 @@
 	}
   }
 
+  .group {
+	.group-header {
+	  color: #FFF;
+	  border-bottom: 1px #CCC solid;
+	  padding: 1em;
+	  position: relative;
+	  cursor: pointer;
+
+	  &:after {
+		.icon(@collapse-top);
+		position: absolute;
+		right: 1em;
+	  }
+	}
+
+	&.folded {
+	  .group-header:after {
+		.icon(@collapse)
+	  }
+	  .projects {
+		display: none;
+	  }
+	}
+  }
+
   .projects-updater {
 	margin: 20px 0;
 
