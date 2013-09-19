@@ -13,6 +13,8 @@ var mongoose = require('mongoose'),
 var SupportSchema = new Schema({
 	user: {type: Schema.ObjectId, ref: 'User'},
 	project: {type: Schema.ObjectId, ref: 'Project'},
+	relatedTo: {type: Number, default: 0, index: true},
+
 	donating: {type: Boolean, default: false},
 	supporting: {type: Boolean, default: false},
 	contributing: {type: Boolean, default: false}

@@ -12,8 +12,13 @@ define(function (require) {
 	return Backbone.Collection.extend({
 		url: '/maintaining-projects',
 		model: Project,
-		save: function (options) {
-			return this.sync('update', this, options);
+		fetch: function() {
+			var self = this
+			self.trigger('fetching')
+			Backbone.Collection.prototype.fetch.apply(this, arguments)
+				.done(function() {
+					self.trigger('fetched')
+				});
 		}
 	})
 })

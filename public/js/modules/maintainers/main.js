@@ -16,12 +16,13 @@ define(function (require) {
 		store().hub = _.extend({}, Backbone.Events)
 		store().projects = new Projects()
 		store().notify = toastr
-
-		store().projects.fetch().done(function () {
-			store().layout = new Layout({
-				el: $('#maintainers')
-			})
-			store().layout.showProjects()
+		store().layout = new Layout({
+			el: $('#maintainers')
 		})
+		store().projects.fetch()
+
+		$('body').tooltip({
+			selector: '[data-toggle="tooltip"]'
+		});
 	})
 })

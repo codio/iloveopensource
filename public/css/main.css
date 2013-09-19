@@ -9906,6 +9906,10 @@ form .form-group .control-label {
   display: none;
 }
 
+#maintainers .projects-updater {
+  margin: 20px 0;
+}
+
 #page-project .welcome {
   padding: 20px;
   font-size: 1.3em;

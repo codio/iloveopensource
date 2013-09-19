@@ -7,23 +7,25 @@
 define(function (require) {
 	require('backbone')
 
-	var store = require('store').getNamespace('maintainer')
+	var io = require('socket.io')
 	var ProjectList = require('./list')
+	var store = require('store').getNamespace('maintainer')
 
 	return Backbone.View.extend({
 		initialize: function () {
-			this.render()
+			this.listenTo(store().projects, 'fetched', this.showProjects)
+			this.listenTo(store().projects, 'fetching', this.showLoading)
 		},
-		render: function () {
+		showProjects: function () {
+			console.log(arguments)
 			this.$('.loading').hide()
-			$('body').tooltip({
-				selector: '[data-toggle="tooltip"]'
-			});
-			return this
-		},
-		showProjects: function() {
+			this.$('.content').slideDown()
 			this.projects = this.projects || new ProjectList
 			this.projects.render().$el.appendTo(this.$('.content'))
+		},
+		showLoading: function () {
+			this.$('.loading').show()
+			this.$('.content').slideUp()
 		}
 	});
 })

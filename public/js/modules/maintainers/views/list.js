@@ -11,6 +11,9 @@ define(function (require) {
 	return Backbone.View.extend({
 		tpl: require('tpl!../templates/list.html'),
 		RepoRow: require('./project'),
+		events: {
+			'click .update-projects-info': 'updateProjects'
+		},
 		initialize: function () {
 			this.repoRows = []
 			this.collection = store().projects
@@ -35,6 +38,38 @@ define(function (require) {
 			this.$el.html(this.tpl())
 			this.renderRepos()
 			return this
+		},
+		updateProjects: function (event) {
+			var btn = $(event.currentTarget),
+				log = btn.next('.log').empty()
+
+			if (btn.prop('disabled')) return
+
+			var socket = io.connect(window.location.origin)
+			btn.button('loading')
+
+			socket.on('progress', function (desc) {
+				log.append('<p>' + desc + '</p>')
+			})
+
+			socket.on('error', function () {
+				btn.button('reset')
+				log.append('<p class="text-danger">Error appear during update, please try again</p>')
+			})
+
+			socket.on('done', function () {
+				btn.html('Done!')
+				log.empty()
+				store().projects.fetch()
+			})
+
+			if (socket.socket.connected) {
+				$.get('/update-projects', {sessionId: socket.socket.sessionid})
+			} else {
+				socket.on('connect', function () {
+					$.get('/update-projects', {sessionId: socket.socket.sessionid})
+				})
+			}
 		},
 		checkIsEmpty: function () {
 			var el = this.$('.is-empty.message')

@@ -7,3 +7,4 @@
 require('./user')
 require('./project')
 require('./support')
+require('./orgs')

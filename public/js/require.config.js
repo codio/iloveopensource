@@ -19,6 +19,7 @@ require.config({
 		backbone: 'vendors/backbone/js/backbone',
 		'require-tpl': 'vendors/require-tpl/js/require-tpl',
 		json: 'vendors/json3/js/json3',
+		'socket.io': '/socket.io/socket.io',
 
 		gitRepoRequester: 'plugins/repo-requester'
 	},

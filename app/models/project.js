@@ -18,6 +18,8 @@ var ProjectSchema = new Schema({
 	description: {type: String, trim: true},
 	fork: Boolean,
 
+	admins: [{type: Schema.ObjectId, ref: 'User', index: true}],
+
 	owner: {
 		user: {type: Schema.ObjectId, ref: 'User', index: true},
 		githubId: {type: Number, required: true, index: true},
@@ -26,6 +28,7 @@ var ProjectSchema = new Schema({
 		url: String,
 		gravatar: String
 	},
+
 	donateMethods: {
 		gittip: {type: String, trim: true},
 		paypal: {type: String, trim: true},
@@ -56,6 +59,7 @@ ProjectSchema.pre('validate', function (next, done) {
 });
 
 ProjectSchema.statics.parseGitHubData = function (repo) {
+	!repo.owner && console.log(repo)
 	return {
 		githubId: repo.id,
 		url: repo.html_url,
@@ -67,10 +71,14 @@ ProjectSchema.statics.parseGitHubData = function (repo) {
 			githubId: repo.owner.id,
 			username: repo.owner.login,
 			url: 'https://github.com/' + repo.owner.login,
+			type: repo.owner.type,
 			gravatar: repo.owner.gravatar_id
-		}
+		},
+		admins: [],
+		githubData: repo
 	}
 }
+
 ProjectSchema.statics.createIfNotExists = function (data, cb) {
 	var self = this
 

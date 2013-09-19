@@ -54,6 +54,10 @@ if ('development' == cfg.env) {
 	require('./app/middleware/errors')(app)
 }
 
-http.createServer(app).listen(app.get('port'), function () {
+var server = http.createServer(app)
+
+require('./app/utils/socket.io')(server)
+
+server.listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));
 });
