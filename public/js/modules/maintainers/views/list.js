@@ -53,7 +53,8 @@ define(function (require) {
 		},
 		updateProjects: function (event) {
 			var btn = $(event.currentTarget),
-				log = btn.next('.log').empty()
+				log = btn.next('.log').empty(),
+				url = '/maintainer/projects/update'
 
 			if (btn.prop('disabled')) return
 
@@ -76,10 +77,10 @@ define(function (require) {
 			})
 
 			if (socket.socket.connected) {
-				$.get('/update-projects', {sessionId: socket.socket.sessionid})
+				$.get(url, {sessionId: socket.socket.sessionid})
 			} else {
 				socket.on('connect', function () {
-					$.get('/update-projects', {sessionId: socket.socket.sessionid})
+					$.get(url, {sessionId: socket.socket.sessionid})
 				})
 			}
 		},

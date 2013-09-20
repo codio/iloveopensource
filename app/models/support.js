@@ -11,9 +11,11 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema
 
 var SupportSchema = new Schema({
-	user: {type: Schema.ObjectId, ref: 'User'},
+	byUser: {type: Schema.ObjectId, ref: 'User', index: true},
+	byProject: {type: Schema.ObjectId, ref: 'Project', index: true},
+	byOrganization: {type: Schema.ObjectId, ref: 'Project', index: true},
+
 	project: {type: Schema.ObjectId, ref: 'Project'},
-	relatedTo: {type: Number, default: 0, index: true},
 
 	donating: {type: Boolean, default: false},
 	supporting: {type: Boolean, default: false},
@@ -84,5 +86,4 @@ SupportSchema.statics.updateSupportByUser = function (userId, repos, cb) {
 	], cb)
 }
 
-SupportSchema.index({user: 1, project: 1}, {unique: true});
 mongoose.model('Support', SupportSchema)

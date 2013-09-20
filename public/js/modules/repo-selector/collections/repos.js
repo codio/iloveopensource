@@ -12,7 +12,7 @@ define(function (require) {
 	return Backbone.Collection.extend({
 		model: Repo,
 		url: function () {
-			return '/github-request/' + this.path;
+			return '/supporter/github/' + this.path;
 		},
 		initialize: function (models, options) {
 			options = options || {}

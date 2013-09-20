@@ -9,6 +9,6 @@ define(function (require) {
 
 	return Backbone.Model.extend({
 		idAttribute: '_id',
-		urlRoot: '/maintaining-projects'
+		urlRoot: '/maintainer/projects'
 	})
 })

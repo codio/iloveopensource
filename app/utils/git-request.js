@@ -71,7 +71,10 @@ module.exports.requestRepos = function (path, params, callback) {
 			});
 		}
 
-		callback(null, _.map(body.items || body, function (repo) {
+		var items = body.items || body
+		if (!_.isArray(items)) items = [items]
+
+		callback(null, _.map(items, function (repo) {
 			repo = Project.parseGitHubData(repo)
 			return repo
 		}), links)

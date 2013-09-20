@@ -14,6 +14,7 @@ define(function (require) {
 	var Router = require('./router')
 	var Search = require('./collections/search')
 	var Projects = require('./collections/projects')
+	var ProjectGroups = require('./collections/projects')
 	var store = require('store').getNamespace('repo-selector')
 
 	$(function () {
