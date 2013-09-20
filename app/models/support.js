@@ -40,7 +40,7 @@ SupportSchema.statics.checkRights = function (currentUser, type, id, callback) {
 			callback(null, entry, query)
 		}
 
-	if (!(id instanceof ObjectId)) {
+	if (_.isString(id)) {
 		id = new ObjectId(id);
 	}
 

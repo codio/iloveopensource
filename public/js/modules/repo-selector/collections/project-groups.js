@@ -7,8 +7,6 @@
 define(function (require) {
 	require('backbone')
 
-	var Projects = require('./projects')
-
 	return Backbone.Collection.extend({
 		url: '/maintainer/projects',
 		comparator: function(item) {
@@ -19,9 +17,10 @@ define(function (require) {
 
 			_.each(data, function (entry) {
 				var group = owners[entry.owner.githubId]
+
 				if (!group) {
 					group = owners[entry.owner.githubId] = _.clone(entry.owner)
-					group.repos = new Projects
+					group.repos = []
 				}
 
 				group.repos.push(entry)

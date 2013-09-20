@@ -18,6 +18,11 @@ define(function (require) {
 			options = options || {}
 			options.path && (this.path = options.path)
 			options.type && (this.type = options.type)
+			this.listenTo(store().selected, 'fetched', this.setUpstreamSupport)
+		},
+		setUpstreamSupport: function() {
+			_.invoke(this.models, 'setUpstreamSupport')
+			this.trigger('repos-loaded')
 		},
 		fetch: function (options) {
 			var self = this

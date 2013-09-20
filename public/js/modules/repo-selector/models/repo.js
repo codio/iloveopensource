@@ -21,6 +21,14 @@ define(function (require) {
 			obj.support = obj.support.toJSON()
 			return obj
 		},
+		setUpstreamSupport: function() {
+			var exists = store().selected.get(this.id),
+				support = {}
+			if (exists) {
+				support = exists.get('support').toJSON()
+			}
+			this.set('support', new Support(support))
+		},
 		parse: function (repo) {
 			var exists = store().selected.get(repo.githubId)
 			if (exists) {

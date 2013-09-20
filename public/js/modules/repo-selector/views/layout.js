@@ -8,28 +8,53 @@ define(function (require) {
 	require('backbone')
 
 	var toastr = require('toastr')
-	var RepoList = require('./repo-list')
-	var RepoSearch = require('./search')
-	var SelectedRepos = require('./selected')
 	var store = require('store').getNamespace('repo-selector')
 	var tpl = require('tpl!../templates/layout.html')
+	var selectorTpl = require('tpl!../templates/support-selector.html')
 
 	return Backbone.View.extend({
 		events: {
 			'click .share-trigger': 'toggleShare',
-			'click .share input': 'selectAllText'
+			'click .nav-tabs a': 'selectTab',
+			'click a[role="menuitem"]': 'select'
+		},
+		select: function (event) {
+			var el = $(event.currentTarget)
+			this.$('.support-selector').find('.value').text(el.text())
+		},
+		selectTab: function (event) {
+			event.preventDefault()
+			var tab = $(event.currentTarget).attr('href').replace('#', '')
+			store().router.navigate(
+				'/type/' + store().currentType.type + '/id/' + store().currentType.id + '/tab/' + tab,
+				{trigger: true}
+			)
 		},
 		initialize: function () {
-			this.listenTo(store().hub, 'repos-loaded', this.renderRepoList)
+			this.listenTo(store().hub, 'repos-loaded', this.loadedRepoList)
 			this.listenTo(store().selected, 'add', this.updateSelectedCount)
 			this.listenTo(store().selected, 'remove', this.updateSelectedCount)
+			this.listenTo(store().selected, 'prefetch', this.showLoading)
+			this.listenTo(store().selected, 'fetched', this.hideLoading)
+			this.listenTo(store().groups, 'sync', this.showSelector)
 			this.render()
+		},
+		hideLoading: function () {
+			this.$('.loading').hide()
+			this.$('.content').slideDown()
+		},
+		showLoading: function () {
+			this.$('.loading').show()
+			this.$('.content').slideUp()
+		},
+		showSelector: function () {
+			this.$('.support-selector').html(selectorTpl({
+				groups: store().groups.toJSON(),
+				current: store().currentType
+			}))
 		},
 		updateSelectedCount: function (model, collection) {
 			this.$('#selected-count').text(collection.length)
-		},
-		selectAllText: function(event) {
-			$(event.currentTarget).select();
 		},
 		toggleShare: function () {
 			var btn = this.$('.share-trigger'),
@@ -47,31 +72,13 @@ define(function (require) {
 		},
 		render: function () {
 			var self = this
-
-			this.$('#repos-selector').html(tpl({
-				selectedCount: store().selected.length
-			}))
-
-			new RepoSearch({
-				el: this.$('#repo-search'),
-				collection: store().repos.search
-			}).render()
-
-			new SelectedRepos({
-				el: this.$('#selected-repos'),
-				collection: store().selected
-			}).render()
+			this.$('.loading').hide()
+			this.$('.content').html(tpl()).slideDown()
+			this.updateSelectedCount(null, store().selected)
 		},
-		renderRepoList: function (collection, type) {
+		loadedRepoList: function (collection, type) {
 			if (type == 'search') return
-			this.$('a[href="#' + type + '-repos"]').parent().removeClass('disabled')
-
-			var view = new RepoList({
-				el: this.$('#' + type + '-repos'),
-				collection: collection
-			})
-
-			view.render()
+			this.$('.nav a[href="#' + type + '-repos"]').parent().removeClass('disabled')
 		}
 	});
 })

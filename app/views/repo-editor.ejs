@@ -4,10 +4,12 @@
 <% include parts/head.ejs %>
 <div class="container">
 
-	<section id="repos-editor">
-		<section id="repos-selector">
+	<section id="repos-selector">
+		<div class="loading">
 			<i class="icon-spinner icon-spin icon-large"></i> Loading
-		</section>
+		</div>
+		<div class="support-selector"></div>
+		<div class="content"></div>
 	</section>
 
 	<% include modals/index.ejs %>
@@ -19,7 +21,7 @@
 			baseUrl: "<%=jsPath %>"
 		})
 		window.currentUserName = '<%= loggedUser.username %>'
-		window.currentUser = <%- JSON.stringify(loggedUser) %>
+		window.currentUserId = '<%= loggedUser._id %>'
 
 		require(['modules/repo-selector/main'])
 	</script>

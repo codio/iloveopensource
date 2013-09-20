@@ -10,11 +10,26 @@ define(function (require) {
 
 	return Backbone.Router.extend({
 		routes: {
-			'*actions': 'selected'
+			'type/:type/id/:id': 'switchType',
+			'type/:type/id/:id/tab/:tab': 'switchType',
+			'*actions': 'switchType'
 		},
-		selected: function (hash) {
-			hash = hash || 'selected-repos'
-			var el = store().layout.$('.nav a[href="#' + hash + '"]')
+		switchType: function (type, id, tab) {
+			if (type != store().currentType.type || id != store().currentType.id) {
+				store().currentType = {
+					type: type,
+					id: id
+				}
+
+				store().selected.fetch()
+			}
+
+			this.selectTab(tab)
+		},
+		selectTab: function () {
+			var tab = Array.prototype.pop.call(arguments)
+			tab = tab || 'selected-repos'
+			var el = store().layout.$('.nav a[href="#' + tab + '"]')
 			el.tab('show')
 		}
 	});

@@ -12,10 +12,6 @@ define(function (require) {
 	return RepoList.extend({
 		minLength: 5,
 		tpl: require('tpl!../templates/repo-search.html'),
-		initialize: function () {
-			RepoList.prototype.initialize.apply(this, arguments)
-			this.listenTo(this.collection, 'repos-loaded', this.renderRepos)
-		},
 		events: {
 			'keyup .search-string': 'triggerSearch',
 			'click .controls .support-type': 'toogleReposSupport',

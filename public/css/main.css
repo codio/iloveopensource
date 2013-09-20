@@ -9814,6 +9814,20 @@ form .form-group .control-label {
   font-size: 22px;
 }
 
+#repos-selector .support-selector .dropdown-menu {
+  background: #222;
+}
+
+#repos-selector .support-selector .dropdown-menu .dropdown-header {
+  font-size: 1.1em;
+  padding-left: 5px;
+  color: #fff;
+}
+
+#repos-selector .support-selector .dropdown-menu > li > a {
+  color: #ccc;
+}
+
 #repos-selector .nav-tabs li .icon-spinner {
   display: none;
 }

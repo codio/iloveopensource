@@ -15,6 +15,7 @@ define(function (require) {
 			'click .controls .support-type': 'toogleReposSupport'
 		},
 		initialize: function () {
+			this.listenTo(this.collection, 'repos-loaded', this.renderRepos)
 			this.repoRows = []
 		},
 		loadMore: function () {

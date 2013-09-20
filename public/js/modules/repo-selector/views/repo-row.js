@@ -75,6 +75,10 @@ define(function (require) {
 			}
 
 			return this
+		},
+		remove: function() {
+			this.donateMethods && this.donateMethods.remove()
+			Backbone.View.prototype.remove.apply(this, arguments)
 		}
 	});
 })

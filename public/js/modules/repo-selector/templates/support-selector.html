@@ -1,0 +1,46 @@
+<% var own = _.find(groups, {type: 'User'}) %>
+<% var orgs = _.filter(groups, {type: 'Organization'}) %>
+<% var selected = 'Personal Support' %>
+
+<% if (own || orgs.length)  {%>
+<div class="dropdown">
+	<ul class="dropdown-menu" role="menu">
+		<li role="presentation">
+			<a role="menuitem" tabindex="-1" href="#type/user/id/<%= currentUserId %>">Personal Support</a>
+		</li>
+
+		<% if (own) { %>
+		<li role="presentation" class="divider"></li>
+		<li role="presentation" class="dropdown-header">Owned Projects</li>
+		<% _.each(own.repos, function(repo) { %>
+		<% current.id == repo._id && (selected = repo.owner.username + '/' + repo.name) %>
+		<li role="presentation">
+			<a role="menuitem" tabindex="-1" href="#type/project/id/<%= repo._id %>"><%= repo.owner.username %>/<%= repo.name %></a>
+		</li>
+		<% }) %>
+		<% } %>
+		<% if (orgs.length) { %>
+		<li role="presentation" class="divider"></li>
+		<li role="presentation" class="dropdown-header">Organizations</li>
+		<% _.each(orgs, function(org) { %>
+		<% current.id == org.org && (selected = org.username) %>
+		<li role="presentation">
+			<a role="menuitem" tabindex="-1" href="#type/organization/id/<%= org.org %>"><%= org.username %></a>
+		</li>
+		<li role="presentation" class="dropdown-header"><%= org.username %> Projects</li>
+		<% _.each(org.repos, function(repo) { %>
+		<% current.id == repo._id && (selected = repo.owner.username + '/' + repo.name) %>
+		<li role="presentation">
+			<a role="menuitem" tabindex="-1" href="#type/project/id/<%= repo._id %>"><%= repo.owner.username %>/<%= repo.name %></a>
+		</li>
+		<li role="presentation" class="divider"></li>
+		<% }) %>
+		<% }) %>
+		<% } %>
+	</ul>
+	You are editing:
+	<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+		<span class="value"><%= selected ? selected: 'Personal Support' %></span> <i class="icon-edit"></i>
+	</button>
+</div>
+<% } %>

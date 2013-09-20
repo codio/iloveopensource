@@ -16,6 +16,7 @@ define(function (require) {
 			this.listenTo(this.collection, 'add', this.renderRepo)
 			this.listenTo(this.collection, 'destroy', this.checkIsEmpty)
 			this.listenTo(this.collection, 'add', this.checkIsEmpty)
+			this.listenTo(this.collection, 'sync', this.renderRepos)
 		}
 	});
 })
