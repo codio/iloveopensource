@@ -36,6 +36,9 @@ module.exports = function (grunt) {
 					generateSourceMaps: true,
 					optimize: 'uglify2',
 					mainConfigFile: "./public/js/require.config.js",
+					paths: {
+						'socket.io': 'empty:'
+					},
 					modules: [
 						{
 							name: 'modules/repo-selector/main'
