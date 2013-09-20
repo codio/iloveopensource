@@ -24,17 +24,17 @@ module.exports = function (app) {
 
 			async.parallel({
 				supporters: function (cb) {
-					Support.find({project: project._id, supporting: true}).populate('user').exec(cb)
+					Support.find({project: project._id, supporting: true, type: 'user'}).populate('byUser').exec(cb)
 				},
 				contributors: function (cb) {
-					Support.find({project: project._id, contributing: true}).populate('user').exec(cb)
+					Support.find({project: project._id, contributing: true, type: 'user'}).populate('byUser').exec(cb)
 				},
 				donators: function (cb) {
-					Support.find({project: project._id, donating: true}).populate('user').exec(cb)
+					Support.find({project: project._id, donating: true, type: 'user'}).populate('byUser').exec(cb)
 				},
 				userSupport: function (cb) {
 					if (!req.user) return cb(null, {})
-					Support.findOne({project: project._id, user: req.user._id}).exec(cb)
+					Support.findOne({project: project._id, byUser: req.user._id, type: 'user'}).exec(cb)
 				}
 			}, function (error, result) {
 				if (error) return res.send(500, err)
@@ -59,10 +59,7 @@ module.exports = function (app) {
 		Project.findById(id, function (err) {
 			if (err) return res.send(400, 'project not found');
 
-			Support.update({
-				'project': id,
-				'user': req.user._id
-			}, { $set: data }, {upsert: true}, function (err) {
+			Support.updateEntry(req.user, 'user', req.user._id, id, data, function (err) {
 				if (err) return res.send(500, 'Failed to update your support')
 				res.send('ok')
 			})

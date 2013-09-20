@@ -73,7 +73,7 @@
 					Cash Donors (<span class="counter"><%= users.donators.length %></span>)
 				</h4>
 				<% _.each(users.donators, function(support) { %>
-				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
+				<a href="/users/<%= support.byUser.username %>"><%= support.byUser.username %></a>
 				<% }) %>
 			</div>
 			<div class="col contributing">
@@ -82,7 +82,7 @@
 					Code Contributors (<span class="counter"><%= users.contributors.length %></span>)
 				</h4>
 				<% _.each(users.contributors, function(support) { %>
-				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
+				<a href="/users/<%= support.byUser.username %>"><%= support.byUser.username %></a>
 				<% }) %>
 			</div>
 			<div class="col supporting">
@@ -91,7 +91,7 @@
 					Vocal Supporters (<span class="counter"><%= users.supporters.length %></span>)
 				</h4>
 				<% _.each(users.supporters, function(support) { %>
-				<a href="/users/<%= support.user.username %>"><%= support.user.username %></a>
+				<a href="/users/<%= support.byUser.username %>"><%= support.byUser.username %></a>
 				<% }) %>
 			</div>
 		</div>

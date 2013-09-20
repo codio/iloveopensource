@@ -59,45 +59,25 @@ module.exports = function (app) {
 	})
 
 	app.put('/supporter/support/:type/:by/[0-9]+', ensureAuthenticated, function (req, res) {
-		if (!req.body.project || !req.body.support) return res.send('empty request')
+		if (!req.body) return res.send('empty request')
 
 
-		Project.createIfNotExists(req.body.project, function (err, project) {
+		Project.createIfNotExists(req.body, function (err, project) {
 			if (err) return res.send(400, err);
 
 			Support.updateEntry(req.user, req.param('type'), req.param('by'), project._id, req.body.support, function (error, supports) {
 				if (error) return res.send(400, 'Failed to update your support');
 				res.send(supports)
 			})
-
-//			Support.updateSupport(_.extend(req.body.support, {
-//				'project': project._id,
-//				'user': req.user._id
-//			}), function (err, supporting) {
-//				if (err) return res.send(400, err)
-//
-//				project = project.toObject()
-//				project.support = supporting
-//				res.send(project)
-//			})
 		})
 	})
 
 	app.delete('/supporter/support/:type/:by/[0-9]+', ensureAuthenticated, function (req, res) {
 		if (!req.body || !req.body.id) return res.send('empty request')
 
-		Support.removeEntry(req.user._id, req.param('type'), req.param('by'), function (error, supports) {
+		Support.removeEntry(req.user._id, req.param('type'), req.param('by'), req.body.id, function (error, supports) {
 			if (error) return res.send(400, 'Failed to remove your support');
 			res.send('removed')
 		})
-
-//		Support.remove({
-//			'project': req.body.id,
-//			'user': req.user._id
-//		}, function (err, supporting) {
-//			if (err) return res.send(400, err)
-//
-//			res.send('removed')
-//		})
 	})
 };

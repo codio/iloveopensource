@@ -22,7 +22,7 @@ define(function (require) {
 			if (el.prop('disabled')) return
 
 			el.prop('disabled', true)
-			$.get('/project/' + projectId + '/subscribe/' + el.data().type + '/' + newState)
+			$.get('/projects/' + projectId + '/subscribe/' + el.data().type + '/' + newState)
 				.done(function () {
 					var container = usersList.find('.col.' + el.data().type),
 						counter = container.find('.counter')

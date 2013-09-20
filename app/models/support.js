@@ -18,6 +18,8 @@ var SupportSchema = new Schema({
 
 	project: {type: Schema.ObjectId, ref: 'Project'},
 
+	type: { type: String, enum: ['user', 'organization', 'project'] },
+
 	donating: {type: Boolean, default: false},
 	supporting: {type: Boolean, default: false},
 	contributing: {type: Boolean, default: false}
@@ -29,6 +31,7 @@ SupportSchema.statics.isEmpty = function (data) {
 
 SupportSchema.statics.checkRights = function (currentUser, type, id, callback) {
 	var self = this,
+		ObjectId = mongoose.Types.ObjectId,
 		query = { type: type },
 		done = function (error, entry) {
 			if (error) return callback('Server error')
@@ -36,6 +39,10 @@ SupportSchema.statics.checkRights = function (currentUser, type, id, callback) {
 
 			callback(null, entry, query)
 		}
+
+	if (!(id instanceof ObjectId)) {
+		id = new ObjectId(id);
+	}
 
 	if (type == 'organization') {
 		query.byOrganization = id
@@ -77,31 +84,17 @@ SupportSchema.statics.updateEntry = function (currentUser, type, id, projectId, 
 		self.findOne(query, function (err, support) {
 			if (err) return callback('Failed to update your support')
 
-			if (support) {
-				_.merge(support, userData)
-
-				if (self.isEmpty(support)) {
-					return support.remove(callback)
-				} else {
-					return support.save(callback)
-				}
-			}
-
-			support = {
-				type: type,
-				project: projectId
-			}
-
-			if (type == 'organization') {
-				support.byOrganization = id
-			} else if (type == 'project') {
-				support.byProject = id
-			} else {
-				support.byUser = id
+			if (!support) {
+				return self.create(_.merge({}, userData, query), callback)
 			}
 
 			_.merge(support, userData)
-			self.create(support, callback)
+
+			if (self.isEmpty(support)) {
+				return support.remove(callback)
+			} else {
+				return support.save(callback)
+			}
 		})
 	})
 }
