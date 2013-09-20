@@ -17,8 +17,8 @@ define(function (require) {
 		switchType: function (type, id, tab) {
 			if (type != store().currentType.type || id != store().currentType.id) {
 				store().currentType = {
-					type: type,
-					id: id
+					type: type || 'user',
+					id: id || currentUserId
 				}
 
 				store().selected.fetch()
