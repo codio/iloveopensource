@@ -19,6 +19,7 @@
 			baseUrl: "<%=jsPath %>"
 		})
 		window.currentUserName = '<%= loggedUser.username %>'
+		window.currentUser = <%- JSON.stringify(loggedUser) %>
 
 		require(['modules/repo-selector/main'])
 	</script>

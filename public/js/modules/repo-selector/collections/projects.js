@@ -10,7 +10,7 @@ define(function (require) {
 	var Project = require('../models/project')
 
 	return Backbone.Collection.extend({
-		url: '/supporter/support',
+		url: '/supporter/support/user/' + currentUser._id,
 		model: Project,
 		save: function (options) {
 			return this.sync('update', this, options);

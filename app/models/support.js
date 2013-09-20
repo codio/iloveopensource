@@ -7,6 +7,7 @@
 var mongoose = require('mongoose'),
 	_ = require('lodash'),
 	Project = mongoose.model('Project'),
+	Organization = mongoose.model('Project'),
 	async = require('async'),
 	Schema = mongoose.Schema
 
@@ -24,6 +25,93 @@ var SupportSchema = new Schema({
 
 SupportSchema.statics.isEmpty = function (data) {
 	return (!data.contributing && !data.supporting && !data.donating)
+}
+
+SupportSchema.statics.checkRights = function (currentUser, type, id, callback) {
+	var self = this,
+		query = { type: type },
+		done = function (error, entry) {
+			if (error) return callback('Server error')
+			if (!entry) return callback('Nothing found')
+
+			callback(null, entry, query)
+		}
+
+	if (type == 'organization') {
+		query.byOrganization = id
+		Organization.findOne({ admins: currentUser._id}, done)
+	} else if (type == 'project') {
+		query.byProject = id
+		Project.findOne({ $or: [
+			{ admins: currentUser._id},
+			{ 'owner.user': currentUser._id},
+		]}, done)
+	} else {
+		query.byUser = id
+		done(null, currentUser)
+	}
+
+}
+
+SupportSchema.statics.getProjectList = function (currentUser, type, id, callback) {
+	var self = this
+
+	self.checkRights(currentUser, type, id, function (error, entry, query) {
+		if (error) return callback('You have no rights to do this')
+
+		self.find(query).populate('project').lean().exec(function (error, supports) {
+			callback(error ? 'Failed to retrieve supporting projects' : null, supports);
+		})
+	})
+}
+
+SupportSchema.statics.updateEntry = function (currentUser, type, id, projectId, userData, callback) {
+	var self = this,
+		data = _.pick(userData, 'donating', 'supporting', 'contributing');
+
+	self.checkRights(currentUser, type, id, function (error, entry, query) {
+		if (error) return callback('You have no rights to do this')
+
+		query.project = projectId
+
+		self.findOne(query, function (err, support) {
+			if (err) return callback('Failed to update your support')
+
+			if (support) {
+				_.merge(support, userData)
+
+				if (self.isEmpty(support)) {
+					return support.remove(callback)
+				} else {
+					return support.save(callback)
+				}
+			}
+
+			support = {
+				type: type,
+				project: projectId
+			}
+
+			if (type == 'organization') {
+				support.byOrganization = id
+			} else if (type == 'project') {
+				support.byProject = id
+			} else {
+				support.byUser = id
+			}
+
+			_.merge(support, userData)
+			self.create(support, callback)
+		})
+	})
+}
+
+SupportSchema.statics.removeEntry = function (currentUser, type, id, projectId, callback) {
+	this.updateEntry(currentUser, type, id, projectId, {
+		donating: false,
+		supporting: false,
+		contributing: false
+	}, callback)
 }
 
 SupportSchema.statics.updateSupport = function (userData, callback) {
