@@ -42,6 +42,9 @@ module.exports = function (grunt) {
 					modules: [
 						{
 							name: 'modules/repo-selector/main'
+						},
+						{
+							name: 'modules/maintainers/main'
 						}
 					]
 				}
