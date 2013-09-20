@@ -22,6 +22,7 @@ var ProjectSchema = new Schema({
 
 	owner: {
 		user: {type: Schema.ObjectId, ref: 'User', index: true},
+		org: {type: Schema.ObjectId, ref: 'Organization', index: true},
 		githubId: {type: Number, required: true, index: true},
 		username: {type: String, required: true},
 		type: {type: String},

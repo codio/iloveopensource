@@ -102,9 +102,17 @@ ProjectsUpdater.prototype.fetchOrgRepos = function (org, callback) {
 				return entry
 			})
 
-		async.parallel([
+		async.waterfall([
 			async.apply(_.bind(self.updateOrganization, self), org, isAdmin),
-			async.apply(_.bind(self.updateRepos, self), repos, org.githubId)
+			function() {
+				var org = arguments[0],
+					callback = Array.prototype.pop.call(arguments)
+
+				repos = _.each(repos, function (entry) {
+					entry.owner.org = org._id
+				})
+				self.updateRepos(repos, org.githubId, callback)
+			}
 		], function (error) {
 			if (!error) self.progress('updated info for "' + org.name + '" organization')
 			callback(error)
