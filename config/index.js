@@ -33,11 +33,16 @@ config.github = {
 //config.emails.to - email of support
 //config.emails.transport - nodemailer email transport
 config.emails = {
-	from: 'robo@'+config.hostname,
+	from: 'robo@' + config.hostname,
 	to: 'support@codio.com',
-	transport: nodemailer.createTransport('sendmail', {
-		path: '/usr/sbin/sendmail',
-		args: ['-i', '-t']
+	transport: nodemailer.createTransport('SMTP', {
+		host: 'smtp.mandrillapp.com',
+		port: 465,
+		secureConnection: true,
+		auth: {
+			user: process.env.MANDRILL_USERNAME,
+			pass: process.env.MANDRILL_APIKEY
+		}
 	})
 }
 //config.sessionSecret to hash sessions
