@@ -5,7 +5,7 @@ module.exports = function (app) {
 
 	app.get('/auth/github/callback', function (req, res, next) {
 		passport.authenticate('github', function (err, user, info) {
-			var redirectUrl = '/users/' + user.username;
+			var redirectUrl = '/supporter/';
 
 			if (err) {
 				return next(err);
