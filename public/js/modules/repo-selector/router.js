@@ -29,7 +29,7 @@ define(function (require) {
 		selectTab: function () {
 			var tab = Array.prototype.pop.call(arguments)
 			tab = tab || 'selected-repos'
-			var el = store().layout.$('.nav a[href="#' + tab + '"]')
+			var el = store().layout.$('.nav .tab[href="#' + tab + '"]')
 			el.tab('show')
 		}
 	});

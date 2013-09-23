@@ -15,7 +15,7 @@ define(function (require) {
 	return Backbone.View.extend({
 		events: {
 			'click .share-trigger': 'toggleShare',
-			'click .nav-tabs a': 'selectTab',
+			'click .nav-tabs .tab': 'selectTab',
 			'click a[role="menuitem"]': 'select'
 		},
 		select: function (event) {
@@ -78,7 +78,7 @@ define(function (require) {
 		},
 		loadedRepoList: function (collection, type) {
 			if (type == 'search') return
-			this.$('.nav a[href="#' + type + '-repos"]').parent().removeClass('disabled')
+			this.$('.nav .tab[href="#' + type + '-repos"]').parent().removeClass('disabled')
 		}
 	});
 })
