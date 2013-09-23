@@ -39,6 +39,9 @@ define(function (require) {
 			list.removeClass('hidden').append(_.pluck(this.repoRows, 'el'))
 		},
 		render: function () {
+			if (this.model.get('type').toLowerCase() != 'user') {
+				this.$el.addClass('folded')
+			}
 			this.$el.html(tpl(this.model.toJSON()))
 			this.renderRepos()
 			return this
