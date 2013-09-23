@@ -1,0 +1,36 @@
+<div class="repo <%= project.fork ? 'fork' : '' %>">
+	<div class="col repo-name">
+		<a href="<%= project.url %>" class="icon-github go-to" target="_blank"></a>
+
+		<h4>
+			<% if (project.owner.user) { %>
+			<a href="/users/<%=project.owner.username %>"><%=project.owner.username %></a>
+			<% } else if (project.owner.org) { %>
+			<a href="/org/<%=project.owner.org %>"><%=project.owner.username %></a>
+			<% } else { %>
+			<%=project.owner.username %>
+			<% } %>
+			/
+			<a href="/projects/<%=project._id %>">
+				<%=project.name %>
+			</a>
+		</h4>
+
+		<div class="description">
+			<% if (project.description) { %>
+			<%- project.description %>
+			<% } %>
+		</div>
+	</div>
+
+	<div class="col support-types">
+		<span class="support-type donating <% if (!project.support.donating) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m donating cash"><% } %></span>
+		<span class="support-type contributing <% if (!project.support.contributing) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m contributing code"><% } %></span>
+		<span class="support-type supporting <% if (!project.support.supporting) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m a vocal supporter"><% } %></span>
+	</div>
+
+	<% var donateMethods = project.donateMethods.toObject(); %>
+	<% var projectUrl = project.url; %>
+	<% var projectId = project._id; %>
+	<% include contributions.ejs %>
+</div>

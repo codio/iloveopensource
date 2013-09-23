@@ -4,7 +4,6 @@
 <% include parts/head.ejs %>
 
 <div class="container">
-
 	<section id="user-repos">
 		<div class="clearfix">
 			<a href="<%= user.github.html_url %>" class="pull-left">
@@ -37,7 +36,7 @@
 			<% } %>
 		</div>
 
-		<% if (!supports.length) { %>
+		<% if (!support.personal.length) { %>
 		<% if (isCurrentUser) { %>
 		<h4 class="text-center">
 			You haven't added any projects yet. Want to add some?
@@ -48,51 +47,75 @@
 		<% } %>
 		<% } %>
 
-		<div class="repos-list">
-			<% if (supports.length) { %>
-			<div class="header">
-				<div class="col repo-name"></div>
-				<div class="col support-types"></div>
-				<div class="col contribution-types">Click below to donate</div>
-			</div>
-			<% } %>
-			<% _.each(supports, function(repo) { %>
-			<div class="repo <%= repo.project.fork ? 'fork' : '' %>">
-				<div class="col repo-name">
-					<a href="<%= repo.project.url %>" class="icon-github go-to" target="_blank"></a>
+		<ul class="nav nav-tabs">
+			<li class="selected-repos active">
+				<a class="tab" href="#personal">
+					Personal Support
+				</a>
+			</li>
+			<li>
+				<a class="tab" href="#maintainer">
+					Maintainer
+				</a>
+			</li>
+			<li>
+				<a class="tab" href="#administrator">
+					Administrator
+				</a>
+			</li>
+		</ul>
 
-					<h4>
-						<% if (repo.project.owner.user) { %>
-						<a href="/users/<%=repo.project.owner.username %>"><%=repo.project.owner.username %></a>
-						<% } else { %>
-						<%=repo.project.owner.username %>
-						<% } %>
-						/
-						<a href="/projects/<%=repo.project._id %>">
-							<%=repo.project.name %>
-						</a>
-					</h4>
-
-					<div class="description">
-						<% if (repo.project.description) { %>
-						<%- repo.project.description %>
-						<% } %>
+		<div class="tab-content">
+			<div class="tab-pane active" id="personal">
+				<div class="repos-list">
+					<div class="header">
+						<div class="col repo-name"></div>
+						<div class="col support-types"></div>
+						<div class="col contribution-types">Click below to donate</div>
 					</div>
+					<% _.each(support.personal, function(entry) { %>
+					<% var project = entry.project %>
+					<% project.support = _.omit(entry, 'project') %>
+					<% include parts/project-row %>
+					<% }) %>
 				</div>
-
-				<div class="col support-types">
-					<span class="support-type donating <% if (!repo.donating) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m donating cash"><% } %></span>
-					<span class="support-type contributing <% if (!repo.contributing) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m contributing code"><% } %></span>
-					<span class="support-type supporting <% if (!repo.supporting) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m a vocal supporter"><% } %></span>
-				</div>
-
-				<% var donateMethods = repo.project.donateMethods; %>
-				<% var projectUrl = repo.project.url; %>
-				<% var projectId = repo.project._id; %>
-				<% include parts/contributions.ejs %>
 			</div>
-			<% }) %>
+			<div class="tab-pane" id="maintainer">
+				<div class="repos-list">
+					<div class="header">
+						<div class="col repo-name"></div>
+						<div class="col support-types"></div>
+						<div class="col contribution-types">Click below to donate</div>
+					</div>
+					<% _.each(projects.personal, function(entry) { %>
+					<% var project = entry %>
+					<% project.support = {} %>
+					<% include parts/project-row %>
+					<% }) %>
+				</div>
+			</div>
+			<div class="tab-pane" id="administrator">
+				<div class="orgs">
+					Administrating projects in:
+					<% _.each(orgs, function(org) { %>
+					<a href="/orgs/<%= org._id %>"><%= org.name %></a>
+					<% }) %>
+				</div>
+				<div class="repos-list">
+					<div class="header">
+						<div class="col repo-name"></div>
+						<div class="col support-types"></div>
+						<div class="col contribution-types">Click below to donate</div>
+					</div>
+					<% _.each(projects.admin, function(entry) { %>
+					<% var project = entry %>
+					<% project.support = {} %>
+					<% include parts/project-row %>
+					<% }) %>
+				</div>
+			</div>
 		</div>
+
 		<% include modals/index.ejs %>
 	</section>
 	<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
@@ -101,7 +124,7 @@
 		require.config({
 			baseUrl: "<%=jsPath %>"
 		})
-		require(['plugins/activate-plugins'])
+		require(['modules/account/main'])
 	</script>
 
 </div>

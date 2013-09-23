@@ -18,6 +18,23 @@
 	margin-left: 20px;
   }
 
+  .orgs {
+	padding: 1em 1em 0;
+	font-size: 1.3em;
+
+	a {
+	  &:after {
+		content: ',';
+	  }
+
+	  &:last-child {
+		&:after {
+		  content: '';
+		}
+	  }
+	}
+  }
+
   .repos-list {
 	padding: 20px 0;
 

@@ -6,9 +6,6 @@
 var _ = require('lodash'),
 	mongoose = require('mongoose'),
 	async = require('async'),
-
-	git = require('../utils/git-request'),
-	io = require('../utils/socket.io'),
 	ensureAuthenticated = require('../utils/ensure-auth'),
 
 	Project = mongoose.model('Project'),
@@ -21,10 +18,36 @@ module.exports = function (app) {
 		User.findOne({ 'username': req.param('username') }, function (err, user) {
 			if (!user) return res.render('404');
 
-			Support.getSupportByUser(user._id, function (error, supports) {
+			async.parallel({
+				personalSupport: function (callback) {
+					Support.find({byUser: user._id}).populate('project').exec(callback)
+				},
+				projects: function (callback) {
+					Project.find({$or: [
+						{'owner.user': user._id},
+						{admins: user._id}
+					]}, callback)
+				},
+				orgs: function (callback) {
+					Organization.find({admins: user._id}, callback)
+				}
+			}, function (error, results) {
+				if (error) return res.send(500, 'Server error, please try later')
+
 				res.render('account', {
 					user: user,
-					supports: supports
+					projects: {
+						personal: _.filter(results.projects, function (entry) {
+							return (entry.owner.user + '') == (user._id + '')
+						}),
+						admin: _.filter(results.projects, function (entry) {
+							return entry.owner.org
+						})
+					},
+					orgs: results.orgs,
+					support: {
+						personal: results.personalSupport
+					}
 				});
 			})
 		})

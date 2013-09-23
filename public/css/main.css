@@ -9580,6 +9580,45 @@ form .form-group .control-label {
   content: "\f004";
 }
 
+.repos-list .group .group-header {
+  color: #FFF;
+  border-bottom: 1px #CCC solid;
+  padding: 1em;
+  position: relative;
+  cursor: pointer;
+  font-size: 1.3em;
+}
+
+.repos-list .group .group-header:after {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f151";
+  position: absolute;
+  right: 1em;
+}
+
+.repos-list .group .group-header a {
+  color: #fff;
+}
+
+.repos-list .group.folded .group-header:after {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f150";
+}
+
+.repos-list .group.folded .projects {
+  display: none;
+}
+
 .repos-list .header,
 .repos-list .repo {
   padding: 20px 10px;
@@ -9940,41 +9979,6 @@ form .form-group .control-label {
   display: none;
 }
 
-#maintainers .group .group-header {
-  color: #FFF;
-  border-bottom: 1px #CCC solid;
-  padding: 1em;
-  position: relative;
-  cursor: pointer;
-  font-size: 1.3em;
-}
-
-#maintainers .group .group-header:after {
-  font-family: FontAwesome;
-  font-weight: normal;
-  font-style: normal;
-  text-decoration: inherit;
-  -webkit-font-smoothing: antialiased;
-  *margin-right: .3em;
-  content: "\f151";
-  position: absolute;
-  right: 1em;
-}
-
-#maintainers .group.folded .group-header:after {
-  font-family: FontAwesome;
-  font-weight: normal;
-  font-style: normal;
-  text-decoration: inherit;
-  -webkit-font-smoothing: antialiased;
-  *margin-right: .3em;
-  content: "\f150";
-}
-
-#maintainers .group.folded .projects {
-  display: none;
-}
-
 #maintainers .projects-updater {
   margin: 20px 0;
 }
@@ -10053,6 +10057,19 @@ form .form-group .control-label {
 
 #user-repos .data {
   margin-left: 20px;
+}
+
+#user-repos .orgs {
+  padding: 1em 1em 0;
+  font-size: 1.3em;
+}
+
+#user-repos .orgs a:after {
+  content: ',';
+}
+
+#user-repos .orgs a:last-child:after {
+  content: '';
 }
 
 #user-repos .repos-list {

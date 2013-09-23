@@ -42,6 +42,36 @@
 }
 
 .repos-list {
+  .group {
+	.group-header {
+	  color: #FFF;
+	  border-bottom: 1px #CCC solid;
+	  padding: 1em;
+	  position: relative;
+	  cursor: pointer;
+	  font-size: 1.3em;
+
+	  &:after {
+		.icon(@collapse-top);
+		position: absolute;
+		right: 1em;
+	  }
+
+	  a {
+		  color: #fff;
+	  }
+	}
+
+	&.folded {
+	  .group-header:after {
+		.icon(@collapse)
+	  }
+	  .projects {
+		display: none;
+	  }
+	}
+  }
+
   .header, .repo {
 	.clearfix;
 	padding: 20px 10px;
