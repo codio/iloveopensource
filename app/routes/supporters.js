@@ -74,7 +74,7 @@ module.exports = function (app) {
 	app.delete('/supporter/support/:type/:by/[0-9]+', ensureAuthenticated, function (req, res) {
 		if (!req.body || !req.body.id) return res.send('empty request')
 
-		Support.removeEntry(req.user._id, req.param('type'), req.param('by'), req.body.id, function (error, supports) {
+		Support.removeEntry(req.user, req.param('type'), req.param('by'), req.body.id, function (error, supports) {
 			if (error) return res.send(400, 'Failed to remove your support');
 			res.send('removed')
 		})
