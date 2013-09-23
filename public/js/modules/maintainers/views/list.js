@@ -67,7 +67,7 @@ define(function (require) {
 
 			socket.on('error', function () {
 				btn.button('reset')
-				log.append('<p class="text-danger">Error appear during update, please try again</p>')
+				log.append('<p class="text-danger">An error occurred. Please try later.</p>')
 			})
 
 			socket.on('done', function () {
