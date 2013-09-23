@@ -16,11 +16,11 @@ define(function (require) {
 		events: {
 			'click .share-trigger': 'toggleShare',
 			'click .nav-tabs .tab': 'selectTab',
-			'click a[role="menuitem"]': 'select'
+			'click .support-selector a[role="menuitem"]': 'select'
 		},
 		select: function (event) {
 			var el = $(event.currentTarget)
-			this.$('.support-selector').find('.value').text(el.text())
+			this.$('.support-selector').find('.value').text(el.data().val || el.text())
 		},
 		selectTab: function (event) {
 			event.preventDefault()

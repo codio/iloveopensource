@@ -7,17 +7,34 @@
   }
 
   .support-selector {
+	font-size: 1.3em;
+	padding: 0 .55em 1.5em;
+
+	.dropdown-toggle {
+	  font-size: 1em;
+	}
+
 	.dropdown-menu {
 	  background: #222;
+	  max-height: 400px;
+	  overflow-y: auto;
 
 	  .dropdown-header {
-		font-size: 1.1em;
+		font-size: 1.2em;
 		padding-left: 5px;
 		color: #fff;
+
+		 &:not(:first-of-type) {
+		   padding-top: 15px;
+		 }
 	  }
 
-	  & > li > a {
-		color: #ccc;
+	  & > li {
+		padding-top: 5px;
+		padding-bottom: 5px;
+		& > a {
+		  color: #fff;
+		}
 	  }
 	}
   }

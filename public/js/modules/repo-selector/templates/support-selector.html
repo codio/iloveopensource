@@ -5,13 +5,13 @@
 <% if (own || orgs.length)  {%>
 <div class="dropdown">
 	<ul class="dropdown-menu" role="menu">
+		<li role="presentation" class="dropdown-header">Personal Support</li>
 		<li role="presentation">
-			<a role="menuitem" tabindex="-1" href="#type/user/id/<%= currentUserId %>">Personal Support</a>
+			<a role="menuitem" tabindex="-1" href="#type/user/id/<%= currentUserId %>" data-val="Personal Support">Select personal favorites</a>
 		</li>
 
 		<% if (own) { %>
-		<li role="presentation" class="divider"></li>
-		<li role="presentation" class="dropdown-header">Owned Projects</li>
+		<li role="presentation" class="dropdown-header">My Personal Projects</li>
 		<% _.each(own.repos, function(repo) { %>
 		<% current.id == repo._id && (selected = repo.owner.username + '/' + repo.name) %>
 		<li role="presentation">
@@ -20,20 +20,17 @@
 		<% }) %>
 		<% } %>
 		<% if (orgs.length) { %>
-		<li role="presentation" class="divider"></li>
-		<li role="presentation" class="dropdown-header">Organizations</li>
 		<% _.each(orgs, function(org) { %>
 		<% current.id == org.org && (selected = org.username) %>
-		<li role="presentation">
-			<a role="menuitem" tabindex="-1" href="#type/organization/id/<%= org.org %>"><%= org.username %></a>
-		</li>
 		<li role="presentation" class="dropdown-header"><%= org.username %> Projects</li>
+		<li role="presentation">
+			<a role="menuitem" tabindex="-1" href="#type/organization/id/<%= org.org %>" data-val="<%= org.username %> Support">Select <%= org.username %> favorites</a>
+		</li>
 		<% _.each(org.repos, function(repo) { %>
 		<% current.id == repo._id && (selected = repo.owner.username + '/' + repo.name) %>
 		<li role="presentation">
 			<a role="menuitem" tabindex="-1" href="#type/project/id/<%= repo._id %>"><%= repo.owner.username %>/<%= repo.name %></a>
 		</li>
-		<li role="presentation" class="divider"></li>
 		<% }) %>
 		<% }) %>
 		<% } %>

@@ -9814,18 +9814,38 @@ form .form-group .control-label {
   font-size: 22px;
 }
 
+#repos-selector .support-selector {
+  font-size: 1.3em;
+  padding: 0 .55em 1.5em;
+}
+
+#repos-selector .support-selector .dropdown-toggle {
+  font-size: 1em;
+}
+
 #repos-selector .support-selector .dropdown-menu {
   background: #222;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 #repos-selector .support-selector .dropdown-menu .dropdown-header {
-  font-size: 1.1em;
+  font-size: 1.2em;
   padding-left: 5px;
   color: #fff;
 }
 
+#repos-selector .support-selector .dropdown-menu .dropdown-header:not(:first-of-type) {
+  padding-top: 15px;
+}
+
+#repos-selector .support-selector .dropdown-menu > li {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 #repos-selector .support-selector .dropdown-menu > li > a {
-  color: #ccc;
+  color: #fff;
 }
 
 #repos-selector .nav-tabs li .icon-spinner {
@@ -9926,7 +9946,7 @@ form .form-group .control-label {
   padding: 1em;
   position: relative;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 1.3em;
 }
 
 #maintainers .group .group-header:after {
