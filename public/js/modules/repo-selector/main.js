@@ -24,8 +24,6 @@ define(function (require) {
 
 	$(function () {
 		store().currentType = {
-			type: 'user',
-			id: currentUserId
 		}
 
 		store().hub = _.extend({}, Backbone.Events)
