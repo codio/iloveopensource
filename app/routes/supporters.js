@@ -57,6 +57,64 @@ module.exports = function (app) {
 		})
 	})
 
+	app.get('/supporter/groups', ensureAuthenticated, function (req, res) {
+		Project.find({ $or: [
+			{
+				'owner.user': req.user._id
+			},
+			{
+				'admins': req.user._id
+			}
+		]}, function (error, projects) {
+			if (error) return res.send(500, 'Failed to retrieve your projects')
+
+			var orgs = _(_.map(projects, function (entry) {
+				return entry.owner.org
+			})).compact().uniq().value()
+
+			async.parallel({
+				orgs: function (callback) {
+					Support.find({byOrganization: {$in: orgs}}, 'byOrganization').distinct('byOrganization', callback)
+				},
+				projects: function (callback) {
+					Support.find({byProject: {$in: _.pluck(projects, '_id')}}, 'byProject').distinct('byProject', callback)
+				},
+				user: function (callback) {
+					Support.findOne({byUser: req.user._id}, callback)
+				}
+			}, function (err, support) {
+				if (err) return res.send(500, 'Failed to retrieve your projects')
+
+				var owners = {}
+				_.each(projects, function (entry) {
+					var group = owners[entry.owner.githubId],
+						project = _.clone(entry.toObject())
+
+					if (!group) {
+						group = owners[entry.owner.githubId] = _.clone(project.owner)
+						group.repos = []
+
+						if (entry.owner.type.toLowerCase() == 'user') {
+							group.hasSupport = !!support.user
+						} else {
+							group.hasSupport = !!_.find(support.orgs, function (id) {
+								return id.toString() == entry.owner.org.toString()
+							})
+						}
+					}
+
+					project.hasSupport = !!_.find(support.projects, function (id) {
+						return id.toString() == entry._id.toString()
+					})
+
+					group.repos.push(project)
+				})
+
+				res.send(_.values(owners))
+			})
+		})
+	})
+
 	app.put('/supporter/support/:type/:by/[0-9]+', ensureAuthenticated, function (req, res) {
 		if (!req.body) return res.send('empty request')
 

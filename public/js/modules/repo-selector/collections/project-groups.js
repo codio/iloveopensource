@@ -7,25 +7,9 @@ define(function (require) {
 	require('backbone')
 
 	return Backbone.Collection.extend({
-		url: '/maintainer/projects',
+		url: '/supporter/groups',
 		comparator: function(item) {
 			return [!item.get('type'), item.get('username')]
-		},
-		parse: function (data) {
-			var owners = {}
-
-			_.each(data, function (entry) {
-				var group = owners[entry.owner.githubId]
-
-				if (!group) {
-					group = owners[entry.owner.githubId] = _.clone(entry.owner)
-					group.repos = []
-				}
-
-				group.repos.push(entry)
-			})
-
-			return _.values(owners);
 		}
 	})
 })

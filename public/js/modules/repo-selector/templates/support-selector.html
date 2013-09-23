@@ -7,7 +7,7 @@
 	<ul class="dropdown-menu" role="menu">
 		<li role="presentation" class="dropdown-header">Personal Support</li>
 		<li role="presentation">
-			<a role="menuitem" tabindex="-1" href="#type/user/id/<%= currentUserId %>" data-val="Personal Support">Select personal favorites</a>
+			<a role="menuitem" tabindex="-1" href="#type/user/id/<%= currentUserId %>" data-val="Personal Support" class="<%= (own.hasSupport ? 'heart' : '') %>">Select personal favorites</a>
 		</li>
 
 		<% if (own) { %>
@@ -15,7 +15,7 @@
 		<% _.each(own.repos, function(repo) { %>
 		<% current.id == repo._id && (selected = repo.owner.username + '/' + repo.name) %>
 		<li role="presentation">
-			<a role="menuitem" tabindex="-1" href="#type/project/id/<%= repo._id %>"><%= repo.owner.username %>/<%= repo.name %></a>
+			<a role="menuitem" tabindex="-1" href="#type/project/id/<%= repo._id %>" class="<%= (repo.hasSupport ? 'heart' : '') %>"><%= repo.owner.username %>/<%= repo.name %></a>
 		</li>
 		<% }) %>
 		<% } %>
@@ -24,12 +24,12 @@
 		<% current.id == org.org && (selected = org.username) %>
 		<li role="presentation" class="dropdown-header"><%= org.username %> Projects</li>
 		<li role="presentation">
-			<a role="menuitem" tabindex="-1" href="#type/organization/id/<%= org.org %>" data-val="<%= org.username %> Support">Select <%= org.username %> favorites</a>
+			<a role="menuitem" tabindex="-1" href="#type/organization/id/<%= org.org %>" data-val="<%= org.username %> Support" class="<%= (org.hasSupport ? 'heart' : '') %>">Select <%= org.username %> favorites</a>
 		</li>
 		<% _.each(org.repos, function(repo) { %>
 		<% current.id == repo._id && (selected = repo.owner.username + '/' + repo.name) %>
 		<li role="presentation">
-			<a role="menuitem" tabindex="-1" href="#type/project/id/<%= repo._id %>"><%= repo.owner.username %>/<%= repo.name %></a>
+			<a role="menuitem" tabindex="-1" href="#type/project/id/<%= repo._id %>" class="<%= (repo.hasSupport ? 'heart' : '') %>"><%= repo.owner.username %>/<%= repo.name %></a>
 		</li>
 		<% }) %>
 		<% }) %>

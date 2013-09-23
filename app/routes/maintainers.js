@@ -26,7 +26,7 @@ module.exports = function (app) {
 			{
 				'admins': req.user._id
 			}
-		]}).exec(function (error, repos) {
+		]}, function (error, repos) {
 				if (error) return res.send(500, error)
 				res.send(repos)
 			})

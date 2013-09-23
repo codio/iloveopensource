@@ -1,5 +1,12 @@
 #repos-selector {
-
+  a.heart {
+	&:after {
+	  .icon(@heart);
+	  color: #ff9900;
+	  position: absolute;
+	  left: .2em;
+	}
+  }
   .is-empty.message {
 	text-align: center;
 	padding-top: 30px;
@@ -24,9 +31,9 @@
 		padding-left: 5px;
 		color: #fff;
 
-		 &:not(:first-of-type) {
-		   padding-top: 15px;
-		 }
+		&:not(:first-of-type) {
+		  padding-top: 15px;
+		}
 	  }
 
 	  & > li {
