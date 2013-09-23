@@ -10,6 +10,7 @@ define(function (require) {
 	var store = require('store').getNamespace('repo-selector')
 	var tpl = require('tpl!../templates/layout.html')
 	var selectorTpl = require('tpl!../templates/support-selector.html')
+	var shareTpl = require('tpl!../templates/share.html')
 
 	return Backbone.View.extend({
 		events: {
@@ -41,6 +42,31 @@ define(function (require) {
 		hideLoading: function () {
 			this.$('.loading').hide()
 			this.$('.content').slideDown()
+
+			var link = this.getProjectLink()
+			this.$('.share').html(shareTpl({
+				shareLink: link
+			}))
+			this.$('.preview').attr('href', link)
+		},
+		getProjectLink: function () {
+			var link = []
+
+			if (store().currentType.type == 'organization') {
+				link.push('orgs')
+			} else if (store().currentType.type == 'project') {
+				link.push('projects')
+			} else {
+				link.push('users')
+			}
+
+			if (store().currentType.type != 'user') {
+				link.push(store().currentType.id)
+			} else {
+				link.push(currentUserName)
+			}
+
+			return link.join('/')
 		},
 		showLoading: function () {
 			this.$('.loading').show()
