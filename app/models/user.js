@@ -1,6 +1,5 @@
 /**
- * Created with JetBrains PhpStorm.
- * User: krasu
+ * Author: krasu
  * Date: 8/4/13
  * Time: 3:45 PM
  */
