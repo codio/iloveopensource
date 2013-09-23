@@ -13,11 +13,10 @@ define(function (require) {
 			noteFromAuthor = $('#note-from-author'),
 			requestContribution = $('#need-contribution-ways')
 
-		$('body').tooltip({
-			selector: '[data-toggle="tooltip"]'
-		});
-
 		$('body')
+			.tooltip({
+				selector: '[data-toggle="tooltip"]'
+			})
 			.on('click', 'input.embed', function (event) {
 				$(event.currentTarget).select()
 			})

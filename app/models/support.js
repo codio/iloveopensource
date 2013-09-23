@@ -50,7 +50,7 @@ SupportSchema.statics.checkRights = function (currentUser, type, id, callback) {
 		query.byProject = id
 		Project.findOne({ $or: [
 			{ admins: currentUser._id},
-			{ 'owner.user': currentUser._id},
+			{ 'owner.user': currentUser._id}
 		]}, done)
 	} else {
 		query.byUser = id

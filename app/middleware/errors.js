@@ -25,13 +25,11 @@ module.exports = function (app) {
 		res.status(err.status || 500);
 
 		if (req.accepts('html')) {
-			res.render('500', { error: err });
-			return;
+			return res.render('500', { error: err });
 		}
 
 		if (req.accepts('json')) {
-			res.send({ error: err });
-			return;
+			return res.send({ error: err });
 		}
 	});
 }

@@ -5,7 +5,6 @@
  */
 var _ = require('lodash'),
 	https = require('https'),
-	qs = require('querystring'),
 	async = require('async'),
 	mongoose = require('mongoose'),
 	ensureAuthenticated = require('../utils/ensure-auth'),

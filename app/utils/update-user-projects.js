@@ -3,7 +3,7 @@
  * Date: 9/19/13
  * Time: 11:20 AM
  */
-var git = require('.//git-request'),
+var git = require('./git-request'),
 	mongoose = require('mongoose'),
 	async = require('async'),
 	_ = require('lodash'),
