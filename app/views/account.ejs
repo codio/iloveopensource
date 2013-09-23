@@ -26,7 +26,7 @@
 			<% if (!isLoggedIn) { %>
 			<div class="welcome pull-right">
 				<p>
-					These are the Open Source projects that we use in our project. We hope that other Open Source and commercial projects will add their own “I Love Open Source” page to their site.
+					These are the Open Source projects that I use in my projects. I hope that other Open Source and commercial projects will add their own “I Love Open Source” page to their site.
 				</p>
 				<a href="/auth/github" class="btn btn-info login">
 					<i class="icon-github"></i>
@@ -36,37 +36,40 @@
 			<% } %>
 		</div>
 
-		<% if (!support.personal.length) { %>
-		<% if (isCurrentUser) { %>
-		<h4 class="text-center">
-			You haven't added any projects yet. Want to add some?
-			<a class="btn btn-primary btn-lg" href="/supporter">Sure!</a>
-		</h4>
-		<% } else { %>
-		<h4 class="text-center">This user hasn't added any projects yet.</h4>
-		<% } %>
-		<% } %>
-
 		<ul class="nav nav-tabs">
 			<li class="selected-repos active">
 				<a class="tab" href="#personal">
 					Personal Support
 				</a>
 			</li>
+			<% if (projects.personal.length) { %>
 			<li>
 				<a class="tab" href="#maintainer">
 					Maintainer
 				</a>
 			</li>
+			<% } %>
+			<% if (projects.admin.length) { %>
 			<li>
 				<a class="tab" href="#administrator">
 					Administrator
 				</a>
 			</li>
+			<% } %>
 		</ul>
 
 		<div class="tab-content">
 			<div class="tab-pane active" id="personal">
+				<% if (!support.personal.length) { %>
+				<% if (isCurrentUser) { %>
+				<h4 class="text-center">
+					You haven't added any projects yet. Want to add some?
+					<a class="btn btn-primary btn-lg" href="/supporter">Sure!</a>
+				</h4>
+				<% } else { %>
+				<h4 class="text-center">This user hasn't added any projects yet.</h4>
+				<% } %>
+				<% } else { %>
 				<div class="repos-list">
 					<div class="header">
 						<div class="col repo-name"></div>
@@ -79,6 +82,7 @@
 					<% include parts/project-row %>
 					<% }) %>
 				</div>
+				<% } %>
 			</div>
 			<div class="tab-pane" id="maintainer">
 				<div class="repos-list">

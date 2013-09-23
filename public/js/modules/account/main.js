@@ -9,15 +9,15 @@ define(function (require) {
 
 
 	$(function () {
-		var tabsHolder = $('#user-repos .nav')
+		var tabsHolder = $('.nav.nav-tabs')
+		var defaultTab = $('a.tab:first', tabsHolder).attr('href').slice(1)
 
 		new (Backbone.Router.extend({
 			routes: {
 				'*actions': 'selectTab'
 			},
 			selectTab: function (tab) {
-				console.log(arguments)
-				tab = tab || 'personal'
+				tab = tab || defaultTab
 				$('a[href="#' + tab + '"]', tabsHolder).tab('show');
 			}
 		}))

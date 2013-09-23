@@ -9384,6 +9384,14 @@ body {
   background: #666666 url('/images/bg.png') repeat;
 }
 
+.link-list a:after {
+  content: ',';
+}
+
+.link-list a:last-child:after {
+  content: '';
+}
+
 #wrap {
   min-height: 100%;
   height: auto !important;
@@ -10083,6 +10091,14 @@ form .form-group .control-label {
 }
 
 #user-repos .orgs a:last-child:after {
+  content: '';
+}
+
+#user-repos .admins a:after {
+  content: ',';
+}
+
+#user-repos .admins a:last-child:after {
   content: '';
 }
 

@@ -39,9 +39,10 @@ module.exports = function (app) {
 	});
 
 	require('./users')(app)
+	require('./organizations')(app)
+	require('./projects')(app)
 	require('./supporters')(app)
 	require('./maintainers')(app)
 	require('./service')(app)
-	require('./projects')(app)
 	require('./emails')(app)
 };

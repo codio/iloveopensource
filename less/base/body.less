@@ -7,6 +7,20 @@ body {
   background: #666 url('/images/bg.png') repeat;
 }
 
+.link-list {
+  a {
+	&:after {
+	  content: ',';
+	}
+
+	&:last-child {
+	  &:after {
+		content: '';
+	  }
+	}
+  }
+}
+
 #wrap {
   min-height: 100%;
   height: auto !important;

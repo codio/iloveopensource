@@ -6,7 +6,7 @@
 			<% if (project.owner.user) { %>
 			<a href="/users/<%=project.owner.username %>"><%=project.owner.username %></a>
 			<% } else if (project.owner.org) { %>
-			<a href="/org/<%=project.owner.org %>"><%=project.owner.username %></a>
+			<a href="/orgs/<%=project.owner.org %>"><%=project.owner.username %></a>
 			<% } else { %>
 			<%=project.owner.username %>
 			<% } %>
