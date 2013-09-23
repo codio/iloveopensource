@@ -23,45 +23,8 @@
 					<div class="col contribution-types">Click below to donate</div>
 				</div>
 			</div>
-			<div class="repo">
-				<div class="col repo-name <%= project.homepage ? 'with-home' : '' %>">
-					<a href="<%= project.url %>" class="icon-github go-to" target="_blank"></a>
-					<% if (project.homepage) { %>
-					<a href="<%= project.homepage %>" class="icon-home go-to" target="_blank"></a>
-					<% } %>
-
-					<% if (project.owner.user) { %>
-					<a href="/users/<%=project.owner.username %>">
-						<%=project.owner.username %>
-					</a>
-					<% } else { %>
-					<%=project.owner.username %>
-					<% } %>
-					<span> / </span>
-					<a href="/projects/<%=project._id %>">
-						<%=project.name %>
-					</a>
-
-					<div class="description">
-						<% if (project.description) { %>
-						<%- project.description %>
-						<% } %>
-					</div>
-				</div>
-
-				<div class="col support-types">
-					<span class="support-type donating <%= userSupport.donating ? 'active' : '' %>" data-type="donating" data-toggle="tooltip" title="I’m donating cash"></span>
-					<span class="support-type contributing <%= userSupport.contributing ? 'active' : '' %>" data-type="contributing" data-toggle="tooltip" title="I’m contributing code"></span>
-					<span class="support-type supporting <%= userSupport.supporting ? 'active' : '' %>" data-type="supporting" data-toggle="tooltip" title="I’m a vocal supporter"></span>
-				</div>
-
-				<div class="col donate-methods">
-					<% var donateMethods = project.donateMethods; %>
-					<% var projectUrl = project.url; %>
-					<% var projectId = project._id; %>
-					<% include parts/contributions.ejs %>
-				</div>
-			</div>
+			<% project.support = userSupport %>
+			<% include parts/project-row %>
 		</div>
 
 		<div class="clearfix users">
@@ -95,6 +58,17 @@
 				<% }) %>
 			</div>
 		</div>
+
+		<% if (supporting.length) { %>
+		<h3>Projects supporting by this project</h3>
+		<div class="repos-list support-inactive">
+			<% _.each(supporting, function(entry) { %>
+			<% var project = entry.project %>
+			<% project.support = _.omit(entry, 'project') %>
+			<% include parts/project-row %>
+			<% }) %>
+		</div>
+		<% } %>
 	</div>
 	<% include modals/index.ejs %>
 </section>

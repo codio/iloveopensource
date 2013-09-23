@@ -9847,6 +9847,16 @@ form .form-group .control-label {
   opacity: 1;
 }
 
+.repos-list.support-inactive .col.support-types .support-type {
+  cursor: default;
+  border: 0;
+  opacity: 0;
+}
+
+.repos-list.support-inactive .col.support-types .support-type.active {
+  opacity: 1;
+}
+
 #repos-selector .is-empty.message {
   text-align: center;
   padding-top: 30px;
@@ -10015,6 +10025,10 @@ form .form-group .control-label {
   padding: 20px;
 }
 
+#page-project .users h3 {
+  margin-left: -20px;
+}
+
 #page-project .users .col {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -10074,16 +10088,6 @@ form .form-group .control-label {
 
 #user-repos .repos-list {
   padding: 20px 0;
-}
-
-#user-repos .repos-list .col.support-types .support-type {
-  cursor: default;
-  border: 0;
-  opacity: 0;
-}
-
-#user-repos .repos-list .col.support-types .support-type.active {
-  opacity: 1;
 }
 
 body.home #wrap {

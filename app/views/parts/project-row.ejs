@@ -24,9 +24,9 @@
 	</div>
 
 	<div class="col support-types">
-		<span class="support-type donating <% if (!project.support.donating) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m donating cash"><% } %></span>
-		<span class="support-type contributing <% if (!project.support.contributing) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m contributing code"><% } %></span>
-		<span class="support-type supporting <% if (!project.support.supporting) { %>"><% } else { %> active" data-toggle="tooltip" title="I’m a vocal supporter"><% } %></span>
+		<span class="support-type donating <%= project.support.donating ? 'active' : '' %>" data-type="donating" data-toggle="tooltip" title="I’m donating cash"></span>
+		<span class="support-type contributing <%= project.support.contributing ? 'active' : '' %>" data-type="contributing" data-toggle="tooltip" title="I’m contributing code"></span>
+		<span class="support-type supporting <%= project.support.supporting ? 'active' : '' %>" data-type="supporting" data-toggle="tooltip" title="I’m a vocal supporter"></span>
 	</div>
 
 	<% var donateMethods = project.donateMethods.toObject(); %>

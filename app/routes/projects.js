@@ -21,6 +21,9 @@ module.exports = function (app) {
 			if (err) return res.send(400, err);
 
 			async.parallel({
+				supporting: function (cb) {
+					Support.find({byProject: project._id}).populate('project').exec(cb)
+				},
 				supporters: function (cb) {
 					Support.find({project: project._id, supporting: true, type: 'user'}).populate('byUser').exec(cb)
 				},
@@ -38,8 +41,9 @@ module.exports = function (app) {
 				if (error) return res.send(500, err)
 
 				res.render('project', {
-					project: project.toJSON(),
-					users: _.omit(result, 'userSupport'),
+					supporting: result.supporting,
+					project: project,
+					users: _.pick(result, 'supporters', 'contributors', 'donators'),
 					userSupport: result.userSupport || {}
 				})
 			})
