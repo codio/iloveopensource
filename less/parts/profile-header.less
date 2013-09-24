@@ -2,22 +2,33 @@
   .clearfix;
   margin: 20px 0;
 
-  .avatar {
-	text-decoration: none;
+  .info {
+	position: relative;
 	float: left;
-	width: 80px;
-	height: 80px;
+	width: 40%;
 
-	&:hover {
+	.avatar {
+	  position: absolute;
+	  left: 0;
+	  top: 0;
 	  text-decoration: none;
+	  display: block;
+	  width: 80px;
+	  height: 80px;
+
+	  &:hover {
+		text-decoration: none;
+	  }
+	}
+
+	.data {
+	  margin-left: 100px;
 	}
   }
 
   .welcome {
 	float: right;
-	position: relative;
 	width: 60%;
-	right: 0;
 	padding: 0 20px 20px;
 	font-size: 1.3em;
 	color: #FFF;
@@ -25,10 +36,5 @@
 	.login {
 	  margin-top: 5px;
 	}
-  }
-
-  .data {
-	margin-left: 20px;
-	float: left;
   }
 }

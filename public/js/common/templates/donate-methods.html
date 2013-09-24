@@ -12,7 +12,7 @@
 
 <% if (donateMethods.flattr) { %>
 <div class="contribution flattr" data-toggle="tooltip" title="Donate via Flattr">
-	<a href="https://flattr.com/profile/<%= donateMethods.flattr %>/things" target="_blank"><img src="https://flattr.com/_img/icons/flattr_logo_16.png" alt="flattr"/></a>
+	<a href="https://flattr.com/profile/<%= donateMethods.flattr %>/things" target="_blank"><img src="/images/flattr.png" alt="flattr"/></a>
 </div>
 <% } %>
 
@@ -45,7 +45,7 @@
 <%= obj.customHelp %>
 <% } else { %>
 <span class="btn btn-link want-contribute" data-toggle="modal" data-project="<%= project._id || '' %>">
-	I would like to donate to this project
+	donate
 </span>
 <% } %>
 <% } %>

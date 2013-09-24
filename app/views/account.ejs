@@ -5,34 +5,29 @@
 
 <section id="user-repos" class="container">
 	<div class="profile-header">
-		<a href="<%= user.github.html_url %>" class="avatar">
-			<img src="http://www.gravatar.com/avatar/<%= user.github.gravatar_id %>?s=80" alt="" class="img-rounded"/>
-		</a>
+		<div class="info">
+			<a href="<%= user.github.html_url %>" class="avatar">
+				<img src="http://www.gravatar.com/avatar/<%= user.github.gravatar_id %>?s=80" alt="" class="img-rounded"/>
+			</a>
 
-		<div class="data pull-left">
-			<h3><%= user.displayName %></h3>
-			<% if (user.displayName != user.username) { %>
-			&nbsp;(<%= user.username %>)
-			<% } %>
-			<% if (isCurrentUser) { %>
-			<a href="/settings">Settings</a>
-			<% } %>
+			<div class="data pull-left">
+				<h3><%= user.displayName %></h3>
+				<% if (user.displayName != user.username) { %>
+				&nbsp;(<%= user.username %>)
+				<% } %>
+				<% if (isCurrentUser) { %>
+				<a href="/settings">Settings</a>
+				<% } %>
+			</div>
 		</div>
 
 		<% if (!isLoggedIn) { %>
-		<div class="welcome">
-			<p>
-				These are the Open Source projects that I use in my projects. I hope that other Open Source and commercial projects will add their own “I Love Open Source” page to their site.
-			</p>
-			<a href="/auth/github" class="btn btn-info login">
-				<i class="icon-github"></i>
-				<span>Sign in with GitHub</span>
-			</a>
-		</div>
+		<% var welcomeName = user.username %>
+		<% include parts/welcome %>
 		<% } %>
 	</div>
 
-	<ul class="nav nav-tabs">
+	<ul class="nav nav-tabs bigger">
 		<li class="selected-repos active">
 			<a class="tab" href="#personal">
 				Supporting

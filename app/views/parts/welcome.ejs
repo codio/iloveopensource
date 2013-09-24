@@ -1,0 +1,20 @@
+<div class="welcome">
+	<p>
+		These are the Open Source projects that are used by <%= welcomeName %>.
+		If you want, you may make a donation to any of the projects by clicking in the right hand column.
+	</p>
+	<% if (typeof welcomeDonate != 'undefined') { %>
+	<p>
+		You may also make a donation to <%= welcomeName %> by clicking on the blue donate button.
+	</p>
+	<% } %>
+	<p>
+		Want to list the projects you use in your project or get support for your own project? Then just sign in.
+	</p>
+
+	<a href="/auth/github" class="btn btn-info login">
+		<i class="icon-github"></i>
+		<span>Sign in with GitHub</span>
+	</a>
+</div>
+

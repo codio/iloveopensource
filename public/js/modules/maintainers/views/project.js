@@ -32,8 +32,7 @@ define(function (require) {
 
 			this.donateMethods = new DonateMethods({
 				model: this.model,
-				needHelp: true,
-				customHelp: 'You have not yet set up any donation preferences. Please click on "Settings"'
+				needHelp: false
 			})
 			this.donateMethods.render().$el.insertAfter(this.$('.repo-name'))
 

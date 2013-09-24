@@ -4,7 +4,7 @@
 <% include parts/head.ejs %>
 <section id="page-project" class="container">
 	<div class="profile-header">
-		<div class="pull-left">
+		<div class="info">
 			<a href="<%= project.url %>" class="avatar" target="_blank">
 				<span class="github"></span>
 			</a>
@@ -42,27 +42,27 @@
 		</div>
 
 		<% if (!isLoggedIn) { %>
-		<div class="welcome">
-			Welcome to I Love Open Source. You may make a donation by clicking below. If you sign in , you can add an I Love Open Source page to your site as well, showing which Open Source projects you use and helping to get recognition for those projects.
-
-			<a href="/auth/github" class="btn btn-info login">
-				<i class="icon-github"></i>
-				<span>Sign in with GitHub</span>
-			</a>
-		</div>
+		<% var welcomeName = project.name %>
+		<% var welcomeDonate = true %>
+		<% include parts/welcome %>
 		<% } %>
 	</div>
 
-	<ul class="nav nav-tabs">
+	<ul class="nav nav-tabs bigger">
 		<li class="active">
 			<a class="tab" href="#supporting">
-				Supporting
+				Open Source projects used
 			</a>
 		</li>
 	</ul>
 	<div class="tab-content">
 		<div class="tab-pane active" id="supporting">
 			<div class="repos-list support-inactive">
+				<div class="header">
+					<div class="col repo-name"></div>
+					<div class="col support-types"></div>
+					<div class="col contribution-types">Click below to donate</div>
+				</div>
 				<% if (!supporting.length) { %>
 				<h4 class="text-center">This project hasn't added any projects yet.</h4>
 				<% } else { %>

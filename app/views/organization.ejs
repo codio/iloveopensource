@@ -5,34 +5,29 @@
 
 <section id="user-repos" class="container">
 	<div class="profile-header">
-		<a href="https://github.com/<%= org.name %>" class="avatar">
-			<img src="http://www.gravatar.com/avatar/<%= org.gravatar %>?s=80" alt="" class="img-rounded"/>
-		</a>
+		<div class="info">
+			<a href="https://github.com/<%= org.name %>" class="avatar">
+				<img src="http://www.gravatar.com/avatar/<%= org.gravatar %>?s=80" alt="" class="img-rounded"/>
+			</a>
 
-		<div class="data">
-			<h3><%= org.name %></h3>
+			<div class="data">
+				<h3><%= org.name %></h3>
 
-			<div class="admins">
-				Administrators: <% _.each(org.admins, function(user) { %>
-				<a href="/user/<%= user.username %>"><%= user.username %></a>
-				<% }) %>
+				<div class="admins">
+					Administrators: <% _.each(org.admins, function(user) { %>
+					<a href="/users/<%= user.username %>"><%= user.username %></a>
+					<% }) %>
+				</div>
 			</div>
 		</div>
 
 		<% if (!isLoggedIn) { %>
-		<div class="welcome">
-			<p>
-				These are the Open Source projects that we use in our projects. We hope that other Open Source and commercial projects will add their own “I Love Open Source” page to their site.
-			</p>
-			<a href="/auth/github" class="btn btn-info login">
-				<i class="icon-github"></i>
-				<span>Sign in with GitHub</span>
-			</a>
-		</div>
+		<% var welcomeName = org.name %>
+		<% include parts/welcome %>
 		<% } %>
 	</div>
 
-	<ul class="nav nav-tabs">
+	<ul class="nav nav-tabs bigger">
 		<li class="active">
 			<a class="tab" href="#supporting">
 				Supporting
