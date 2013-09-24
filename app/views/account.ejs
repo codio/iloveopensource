@@ -39,20 +39,20 @@
 		<ul class="nav nav-tabs">
 			<li class="selected-repos active">
 				<a class="tab" href="#personal">
-					Personal Support
+					Supporting
 				</a>
 			</li>
 			<% if (projects.personal.length) { %>
 			<li>
 				<a class="tab" href="#maintainer">
-					Maintainer
+					Own Projects
 				</a>
 			</li>
 			<% } %>
 			<% if (projects.admin.length) { %>
 			<li>
 				<a class="tab" href="#administrator">
-					Administrator
+					Organizations
 				</a>
 			</li>
 			<% } %>
@@ -70,7 +70,7 @@
 				<h4 class="text-center">This user hasn't added any projects yet.</h4>
 				<% } %>
 				<% } else { %>
-				<div class="repos-list">
+				<div class="repos-list support-inactive">
 					<div class="header">
 						<div class="col repo-name"></div>
 						<div class="col support-types"></div>
@@ -85,7 +85,7 @@
 				<% } %>
 			</div>
 			<div class="tab-pane" id="maintainer">
-				<div class="repos-list">
+				<div class="repos-list support-inactive">
 					<div class="header">
 						<div class="col repo-name"></div>
 						<div class="col support-types"></div>
@@ -105,7 +105,7 @@
 					<a href="/orgs/<%= org._id %>"><%= org.name %></a>
 					<% }) %>
 				</div>
-				<div class="repos-list">
+				<div class="repos-list support-inactive">
 					<div class="header">
 						<div class="col repo-name"></div>
 						<div class="col support-types"></div>

@@ -32,8 +32,11 @@ define(function (require) {
 		},
 		initialize: function () {
 			this.listenTo(store().hub, 'repos-loaded', this.loadedRepoList)
-			this.listenTo(store().selected, 'add', this.updateSelectedCount)
-			this.listenTo(store().selected, 'remove', this.updateSelectedCount)
+
+			this.listenTo(store().selected, 'add remove', this.updateSelectedCount)
+			this.listenTo(store().selected, 'add', this.addHeart)
+			this.listenTo(store().selected, 'remove', this.removeHeart)
+
 			this.listenTo(store().selected, 'prefetch', this.showLoading)
 			this.listenTo(store().selected, 'fetched', this.hideLoading)
 			this.listenTo(store().groups, 'sync', this.showSelector)
@@ -80,6 +83,17 @@ define(function (require) {
 		},
 		updateSelectedCount: function (model, collection) {
 			this.$('#selected-count').text(collection.length)
+		},
+		addHeart: function () {
+			if (!store().groups.currentHasSupport()) {
+				store().groups.updateCurrentSupport(true)
+				this.showSelector()
+			}
+		},
+		removeHeart: function (model, collection) {
+			if (collection.length) return
+			store().groups.updateCurrentSupport(false)
+			this.showSelector()
 		},
 		toggleShare: function () {
 			var btn = this.$('.share-trigger'),
