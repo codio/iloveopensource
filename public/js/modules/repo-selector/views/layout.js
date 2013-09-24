@@ -50,7 +50,8 @@ define(function (require) {
 			this.$('.share').html(shareTpl({
 				shareLink: link
 			}))
-			this.$('.preview').attr('href', link)
+
+			this.$('.preview').attr('href', link).html('Preview ' + store().currentType.type)
 		},
 		getProjectLink: function () {
 			var link = []
