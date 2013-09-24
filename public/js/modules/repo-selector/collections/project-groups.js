@@ -13,9 +13,9 @@ define(function (require) {
 			var current = store().currentType
 
 			if (current.type == 'user') {
-				return this.find({type: 'User'}).get('hasSupport')
+				return this.findWhere({type: 'User'}).get('hasSupport')
 			} else if (current.type == 'org') {
-				return this.find({type: 'Organization', org: current.id}).get('hasSupport')
+				return this.findWhere({type: 'Organization', org: current.id}).get('hasSupport')
 			} else {
 				var hasSupport
 				this.each(function(group) {
@@ -30,18 +30,16 @@ define(function (require) {
 			var current = store().currentType
 
 			if (current.type == 'user') {
-				this.find({type: 'User'}).set('hasSupport', hasSupport)
+				this.findWhere({type: 'User'}).set('hasSupport', hasSupport)
 			} else if (current.type == 'org') {
-				this.find({type: 'Organization', org: current.id}).set('hasSupport', hasSupport)
+				this.findWhere({type: 'Organization', org: current.id}).set('hasSupport', hasSupport)
 			} else {
 
 				this.each(function(group) {
 					var projects = group.get('repos')
 					var found = _.find(projects, {_id: current.id})
 					if (!found) return
-					console.log(found)
 					found.hasSupport = hasSupport
-					console.log(projects)
 					group.set('repos', projects)
 				})
 			}
