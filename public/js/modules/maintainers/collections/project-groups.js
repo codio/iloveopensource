@@ -10,9 +10,6 @@ define(function (require) {
 
 	return Backbone.Collection.extend({
 		url: '/maintainer/projects',
-		comparator: function(item) {
-			return [!item.get('type'), item.get('username')]
-		},
 		parse: function (data) {
 			var owners = {}
 
@@ -26,7 +23,9 @@ define(function (require) {
 				group.repos.push(entry)
 			})
 
-			return _.values(owners);
+			return _.sortBy(_.values(owners), function(entry) {
+				return entry.type.toLowerCase() == 'user' ? 0 : 1
+			});
 		}
 	})
 })
