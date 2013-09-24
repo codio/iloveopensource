@@ -17,17 +17,17 @@ config.env = process.env.NODE_ENV || 'development';
 config.isDev = config.env === 'development';
 
 //config.hostname used to create site links
-config.hostname = process.env.HOSTNAME || 'iloveopensource.io';
+config.hostname = 'www.iloveopensource.io';
 //config.isHttps used to create site links
 config.isHttps = false;
 //config.usePort used to create site links
 config.usePort = false;
 //config.mongodb connection Uri string
-config.mongodbUri = process.env.MONGOHQ_URL || 'mongodb://localhost/ilos'
+config.mongodbUri = 'mongodb://localhost/ilos'
 //config.github app settings
 config.github = {
-	clientId: process.env.GITHUB_CLIENT_ID || '',
-	clientSecret: process.env.GITHUB_CLIENT_SECRET || ''
+	clientId: '',
+	clientSecret: ''
 }
 //config.emails.from - name of sender
 //config.emails.to - email of support
@@ -35,22 +35,17 @@ config.github = {
 config.emails = {
 	from: 'robo@' + config.hostname,
 	to: 'support@codio.com',
-	transport: nodemailer.createTransport('SMTP', {
-		host: 'smtp.mandrillapp.com',
-		port: 465,
-		secureConnection: true,
-		auth: {
-			user: process.env.MANDRILL_USERNAME,
-			pass: process.env.MANDRILL_APIKEY
-		}
+	transport: nodemailer.createTransport('sendmail', {
+		path: '/usr/sbin/sendmail',
+		args: ['-i', '-t']
 	})
 }
 //config.sessionSecret to hash sessions
-config.sessionSecret = process.env.SESSION_SECRET || 's,dfjsklfj3k45j34k5kjLKj87093476ukvj jlk';
+config.sessionSecret = 's,dfjsklfj3k45j34k5kjLKj87093476ukvj jlk';
 //config.port on which app should run
-config.port = process.env.PORT || '5000';
+config.port = '5000';
 //config.port on which app should run
-config.jsPath = '/js/build/'
+config.jsPath = '/js/'
 
 config.fullUrl = function () {
 	return 'http'
