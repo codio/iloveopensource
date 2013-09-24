@@ -9496,6 +9496,64 @@ footer .copyright a:hover img {
   background: #666666 url('/images/bg.png') repeat;
 }
 
+.profile-header {
+  margin: 20px 0;
+}
+
+.profile-header:before,
+.profile-header:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+
+.profile-header:after {
+  clear: both;
+}
+
+.profile-header:before,
+.profile-header:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+
+.profile-header:after {
+  clear: both;
+}
+
+.profile-header .avatar {
+  text-decoration: none;
+  float: left;
+  width: 80px;
+  height: 80px;
+}
+
+.profile-header .avatar:hover {
+  text-decoration: none;
+}
+
+.profile-header .welcome {
+  float: right;
+  position: relative;
+  width: 60%;
+  right: 0;
+  padding: 0 20px 20px;
+  font-size: 1.3em;
+  color: #FFF;
+}
+
+.profile-header .welcome .login {
+  margin-top: 5px;
+}
+
+.profile-header .data {
+  margin-left: 20px;
+  float: left;
+}
+
 form legend {
   font-weight: 200;
   text-transform: uppercase;
@@ -9524,6 +9582,17 @@ form .form-group .help-block {
 
 form .form-group .control-label {
   font-weight: 400;
+}
+
+.contribution {
+  margin: 0 .5em;
+  font-size: 1.2em;
+  float: left;
+  cursor: pointer;
+}
+
+.contribution.paypal {
+  margin-top: 3px;
 }
 
 .support-type {
@@ -9768,17 +9837,6 @@ form .form-group .control-label {
   line-height: 1.4;
 }
 
-.repos-list .repo .col.donate-methods .contribution {
-  margin: 0 .5em;
-  font-size: 1.2em;
-  float: left;
-  cursor: pointer;
-}
-
-.repos-list .repo .col.donate-methods .contribution.paypal {
-  margin-top: 3px;
-}
-
 .repos-list .repo .col.support-types .remove {
   cursor: pointer;
   -webkit-border-radius: 5px;
@@ -10014,32 +10072,33 @@ form .form-group .control-label {
   margin: 20px 0;
 }
 
-#page-project .welcome {
-  padding: 20px;
-  font-size: 1.3em;
-  color: #FFF;
+#page-project .profile-header .avatar {
   position: relative;
-  width: 960px;
-  margin: auto;
-  padding-right: 200px;
 }
 
-#page-project .welcome .login {
+#page-project .profile-header .avatar:after {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f092";
+  font-size: 92px;
   position: absolute;
-  right: 0px;
-  top: 50%;
-  margin-top: -24px;
+  left: 0px;
+  display: block;
+  vertical-align: top;
+  top: -25px;
 }
 
-#page-project h4 {
-  padding-left: 1em;
+#page-project .profile-header .donate {
+  clear: both;
+  padding: 20px 0;
 }
 
-#page-project h4 .support-type {
-  cursor: default;
-  font-size: 75%;
-  border: 0;
-  margin: -0.15em 0 0 -2em;
+#page-project .profile-header .donate .methods {
+  display: none;
 }
 
 #page-project .users {
@@ -10071,27 +10130,6 @@ form .form-group .control-label {
 
 #page-project .users .col a:last-child:after {
   content: '';
-}
-
-#user-repos {
-  margin-top: 20px;
-}
-
-#user-repos .welcome {
-  position: relative;
-  width: 60%;
-  right: 0;
-  padding: 0 20px 20px;
-  font-size: 1.3em;
-  color: #FFF;
-}
-
-#user-repos .welcome .login {
-  margin-top: 5px;
-}
-
-#user-repos .data {
-  margin-left: 20px;
 }
 
 #user-repos .orgs {

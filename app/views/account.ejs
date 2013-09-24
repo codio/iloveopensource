@@ -3,134 +3,128 @@
 
 <% include parts/head.ejs %>
 
-<div class="container">
-	<section id="user-repos">
-		<div class="clearfix">
-			<a href="<%= user.github.html_url %>" class="pull-left">
-				<img src="http://www.gravatar.com/avatar/<%= user.github.gravatar_id %>?s=80" alt="" class="img-rounded"/>
+<section id="user-repos" class="container">
+	<div class="profile-header">
+		<a href="<%= user.github.html_url %>" class="avatar">
+			<img src="http://www.gravatar.com/avatar/<%= user.github.gravatar_id %>?s=80" alt="" class="img-rounded"/>
+		</a>
+
+		<div class="data pull-left">
+			<h3><%= user.displayName %></h3>
+			<% if (user.displayName != user.username) { %>
+			&nbsp;(<%= user.username %>)
+			<% } %>
+			<% if (isCurrentUser) { %>
+			<a href="/settings">Settings</a>
+			<% } %>
+		</div>
+
+		<% if (!isLoggedIn) { %>
+		<div class="welcome">
+			<p>
+				These are the Open Source projects that I use in my projects. I hope that other Open Source and commercial projects will add their own “I Love Open Source” page to their site.
+			</p>
+			<a href="/auth/github" class="btn btn-info login">
+				<i class="icon-github"></i>
+				<span>Sign in with GitHub</span>
 			</a>
+		</div>
+		<% } %>
+	</div>
 
-			<div class="data pull-left">
-				<p>
+	<ul class="nav nav-tabs">
+		<li class="selected-repos active">
+			<a class="tab" href="#personal">
+				Supporting
+			</a>
+		</li>
+		<% if (projects.personal.length) { %>
+		<li>
+			<a class="tab" href="#maintainer">
+				Own Projects
+			</a>
+		</li>
+		<% } %>
+		<% if (projects.admin.length) { %>
+		<li>
+			<a class="tab" href="#administrator">
+				Organizations
+			</a>
+		</li>
+		<% } %>
+	</ul>
 
-				<h3><%= user.displayName %></h3>
-				<% if (user.displayName != user.username) { %>
-				&nbsp;(<%= user.username %>)
-				<% } %>
-				<% if (isCurrentUser) { %>
-				<a href="/settings">Settings</a>
-				<% } %>
-				</p>
-			</div>
-
-			<% if (!isLoggedIn) { %>
-			<div class="welcome pull-right">
-				<p>
-					These are the Open Source projects that I use in my projects. I hope that other Open Source and commercial projects will add their own “I Love Open Source” page to their site.
-				</p>
-				<a href="/auth/github" class="btn btn-info login">
-					<i class="icon-github"></i>
-					<span>Sign in with GitHub</span>
-				</a>
+	<div class="tab-content">
+		<div class="tab-pane active" id="personal">
+			<% if (!support.personal.length) { %>
+			<% if (isCurrentUser) { %>
+			<h4 class="text-center">
+				You haven't added any projects yet. Want to add some?
+				<a class="btn btn-primary btn-lg" href="/supporter">Sure!</a>
+			</h4>
+			<% } else { %>
+			<h4 class="text-center">This user hasn't added any projects yet.</h4>
+			<% } %>
+			<% } else { %>
+			<div class="repos-list support-inactive">
+				<div class="header">
+					<div class="col repo-name"></div>
+					<div class="col support-types"></div>
+					<div class="col contribution-types">Click below to donate</div>
+				</div>
+				<% _.each(support.personal, function(entry) { %>
+				<% var project = entry.project %>
+				<% project.support = _.omit(entry, 'project') %>
+				<% include parts/project-row %>
+				<% }) %>
 			</div>
 			<% } %>
 		</div>
-
-		<ul class="nav nav-tabs">
-			<li class="selected-repos active">
-				<a class="tab" href="#personal">
-					Supporting
-				</a>
-			</li>
-			<% if (projects.personal.length) { %>
-			<li>
-				<a class="tab" href="#maintainer">
-					Own Projects
-				</a>
-			</li>
-			<% } %>
-			<% if (projects.admin.length) { %>
-			<li>
-				<a class="tab" href="#administrator">
-					Organizations
-				</a>
-			</li>
-			<% } %>
-		</ul>
-
-		<div class="tab-content">
-			<div class="tab-pane active" id="personal">
-				<% if (!support.personal.length) { %>
-				<% if (isCurrentUser) { %>
-				<h4 class="text-center">
-					You haven't added any projects yet. Want to add some?
-					<a class="btn btn-primary btn-lg" href="/supporter">Sure!</a>
-				</h4>
-				<% } else { %>
-				<h4 class="text-center">This user hasn't added any projects yet.</h4>
-				<% } %>
-				<% } else { %>
-				<div class="repos-list support-inactive">
-					<div class="header">
-						<div class="col repo-name"></div>
-						<div class="col support-types"></div>
-						<div class="col contribution-types">Click below to donate</div>
-					</div>
-					<% _.each(support.personal, function(entry) { %>
-					<% var project = entry.project %>
-					<% project.support = _.omit(entry, 'project') %>
-					<% include parts/project-row %>
-					<% }) %>
+		<div class="tab-pane" id="maintainer">
+			<div class="repos-list support-inactive">
+				<div class="header">
+					<div class="col repo-name"></div>
+					<div class="col support-types"></div>
+					<div class="col contribution-types">Click below to donate</div>
 				</div>
-				<% } %>
-			</div>
-			<div class="tab-pane" id="maintainer">
-				<div class="repos-list support-inactive">
-					<div class="header">
-						<div class="col repo-name"></div>
-						<div class="col support-types"></div>
-						<div class="col contribution-types">Click below to donate</div>
-					</div>
-					<% _.each(projects.personal, function(entry) { %>
-					<% var project = entry %>
-					<% project.support = {} %>
-					<% include parts/project-row %>
-					<% }) %>
-				</div>
-			</div>
-			<div class="tab-pane" id="administrator">
-				<div class="orgs">
-					Administrating projects in:
-					<% _.each(orgs, function(org) { %>
-					<a href="/orgs/<%= org._id %>"><%= org.name %></a>
-					<% }) %>
-				</div>
-				<div class="repos-list support-inactive">
-					<div class="header">
-						<div class="col repo-name"></div>
-						<div class="col support-types"></div>
-						<div class="col contribution-types">Click below to donate</div>
-					</div>
-					<% _.each(projects.admin, function(entry) { %>
-					<% var project = entry %>
-					<% project.support = {} %>
-					<% include parts/project-row %>
-					<% }) %>
-				</div>
+				<% _.each(projects.personal, function(entry) { %>
+				<% var project = entry %>
+				<% project.support = {} %>
+				<% include parts/project-row %>
+				<% }) %>
 			</div>
 		</div>
+		<div class="tab-pane" id="administrator">
+			<div class="orgs">
+				Administrating projects in:
+				<% _.each(orgs, function(org) { %>
+				<a href="/orgs/<%= org._id %>"><%= org.name %></a>
+				<% }) %>
+			</div>
+			<div class="repos-list support-inactive">
+				<div class="header">
+					<div class="col repo-name"></div>
+					<div class="col support-types"></div>
+					<div class="col contribution-types">Click below to donate</div>
+				</div>
+				<% _.each(projects.admin, function(entry) { %>
+				<% var project = entry %>
+				<% project.support = {} %>
+				<% include parts/project-row %>
+				<% }) %>
+			</div>
+		</div>
+	</div>
 
-		<% include modals/index.ejs %>
-	</section>
-	<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
-	<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
-	<script type="text/javascript">
-		require.config({
-			baseUrl: "<%=jsPath %>"
-		})
-		require(['modules/account/main'])
-	</script>
+</section>
+<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
+<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
+<script type="text/javascript">
+	require.config({
+		baseUrl: "<%=jsPath %>"
+	})
+	require(['modules/account/main'])
+</script>
 
-</div>
-
+<% include modals/index.ejs %>
 <% include parts/foot.ejs %>

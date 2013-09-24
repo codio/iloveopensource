@@ -2,8 +2,45 @@
 <% titleBuilder.add(project.owner.username) %>
 
 <% include parts/head.ejs %>
-<section id="page-project">
-	<div class="container">
+<section id="page-project" class="container">
+	<div class="profile-header">
+		<div class="pull-left">
+			<a href="<%= project.url %>" class="avatar" target="_blank">
+				<span class="github"></span>
+			</a>
+
+			<div class="data">
+				<h3>
+					<a href="/projects/<%=project._id %>">
+						<%=project.name %>
+					</a>
+				</h3>
+
+				<p>
+					Owner:
+					<% if (project.owner.user) { %>
+					<a href="/users/<%=project.owner.username %>"><%=project.owner.username %></a>
+					<% } else if (project.owner.org) { %>
+					<a href="/orgs/<%=project.owner.org %>"><%=project.owner.username %></a>
+					<% } else { %>
+					<%=project.owner.username %>
+					<% } %>
+				</p>
+			</div>
+
+			<% if (_(project.donateMethods.toObject()).values().compact().value().length) { %>
+			<div class="donate">
+				<div class="btn btn-primary btn-xs">Donate to this project</div>
+				<div class="methods col donate-methods">
+					<% var donateMethods = project.donateMethods.toObject(); %>
+					<% var projectUrl = project.url; %>
+					<% var projectId = project._id; %>
+					<% include parts/contributions.ejs %>
+				</div>
+			</div>
+			<% } %>
+		</div>
+
 		<% if (!isLoggedIn) { %>
 		<div class="welcome">
 			Welcome to I Love Open Source. You may make a donation by clicking below. If you sign in , you can add an I Love Open Source page to your site as well, showing which Open Source projects you use and helping to get recognition for those projects.
@@ -14,64 +51,32 @@
 			</a>
 		</div>
 		<% } %>
-
-		<div class="repos-list">
-			<div class="header">
-				<div class="header">
-					<div class="col repo-name"></div>
-					<div class="col support-types">Select to indicate support</div>
-					<div class="col contribution-types">Click below to donate</div>
-				</div>
-			</div>
-			<% project.support = userSupport %>
-			<% include parts/project-row %>
-		</div>
-
-		<div class="clearfix users">
-			<h3>People who support this project</h3>
-
-			<div class="col donating">
-				<h4>
-					<span class="support-type donating active"></span>
-					Cash Donors (<span class="counter"><%= users.donators.length %></span>)
-				</h4>
-				<% _.each(users.donators, function(support) { %>
-				<a href="/users/<%= support.byUser.username %>"><%= support.byUser.username %></a>
-				<% }) %>
-			</div>
-			<div class="col contributing">
-				<h4>
-					<span class="support-type contributing active"></span>
-					Code Contributors (<span class="counter"><%= users.contributors.length %></span>)
-				</h4>
-				<% _.each(users.contributors, function(support) { %>
-				<a href="/users/<%= support.byUser.username %>"><%= support.byUser.username %></a>
-				<% }) %>
-			</div>
-			<div class="col supporting">
-				<h4>
-					<span class="support-type supporting active"></span>
-					Vocal Supporters (<span class="counter"><%= users.supporters.length %></span>)
-				</h4>
-				<% _.each(users.supporters, function(support) { %>
-				<a href="/users/<%= support.byUser.username %>"><%= support.byUser.username %></a>
-				<% }) %>
-			</div>
-		</div>
-
-		<% if (supporting.length) { %>
-		<h3>Projects supporting by this project</h3>
-		<div class="repos-list support-inactive">
-			<% _.each(supporting, function(entry) { %>
-			<% var project = entry.project %>
-			<% project.support = _.omit(entry, 'project') %>
-			<% include parts/project-row %>
-			<% }) %>
-		</div>
-		<% } %>
 	</div>
-	<% include modals/index.ejs %>
+
+	<ul class="nav nav-tabs">
+		<li class="active">
+			<a class="tab" href="#supporting">
+				Supporting
+			</a>
+		</li>
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active" id="supporting">
+			<div class="repos-list support-inactive">
+				<% if (!supporting.length) { %>
+				<h4 class="text-center">This project hasn't added any projects yet.</h4>
+				<% } else { %>
+				<% _.each(supporting, function(entry) { %>
+				<% var project = entry.project %>
+				<% project.support = _.omit(entry, 'project') %>
+				<% include parts/project-row %>
+				<% }) %>
+				<% } %>
+			</div>
+		</div>
+	</div>
 </section>
+<% include modals/index.ejs %>
 <script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
 <script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
 <script type="text/javascript">

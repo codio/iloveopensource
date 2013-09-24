@@ -1,30 +1,28 @@
 #page-project {
 
-  .welcome {
-	padding: 20px;
-	font-size: 1.3em;
-	color: #FFF;
-	position: relative;
-	width: 960px;
-	margin: auto;
-	padding-right: 200px;
+  .profile-header {
+	.avatar {
+	  position: relative;
 
-	.login {
-	  position: absolute;
-	  right: 0px;
-	  top: 50%;
-	  margin-top: -24px;
+	  &:after {
+		.icon(@github-sign);
+		font-size: 92px;
+		position: absolute;
+		position: absolute;
+		left: 0px;
+		display: block;
+		vertical-align: top;
+		top: -25px;
+	  }
 	}
-  }
 
-  h4 {
-	padding-left: 1em;
+	.donate {
+	  clear: both;
+	  padding: 20px 0;
 
-	.support-type {
-	  cursor: default;
-	  font-size: 75%;
-	  border: 0;
-	  margin: -.15em 0 0 -2em;
+	  .methods {
+		display: none;
+	  }
 	}
   }
 
@@ -60,6 +58,5 @@
 		}
 	  }
 	}
-
   }
 }
