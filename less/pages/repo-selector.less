@@ -4,7 +4,7 @@
 	  .icon(@heart);
 	  color: #ff9900;
 	  position: absolute;
-	  left: .2em;
+	  left: 0em;
 	}
   }
 
@@ -20,32 +20,37 @@
 
 	.dropdown-toggle {
 	  font-size: 1em;
+	  margin-top: -2px;
 	}
 
 	.dropdown-menu {
 	  background: #222;
 	  max-height: 400px;
-	  min-width: 300px;
+	  min-width: 400px;
 	  overflow: hidden;
 	  overflow-y: auto;
 	  border: 1px solid #1C1C1C;
 	  border-radius: 10px;
+	  padding: 20px 24px;
 
 	  .dropdown-header {
 		font-size: 1.2em;
-		padding-left: 5px;
+		padding-left: 0px;
+		padding-bottom: 5px;
 		color: #fff;
 
 		&:not(:first-of-type) {
-		  padding-top: 15px;
+		  padding-top: 16px;
 		}
 	  }
 
 	  & > li {
-		padding-top: 5px;
-		padding-bottom: 5px;
+		font-weight: bold;
 		& > a {
-		  color: #fff;
+		  padding: 2px 20px;
+		  font-weight: bold;
+		  position: relative;
+		  color: darken(#fff, 10);
 		}
 	  }
 	}

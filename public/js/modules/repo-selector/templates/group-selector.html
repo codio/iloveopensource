@@ -1,17 +1,15 @@
 <% var own = _.find(groups, {type: 'User'}) %>
 <% var orgs = _.filter(groups, {type: 'Organization'}) %>
-<% var selected = 'My personal account' %>
+<% var selected = 'My General Support' %>
 
 <% if (own || orgs.length)  {%>
 <div class="dropdown">
 	<ul class="dropdown-menu" role="menu">
-		<li role="presentation" class="dropdown-header"><%= selected %></li>
+		<li role="presentation" class="dropdown-header">My Personal Projects</li>
 		<li role="presentation">
-			<a role="menuitem" tabindex="-1" href="#type/user/id/<%= currentUserId %>" data-val="<%= selected %>" class="<%= (own.hasSupport ? 'heart' : '') %>">Select personal favorites</a>
+			<a role="menuitem" tabindex="-1" href="#type/user/id/<%= currentUserId %>" data-val="<%= selected %>" class="<%= (own.hasSupport ? 'heart' : '') %>">General support</a>
 		</li>
-
 		<% if (own) { %>
-		<li role="presentation" class="dropdown-header">Projects I personally support</li>
 		<% _.each(own.repos.toJSON(), function(repo) { %>
 		<% current.id == repo._id && (selected = repo.owner.username + '/' + repo.name) %>
 		<li role="presentation">
@@ -21,10 +19,10 @@
 		<% } %>
 		<% if (orgs.length) { %>
 		<% _.each(orgs, function(org) { %>
-		<% current.id == org.org && (selected = org.username) %>
+		<% current.id == org.org && (selected = org.username + ' General Support') %>
 		<li role="presentation" class="dropdown-header"><%= org.username %></li>
 		<li role="presentation">
-			<a role="menuitem" tabindex="-1" href="#type/organization/id/<%= org.org %>" data-val="<%= org.username %> Support" class="<%= (org.hasSupport ? 'heart' : '') %>">Projects <%= org.username %> supports</a>
+			<a role="menuitem" tabindex="-1" href="#type/organization/id/<%= org.org %>" data-val="<%= org.username %> General Support" class="<%= (org.hasSupport ? 'heart' : '') %>">General support</a>
 		</li>
 		<% _.each(org.repos.toJSON(), function(repo) { %>
 		<% current.id == repo._id && (selected = repo.owner.username + '/' + repo.name) %>
@@ -35,7 +33,8 @@
 		<% }) %>
 		<% } %>
 	</ul>
-	You are editing:
+
+	<span class="text-label">You are editing:</span>
 	<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
 		<span class="value"><%= selected ? selected: 'Personal Support' %></span> <i class="icon-edit"></i>
 	</button>
