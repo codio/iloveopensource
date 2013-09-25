@@ -31,10 +31,10 @@
 			<div class="donate">
 				<% if (!_(project.donateMethods.toObject()).values().compact().value().length) { %>
 				<div class="btn btn-primary btn-xs want-contribute" data-toggle="modal" data-project="<%= project._id %>">
-					Donate to this project
+					Donate to project
 				</div>
 				<% } else { %>
-				<div class="btn btn-primary btn-xs toggle">Donate to this project</div>
+				<div class="btn btn-primary btn-xs toggle">Donate to project</div>
 				<div class="methods col donate-methods">
 					<% var donateMethods = project.donateMethods.toObject(); %>
 					<% var projectUrl = project.url; %>
@@ -53,6 +53,7 @@
 		<% } %>
 	</div>
 
+	<% if (!supporting.length) { %>
 	<ul class="nav nav-tabs bigger">
 		<li class="active">
 			<a class="tab" href="#supporting">
@@ -68,7 +69,6 @@
 					<div class="col support-types"></div>
 					<div class="col contribution-types">Click below to donate</div>
 				</div>
-				<% if (!supporting.length) { %>
 				<h4 class="text-center">This project hasn't added any projects yet.</h4>
 				<% } else { %>
 				<% _.each(supporting, function(entry) { %>
@@ -76,10 +76,10 @@
 				<% project.support = _.omit(entry, 'project') %>
 				<% include parts/project-row %>
 				<% }) %>
-				<% } %>
 			</div>
 		</div>
 	</div>
+	<% } %>
 </section>
 <% include modals/index.ejs %>
 <script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
