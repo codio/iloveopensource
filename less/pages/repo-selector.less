@@ -1,11 +1,11 @@
 #repos-selector {
-  a.heart {
-	&:after {
-	  .icon(@heart);
-	  color: #ff9900;
-	  position: absolute;
-	  left: 0em;
-	}
+  position: relative;
+
+  .show-help {
+	position: absolute;
+	top: .5em;
+	right: 5px;
+	cursor: pointer;
   }
 
   .is-empty.message {
@@ -51,6 +51,15 @@
 		  font-weight: bold;
 		  position: relative;
 		  color: darken(#fff, 10);
+
+		  &.heart {
+			&:after {
+			  .icon(@heart);
+			  color: #ff9900;
+			  position: absolute;
+			  left: 0em;
+			}
+		  }
 		}
 	  }
 	}

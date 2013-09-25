@@ -11,6 +11,7 @@ define(function (require) {
 	var GroupSelector = require('./group-selector')
 	var tpl = require('tpl!../templates/layout.html')
 	var shareTpl = require('tpl!../templates/share.html')
+	var helpTpl = require('tpl!../templates/help.html')
 
 	return Backbone.View.extend({
 		initialize: function () {
@@ -23,7 +24,17 @@ define(function (require) {
 		},
 		events: {
 			'click .share-trigger': 'toggleShare',
+			'click .show-help': 'showHelp',
+			'click .hide-help': 'hideHelp',
 			'click .nav-tabs .tab': 'selectTab'
+		},
+		showHelp: function() {
+			this.$('.content-holder').hide()
+			this.$('.help.layout').show()
+		},
+		hideHelp: function() {
+			this.$('.content-holder').show()
+			this.$('.help.layout').hide()
 		},
 		toggleShare: function () {
 			var btn = this.$('.share-trigger'),
@@ -72,6 +83,7 @@ define(function (require) {
 		render: function () {
 			this.$('.loading').hide()
 			this.$('.content').html(tpl()).slideDown()
+			this.$('.help.layout').html(helpTpl())
 			this.updateSelectedCount(null, store().selected)
 			new GroupSelector({
 				el: this.$('.support-selector')
