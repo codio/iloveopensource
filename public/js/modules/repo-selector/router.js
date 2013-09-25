@@ -8,6 +8,11 @@ define(function (require) {
 	var store = require('store').getNamespace('repo-selector')
 
 	return Backbone.Router.extend({
+		initialize: function () {
+			if (!localStorage) return
+			var lastUrl = localStorage.getItem('supporters-last-url')
+			if (lastUrl != location.hash) location.hash = lastUrl
+		},
 		routes: {
 			'type/:type/id/:id': 'switchType',
 			'type/:type/id/:id/tab/:tab': 'switchType',
@@ -23,6 +28,7 @@ define(function (require) {
 				store().selected.fetch()
 			}
 
+			localStorage && localStorage.setItem('supporters-last-url', location.hash)
 			this.selectTab(tab)
 		},
 		selectTab: function () {
