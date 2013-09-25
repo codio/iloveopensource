@@ -45,19 +45,33 @@ body {
 
 header {
   font-size: 1.3em;
+  height: 75px;
+
+  #main-nav {
+	& > li {
+	  height: 74px;
+
+	  & > a {
+		height: 100%;
+
+		&:hover, &.active {
+		  color: #FFF;
+		  background-color: fade(#000, 10);
+		}
+	  }
+	}
+
+	.navbar-brand {
+	  padding-top: 12px;
+	  padding-right: 60px;
+	}
+
+	font-weight: 300;
+	font-size: 1.1em;
+  }
 
   .navbar-nav > li > a {
 	line-height: 35px;
-  }
-
-  .navbar-brand {
-	padding-top: 12px;
-	padding-right: 60px;
-  }
-
-  #main-nav {
-	font-weight: 300;
-	font-size: 1.1em;
   }
 
   i {

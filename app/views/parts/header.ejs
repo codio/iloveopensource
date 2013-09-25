@@ -13,14 +13,12 @@
 
     <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
       <ul class="nav navbar-nav" id="main-nav">
-        <% if (isLoggedIn) { %>
           <li>
-            <a href="/supporter">Supporters</a>
+            <a href="/supporter" class="<%= typeof activeTab != 'undefined' && activeTab == 'supporters' ? 'active' : '' %>">Supporters</a>
           </li>
           <li>
-            <a href="/maintainer">Maintainers</a>
+            <a href="/maintainer" class="<%= typeof activeTab != 'undefined' && activeTab == 'maintainers' ? 'active' : '' %>">Maintainers</a>
           </li>
-        <% } %>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">

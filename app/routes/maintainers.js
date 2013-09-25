@@ -15,7 +15,7 @@ var _ = require('lodash'),
 
 module.exports = function (app) {
 	app.get('/maintainer', ensureAuthenticated, function (req, res) {
-		res.render('maintainer-editor', { user: req.user });
+		res.render('maintainer-editor', { user: req.user, activeTab: 'maintainers' });
 	});
 
 	app.get('/maintainer/projects', ensureAuthenticated, function (req, res) {

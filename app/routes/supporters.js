@@ -18,7 +18,7 @@ var _ = require('lodash'),
 
 module.exports = function (app) {
 	app.get('/supporter', ensureAuthenticated, function (req, res) {
-		res.render('repo-editor', { user: req.user });
+		res.render('repo-editor', { user: req.user, activeTab: 'supporters' });
 	});
 
 	app.get('/supporter/github/*', ensureAuthenticated, function (req, res) {
