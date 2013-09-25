@@ -33,52 +33,10 @@
 		<legend>Preferred Support Types for Your Projects</legend>
 
 		<div class="form-group">
-			<label for="input-gittip" class="col-sm-2 control-label">Gittip:</label>
-
-			<div class="col-sm-4">
-				<input type="text" class="form-control" name="gittip" id="input-gittip" placeholder="Gittip username" data-field="gittip" value="<%= project.donateMethods.gittip  || '' %>">
-
-				<p class="help-block">If you want to receive weekly payments through
-					<a href="https://www.gittip.com/" tabindex="-1">GitTip</a>, enter your Gittip username here.
-				</p>
-			</div>
-
-			<div class="col-sm-6 saved">Saved!</div>
-		</div>
-
-		<div class="form-group">
-			<label for="input-flattr" class="col-sm-2 control-label">Flattr Username:</label>
-
-			<div class="col-sm-4">
-				<input type="text" class="form-control" name="flattr" id="input-flattr" placeholder="Flattr username" data-field="flattr" value="<%= project.donateMethods.flattr || '' %>">
-
-				<p class="help-block">Fill this field so users will be able to donateMethods your projects via
-					<a href="https://flattr.com/">Flattr</a>.</p>
-			</div>
-
-			<div class="col-sm-6 saved">Saved!</div>
-		</div>
-
-		<div class="form-group">
-			<label for="input-paypal" class="col-sm-2 control-label">Paypal Donation:</label>
-
-			<div class="col-sm-6">
-				<textarea name="paypal" id="input-paypal" class="form-control" data-field="paypal"><%= project.donateMethods.paypal || '' %></textarea>
-
-				<p class="help-block">If you receive payment through a
-					<a href="https://www.paypal.com/">PayPal</a> Donate button, paste the paypal HTML code button here and we will display it for you. More info
-					<a href="https://merchant.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=merchant%2Fdonations">here</a>.
-				</p>
-			</div>
-
-			<div class="col-sm-4 saved">Saved!</div>
-		</div>
-
-		<div class="form-group">
 			<div class="col-sm-6 col-sm-offset-2">
 				<div class="checkbox">
-					<label for="input-emailMe">
-						<input type="checkbox" data-field="emailMe" id="input-emailMe" <%= project.donateMethods.emailMe && 'checked' %>> I would like people to be able to send comments to me.
+					<label for="input-code">
+						<input type="checkbox" id="input-code" data-field="code" <%= project.donateMethods.code && 'checked' %>> I would like to actively encourage code contributions
 					</label>
 				</div>
 			</div>
@@ -88,12 +46,59 @@
 		</div>
 
 		<div class="form-group">
-			<div class="col-sm-6 col-sm-offset-2">
-				<div class="checkbox">
-					<label for="input-code">
-						<input type="checkbox" id="input-code" data-field="code" <%= project.donateMethods.code && 'checked' %>> I would like to actively encourage code contributions
-					</label>
-				</div>
+			<label for="input-gittip" class="col-sm-2 control-label">Gittip:</label>
+
+			<div class="col-sm-6">
+				<input type="text" class="form-control" name="gittip" id="input-gittip" placeholder="Gittip username" data-field="gittip" value="<%= project.donateMethods.gittip  || '' %>">
+
+				<p class="help-block">If you want to receive weekly payments through
+					<a href="https://www.gittip.com/" tabindex="-1">GitTip</a>, enter your Gittip username here.
+				</p>
+			</div>
+
+			<div class="col-sm-4 saved">Saved!</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-flattr" class="col-sm-2 control-label">Flattr Username:</label>
+
+			<div class="col-sm-6">
+				<input type="text" class="form-control" name="flattr" id="input-flattr" placeholder="Flattr username" data-field="flattr" value="<%= project.donateMethods.flattr || '' %>">
+
+				<p class="help-block">Fill this field so users will be able to donateMethods your projects via
+					<a href="https://flattr.com/">Flattr</a>.</p>
+			</div>
+
+			<div class="col-sm-4 saved">Saved!</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-paypal" class="col-sm-2 control-label">Paypal Donation:</label>
+
+			<div class="col-sm-6">
+				<textarea name="paypal" id="input-paypal" class="form-control" data-field="paypal"><%= project.donateMethods.paypal || '' %></textarea>
+
+				<p class="help-block">If you receive payment through a&nbsp;
+					<a href="https://www.paypal.com/">PayPal</a> Donate button, paste the paypal HTML code button here and we will display it for you. More info
+					<a href="https://merchant.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=merchant%2Fdonations">here</a>.
+				</p>
+			</div>
+
+			<div class="col-sm-4 saved">Saved!</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-paypal" class="col-sm-2 control-label">Email for comments:</label>
+
+			<div class="col-sm-6">
+				<input type="email" id="input-emailMeEmail col-sm-6" class="form-control" data-field="emailMe" value="<%= project.donateMethods.emailMe %>">
+
+				<p class="help-block">
+					If you want to receive email comments from users fill field above
+					<% if (window.currentUserEmail) { %>
+					, or <a href="#" class="set-account-email">click here</a> to use your account email
+					<% } %>
+				</p>
 			</div>
 			<div class="col-sm-2">
 				<div class="saved">Saved!</div>

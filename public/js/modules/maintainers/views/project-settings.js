@@ -15,7 +15,13 @@ define(function (require) {
 		events: {
 			'change [data-field]': 'updateField',
 			'focus [data-field]': 'resetField',
+			'click .set-account-email': 'setAccountEmail',
 			'click .embed': 'selectAllText'
+		},
+		setAccountEmail: function(event) {
+			event.preventDefault()
+			if (!currentUserEmail) return
+			this.$('[data-field="emailMe"]').val(currentUserEmail).trigger('change')
 		},
 		selectAllText: function(event) {
 			$(event.currentTarget).select()

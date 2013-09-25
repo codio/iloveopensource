@@ -17,6 +17,7 @@
 	require.config({
 		baseUrl: "<%= jsPath %>"
 	})
+	window.currentUserEmail = '<%= loggedUser.email %>'
 	require(['modules/maintainers/main'])
 </script>
 
