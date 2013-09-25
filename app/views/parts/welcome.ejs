@@ -3,13 +3,17 @@
 		These are the Open Source projects that are used by <%= welcomeName %>.
 		If you want, you may make a donation to any of the projects by clicking in the right hand column.
 	</p>
-	<% if (typeof welcomeDonate != 'undefined') { %>
+
 	<p>
-		You may also make a donation to <%= welcomeName %> by clicking on the blue donate button.
+		Please feel free to make a donation to this OS project (on the left) or the OS projects it uses (below).
 	</p>
-	<% } %>
+
 	<p>
+		<% if (typeof welcomeIsProject == 'undefined') { %>
 		Want to list the projects you use in your project or get support for your own project? Then just sign in.
+		<% } else { %>
+		Why not join I Love Open Source yourself and help generate awareness and donations for yourself and other Open Source developers. Just sign in
+		<% } %>
 	</p>
 
 	<a href="/auth/github" class="btn btn-info login">

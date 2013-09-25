@@ -48,12 +48,12 @@
 
 		<% if (!isLoggedIn) { %>
 		<% var welcomeName = project.name %>
-		<% var welcomeDonate = true %>
+		<% var welcomeIsProject = true %>
 		<% include parts/welcome %>
 		<% } %>
 	</div>
 
-	<% if (!supporting.length) { %>
+	<% if (supporting.length) { %>
 	<ul class="nav nav-tabs bigger">
 		<li class="active">
 			<a class="tab" href="#supporting">
@@ -69,8 +69,6 @@
 					<div class="col support-types"></div>
 					<div class="col contribution-types">Click below to donate</div>
 				</div>
-				<h4 class="text-center">This project hasn't added any projects yet.</h4>
-				<% } else { %>
 				<% _.each(supporting, function(entry) { %>
 				<% var project = entry.project %>
 				<% project.support = _.omit(entry, 'project') %>
