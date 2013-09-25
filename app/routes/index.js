@@ -5,27 +5,13 @@ module.exports = function (app) {
 
 	app.get('/auth/github/callback', function (req, res, next) {
 		passport.authenticate('github', function (err, user, info) {
-			var redirectUrl = '/supporter/';
-
-			if (err) {
-				return next(err);
-			}
-
-			if (!user) {
-				return res.redirect('/');
-			}
-
-			if (req.session.redirectUrl) {
-				redirectUrl = req.session.redirectUrl;
-				req.session.redirectUrl = null;
-			}
+			if (err) return next(err);
+			if (!user) return res.redirect('/');
 
 			req.logIn(user, function (err) {
-				if (err) {
-					return next(err);
-				}
+				if (err) return next(err);
+				res.redirect(getRedirectUrl(req.session));
 			});
-			res.redirect(redirectUrl);
 		})(req, res, next);
 	});
 
@@ -46,3 +32,13 @@ module.exports = function (app) {
 	require('./service')(app)
 	require('./emails')(app)
 };
+
+function getRedirectUrl(session) {
+	var redirectUrl = '/supporter/';
+	if (session.redirectUrl) {
+		redirectUrl = session.redirectUrl;
+		session.redirectUrl = null;
+	}
+
+	return redirectUrl
+}

@@ -17,6 +17,9 @@ mongoose.connect(cfg.mongodbUri)
 require('./app/models')
 
 var passport = require('./app/middleware/passport')
+var sessionStore = new MongoStore({
+	url: cfg.mongodbUri
+})
 
 app.locals._ = require('lodash');
 app.locals.titleBuilder = require('./app/utils/title-builder');
@@ -37,9 +40,7 @@ app.use(express.methodOverride());
 app.use(express.cookieParser(cfg.sessionSecret));
 app.use(express.session({
 	secret: cfg.sessionSecret,
-	store: new MongoStore({
-		url: cfg.mongodbUri
-	})
+	store: sessionStore
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -55,7 +56,7 @@ if ('development' == cfg.env) {
 
 var server = http.createServer(app)
 
-require('./app/utils/socket.io')(server)
+require('./app/utils/socket.io')(server, sessionStore)
 
 server.listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));

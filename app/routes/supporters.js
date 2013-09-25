@@ -8,7 +8,6 @@ var _ = require('lodash'),
 	async = require('async'),
 
 	git = require('../utils/git-request'),
-	io = require('../utils/socket.io'),
 	ensureAuthenticated = require('../utils/ensure-auth'),
 
 	Project = mongoose.model('Project'),

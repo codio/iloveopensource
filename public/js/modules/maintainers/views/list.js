@@ -52,13 +52,16 @@ define(function (require) {
 		},
 		updateProjects: function (event) {
 			var btn = $(event.currentTarget),
-				log = btn.next('.log').empty(),
-				url = '/maintainer/projects/update'
+				log = btn.next('.log').empty()
 
 			if (btn.prop('disabled')) return
 
-			var socket = io.connect(window.location.origin)
+			var socket = io.connect(window.location.origin + '/projects-update')
 			btn.button('loading')
+
+			if (!socket.socket.connected && !socket.socket.connecting) {
+				socket.socket.reconnect()
+			}
 
 			socket.on('progress', function (desc) {
 				log.append('<p>' + desc + '</p>')
@@ -67,21 +70,15 @@ define(function (require) {
 			socket.on('error', function () {
 				btn.button('reset')
 				log.append('<p class="text-danger">An error occurred. Please try later.</p>')
+				socket.socket.disconnect();
 			})
 
 			socket.on('done', function () {
 				btn.html('Done!')
 				log.empty()
+				socket.socket.disconnect();
 				store().projects.fetch()
 			})
-
-			if (socket.socket.connected) {
-				$.get(url, {sessionId: socket.socket.sessionid})
-			} else {
-				socket.on('connect', function () {
-					$.get(url, {sessionId: socket.socket.sessionid})
-				})
-			}
 		},
 		checkIsEmpty: function () {
 			var el = this.$('.is-empty.message')

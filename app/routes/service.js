@@ -6,9 +6,6 @@
 var _ = require('lodash'),
 	mongoose = require('mongoose'),
 	async = require('async'),
-
-	git = require('../utils/git-request'),
-	io = require('../utils/socket.io'),
 	ensureAuthenticated = require('../utils/ensure-auth'),
 	User = mongoose.model('User')
 
