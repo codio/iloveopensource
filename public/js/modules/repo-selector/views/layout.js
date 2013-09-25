@@ -94,7 +94,7 @@ define(function (require) {
 				link.push(currentUserName)
 			}
 
-			return link.join('/')
+			return '/' + link.join('/')
 		}
 	});
 })
