@@ -36,7 +36,8 @@ ProjectsUpdater.prototype.finish = function () {
 	this.events.emit('done')
 }
 
-ProjectsUpdater.prototype.error = function (desc) {
+ProjectsUpdater.prototype.error = function (desc, error) {
+	console.error(desc, error)
 	this.events.emit('error', desc)
 }
 
@@ -132,35 +133,37 @@ ProjectsUpdater.prototype.updateOrganization = function (org, isAdmin, callback)
 	})
 }
 
-ProjectsUpdater.prototype.updateRepos = function (repos, ownerGithubId, callback) {
+ProjectsUpdater.prototype.updateRepos = function (gitRepos, ownerGithubId, callback) {
 	var self = this
 
 	Project.find({
-		githubId: { $in: _.pluck(repos, 'githubId')},
+		githubId: { $in: _.pluck(gitRepos, 'githubId')},
 		'owner.githubId': ownerGithubId
 	}, function (err, entries) {
 		if (err) return callback(err);
 
-		if (!entries.length) return Project.create(repos, callback)
+		if (!entries.length) return Project.create(gitRepos, callback)
 
 		var removed = _.filter(entries, function (entry) {
-			return !_.find(repos, {githubId: entry.githubId})
+			return !_.find(gitRepos, {githubId: entry.githubId})
 		})
 
-		var created = _.filter(repos, function (entry) {
+		var created = _.filter(gitRepos, function (entry) {
 			return !_.find(entries, {githubId: entry.githubId})
 		})
 
-		var updated = _.map(repos, function (repo) {
+		var updated = _.compact(_.map(gitRepos, function (repo) {
 			var entry = _.find(entries, {githubId: repo.githubId})
+			if (!entry) return
 
 			entry = _.merge(entry, _.omit(repo, 'admins'))
 
 			self.updateEntryAdmins(entry, _.find(repo.admins, function (v) {
 				return v + '' == self.user._id + ''
 			}))
+
 			return entry
-		})
+		}))
 
 		async.parallel([
 			function (cb) {

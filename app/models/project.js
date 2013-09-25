@@ -6,7 +6,8 @@
 var mongoose = require('mongoose'),
 	sanitizer = require('sanitizer'),
 	Schema = mongoose.Schema,
-	User = mongoose.model('User')
+	User = mongoose.model('User'),
+	emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
 
 var ProjectSchema = new Schema({
 	githubId: {type: Number, required: true, index: { unique: true }},
@@ -17,7 +18,9 @@ var ProjectSchema = new Schema({
 	description: {type: String, trim: true},
 	fork: Boolean,
 
-	admins: [{type: Schema.ObjectId, ref: 'User', index: true}],
+	admins: [
+		{type: Schema.ObjectId, ref: 'User', index: true}
+	],
 
 	owner: {
 		user: {type: Schema.ObjectId, ref: 'User', index: true},
@@ -34,7 +37,7 @@ var ProjectSchema = new Schema({
 		paypal: {type: String, trim: true},
 		flattr: {type: String, trim: true},
 		other: {type: String, trim: true},
-		emailMe: { type: String, match: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, trim: true },
+		emailMe: { type: String, trim: true },
 		code: Boolean
 	}
 })
@@ -53,6 +56,10 @@ ProjectSchema.pre('validate', function (next, done) {
 
 	if (methods.other) {
 		methods.other = sanitizer.sanitize(methods.other)
+	}
+
+	if (methods.emailMe && !methods.emailMe.match(emailRegExp)) {
+		methods.emailMe = ''
 	}
 
 	next()
