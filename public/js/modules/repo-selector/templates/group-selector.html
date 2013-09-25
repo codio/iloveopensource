@@ -12,7 +12,7 @@
 
 		<% if (own) { %>
 		<li role="presentation" class="dropdown-header">My Personal Projects</li>
-		<% _.each(own.repos, function(repo) { %>
+		<% _.each(own.repos.toJSON(), function(repo) { %>
 		<% current.id == repo._id && (selected = repo.owner.username + '/' + repo.name) %>
 		<li role="presentation">
 			<a role="menuitem" tabindex="-1" href="#type/project/id/<%= repo._id %>" class="<%= (repo.hasSupport ? 'heart' : '') %>"><%= repo.owner.username %>/<%= repo.name %></a>
@@ -26,7 +26,7 @@
 		<li role="presentation">
 			<a role="menuitem" tabindex="-1" href="#type/organization/id/<%= org.org %>" data-val="<%= org.username %> Support" class="<%= (org.hasSupport ? 'heart' : '') %>">Select <%= org.username %> favorites</a>
 		</li>
-		<% _.each(org.repos, function(repo) { %>
+		<% _.each(org.repos.toJSON(), function(repo) { %>
 		<% current.id == repo._id && (selected = repo.owner.username + '/' + repo.name) %>
 		<li role="presentation">
 			<a role="menuitem" tabindex="-1" href="#type/project/id/<%= repo._id %>" class="<%= (repo.hasSupport ? 'heart' : '') %>"><%= repo.owner.username %>/<%= repo.name %></a>

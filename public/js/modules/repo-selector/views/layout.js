@@ -8,19 +8,36 @@ define(function (require) {
 
 	var toastr = require('toastr')
 	var store = require('store').getNamespace('repo-selector')
+	var GroupSelector = require('./group-selector')
 	var tpl = require('tpl!../templates/layout.html')
-	var selectorTpl = require('tpl!../templates/support-selector.html')
 	var shareTpl = require('tpl!../templates/share.html')
 
 	return Backbone.View.extend({
+		initialize: function () {
+			this.listenTo(store().hub, 'repos-loaded', this.loadedRepoList)
+
+			this.listenTo(store().selected, 'add remove', this.updateSelectedCount)
+			this.listenTo(store().selected, 'prefetch', this.showLoading)
+			this.listenTo(store().selected, 'fetched', this.hideLoading)
+			this.render()
+		},
 		events: {
 			'click .share-trigger': 'toggleShare',
-			'click .nav-tabs .tab': 'selectTab',
-			'click .support-selector a[role="menuitem"]': 'select'
+			'click .nav-tabs .tab': 'selectTab'
 		},
-		select: function (event) {
-			var el = $(event.currentTarget)
-			this.$('.support-selector').find('.value').text(el.data().val || el.text())
+		toggleShare: function () {
+			var btn = this.$('.share-trigger'),
+				altText = btn.data().altText,
+				el = this.$('.share')
+
+			if (!el.is(':visible')) {
+				el.slideDown()
+			} else {
+				el.slideUp()
+			}
+
+			btn.data().altText = btn.text()
+			btn.text(altText)
 		},
 		selectTab: function (event) {
 			event.preventDefault()
@@ -29,18 +46,6 @@ define(function (require) {
 				'/type/' + store().currentType.type + '/id/' + store().currentType.id + '/tab/' + tab,
 				{trigger: true}
 			)
-		},
-		initialize: function () {
-			this.listenTo(store().hub, 'repos-loaded', this.loadedRepoList)
-
-			this.listenTo(store().selected, 'add remove', this.updateSelectedCount)
-			this.listenTo(store().selected, 'add', this.addHeart)
-			this.listenTo(store().selected, 'remove', this.removeHeart)
-
-			this.listenTo(store().selected, 'prefetch', this.showLoading)
-			this.listenTo(store().selected, 'fetched', this.hideLoading)
-			this.listenTo(store().groups, 'sync', this.showSelector)
-			this.render()
 		},
 		hideLoading: function () {
 			this.$('.loading').hide()
@@ -52,6 +57,25 @@ define(function (require) {
 			}))
 
 			this.$('.preview').attr('href', link).html('Preview ' + store().currentType.type)
+		},
+		showLoading: function () {
+			this.$('.loading').show()
+			this.$('.content').slideUp()
+		},
+		updateSelectedCount: function (model, collection) {
+			this.$('#selected-count').text(collection.length)
+		},
+		loadedRepoList: function (collection, type) {
+			if (type == 'search') return
+			this.$('.nav .tab[href="#' + type + '-repos"]').parent().removeClass('disabled')
+		},
+		render: function () {
+			this.$('.loading').hide()
+			this.$('.content').html(tpl()).slideDown()
+			this.updateSelectedCount(null, store().selected)
+			new GroupSelector({
+				el: this.$('.support-selector')
+			})
 		},
 		getProjectLink: function () {
 			var link = []
@@ -71,54 +95,6 @@ define(function (require) {
 			}
 
 			return link.join('/')
-		},
-		showLoading: function () {
-			this.$('.loading').show()
-			this.$('.content').slideUp()
-		},
-		showSelector: function () {
-			this.$('.support-selector').html(selectorTpl({
-				groups: store().groups.toJSON(),
-				current: store().currentType
-			}))
-		},
-		updateSelectedCount: function (model, collection) {
-			this.$('#selected-count').text(collection.length)
-		},
-		addHeart: function () {
-			if (!store().groups.currentHasSupport()) {
-				store().groups.updateCurrentSupport(true)
-				this.showSelector()
-			}
-		},
-		removeHeart: function (model, collection) {
-			if (collection.length) return
-			store().groups.updateCurrentSupport(false)
-			this.showSelector()
-		},
-		toggleShare: function () {
-			var btn = this.$('.share-trigger'),
-				altText = btn.data().altText,
-				el = this.$('.share')
-
-			if (!el.is(':visible')) {
-				el.slideDown()
-			} else {
-				el.slideUp()
-			}
-
-			btn.data().altText = btn.text()
-			btn.text(altText)
-		},
-		render: function () {
-			var self = this
-			this.$('.loading').hide()
-			this.$('.content').html(tpl()).slideDown()
-			this.updateSelectedCount(null, store().selected)
-		},
-		loadedRepoList: function (collection, type) {
-			if (type == 'search') return
-			this.$('.nav .tab[href="#' + type + '-repos"]').parent().removeClass('disabled')
 		}
 	});
 })
