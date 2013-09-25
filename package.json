@@ -1,28 +1,30 @@
 {
-  "name": "iloveopensource",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node app.js"
-  },
-  "dependencies": {
-    "express": "~3.2.3",
-    "ejs": "~0.8.4",
-    "passport": "~0.1.17",
-    "passport-github": "~0.1.5",
-    "mongoose": "~3.6.19",
-    "lodash": "~2.0.0",
-    "connect-mongo": "~0.3.3",
-    "async": "~0.2.9",
-    "sanitizer": "0.0.15",
-    "nodemailer": "~0.5.2",
-    "grunt-contrib-less": "~0.6.5",
-    "grunt-autoprefixer": "~0.2.20130806",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-bower-task": "~0.3.2",
-    "grunt": "~0.4.1",
-    "grunt-contrib-cssmin": "~0.6.1",
-    "grunt-contrib-requirejs": "~0.4.1",
-    "socket.io": "~0.9.16"
-  }
+	"name": "iloveopensource",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node app.js"
+	},
+	"dependencies": {
+		"express": "~3.2.3",
+		"ejs": "~0.8.4",
+		"passport": "~0.1.17",
+		"passport-github": "~0.1.5",
+		"mongoose": "~3.6.19",
+		"lodash": "~2.0.0",
+		"connect-mongo": "~0.3.3",
+		"async": "~0.2.9",
+		"sanitizer": "0.0.15",
+		"nodemailer": "~0.5.2"
+	},
+	"devDependencies": {
+		"grunt-contrib-less": "~0.6.5",
+		"grunt-autoprefixer": "~0.2.20130806",
+		"grunt-contrib-watch": "~0.5.3",
+		"grunt-bower-task": "~0.3.2",
+		"grunt": "~0.4.1",
+		"grunt-contrib-cssmin": "~0.6.1",
+		"grunt-contrib-requirejs": "~0.4.1",
+		"socket.io": "~0.9.16"
+	}
 }
