@@ -11,7 +11,7 @@ define(function (require) {
 		var projectId = window.location.pathname.split('/').pop()
 		var usersList = $('.users')
 
-		$('.donate .btn').on('click', function (event) {
+		$('.donate .toggle').on('click', function (event) {
 			var btn = $(this), methods = btn.parent().find('.methods')
 			btn.slideUp()
 			methods.slideDown()

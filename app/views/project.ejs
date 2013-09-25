@@ -28,17 +28,22 @@
 				</p>
 			</div>
 
-			<% if (_(project.donateMethods.toObject()).values().compact().value().length) { %>
 			<div class="donate">
-				<div class="btn btn-primary btn-xs">Donate to this project</div>
+				<% if (!_(project.donateMethods.toObject()).values().compact().value().length) { %>
+				<div class="btn btn-primary btn-xs want-contribute" data-toggle="modal" data-project="<%= project._id %>">
+					Donate to this project
+				</div>
+				<% } else { %>
+				<div class="btn btn-primary btn-xs toggle">Donate to this project</div>
 				<div class="methods col donate-methods">
 					<% var donateMethods = project.donateMethods.toObject(); %>
 					<% var projectUrl = project.url; %>
 					<% var projectId = project._id; %>
 					<% include parts/contributions.ejs %>
 				</div>
+				<% } %>
 			</div>
-			<% } %>
+
 		</div>
 
 		<% if (!isLoggedIn) { %>
