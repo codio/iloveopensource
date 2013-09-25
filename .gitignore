@@ -14,7 +14,7 @@ bower_components
 node_modules
 public/js/vendors
 public/js/build
-css/main.css
+public/css/main.css
 config/config.*.js
 
 npm-debug.log
