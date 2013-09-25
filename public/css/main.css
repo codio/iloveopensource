@@ -9983,7 +9983,12 @@ form .form-group .control-label {
 #repos-selector .support-selector .dropdown-menu {
   background: #222;
   max-height: 400px;
+  min-width: 300px;
+  overflow: hidden;
   overflow-y: auto;
+  border: 1px solid #1C1C1C;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
 }
 
 #repos-selector .support-selector .dropdown-menu .dropdown-header {

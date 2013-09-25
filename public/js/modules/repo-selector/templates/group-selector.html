@@ -1,17 +1,17 @@
 <% var own = _.find(groups, {type: 'User'}) %>
 <% var orgs = _.filter(groups, {type: 'Organization'}) %>
-<% var selected = 'Personal Support' %>
+<% var selected = 'My personal account' %>
 
 <% if (own || orgs.length)  {%>
 <div class="dropdown">
 	<ul class="dropdown-menu" role="menu">
-		<li role="presentation" class="dropdown-header">Personal Support</li>
+		<li role="presentation" class="dropdown-header"><%= selected %></li>
 		<li role="presentation">
-			<a role="menuitem" tabindex="-1" href="#type/user/id/<%= currentUserId %>" data-val="Personal Support" class="<%= (own.hasSupport ? 'heart' : '') %>">Select personal favorites</a>
+			<a role="menuitem" tabindex="-1" href="#type/user/id/<%= currentUserId %>" data-val="<%= selected %>" class="<%= (own.hasSupport ? 'heart' : '') %>">Select personal favorites</a>
 		</li>
 
 		<% if (own) { %>
-		<li role="presentation" class="dropdown-header">My Personal Projects</li>
+		<li role="presentation" class="dropdown-header">Projects I personally support</li>
 		<% _.each(own.repos.toJSON(), function(repo) { %>
 		<% current.id == repo._id && (selected = repo.owner.username + '/' + repo.name) %>
 		<li role="presentation">
@@ -22,9 +22,9 @@
 		<% if (orgs.length) { %>
 		<% _.each(orgs, function(org) { %>
 		<% current.id == org.org && (selected = org.username) %>
-		<li role="presentation" class="dropdown-header"><%= org.username %> Projects</li>
+		<li role="presentation" class="dropdown-header"><%= org.username %></li>
 		<li role="presentation">
-			<a role="menuitem" tabindex="-1" href="#type/organization/id/<%= org.org %>" data-val="<%= org.username %> Support" class="<%= (org.hasSupport ? 'heart' : '') %>">Select <%= org.username %> favorites</a>
+			<a role="menuitem" tabindex="-1" href="#type/organization/id/<%= org.org %>" data-val="<%= org.username %> Support" class="<%= (org.hasSupport ? 'heart' : '') %>">Projects <%= org.username %> supports</a>
 		</li>
 		<% _.each(org.repos.toJSON(), function(repo) { %>
 		<% current.id == repo._id && (selected = repo.owner.username + '/' + repo.name) %>
