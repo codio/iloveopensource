@@ -9824,6 +9824,10 @@ form .form-group .control-label {
   left: 2em;
 }
 
+.repos-list .repo.loading .col.support-types .loader {
+  display: block;
+}
+
 .repos-list .repo:nth-child(even) {
   background-color: #273241;
 }
@@ -9940,6 +9944,85 @@ form .form-group .control-label {
   content: "\f00d";
   color: #f33;
   opacity: 1;
+}
+
+.repos-list .repo .col.support-types .loader {
+  cursor: pointer;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  width: 2em;
+  height: 2em;
+  display: block;
+  position: relative;
+  border: 2px solid #000;
+  border-color: rgba(204, 204, 204, 0.1);
+  float: left;
+  margin: 0 .5em;
+  opacity: 1;
+  border: 0;
+  display: none;
+}
+
+.repos-list .repo .col.support-types .loader.active {
+  border-color: rgba(255, 153, 0, 0.5);
+}
+
+.repos-list .repo .col.support-types .loader.active:before {
+  color: #ff9900;
+  opacity: 1;
+}
+
+.repos-list .repo .col.support-types .loader:before {
+  opacity: .5;
+  position: absolute;
+  top: 50%;
+  margin-top: -0.7em;
+  text-align: center;
+  width: 100%;
+}
+
+.repos-list .repo .col.support-types .loader.contributing:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f0c0";
+}
+
+.repos-list .repo .col.support-types .loader.donating:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f155";
+}
+
+.repos-list .repo .col.support-types .loader.supporting:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f004";
+}
+
+.repos-list .repo .col.support-types .loader:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+  content: "\f110";
+  display: inline-block;
+  -o-animation: spin 2s infinite linear;
+  -webkit-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
 }
 
 .repos-list.support-inactive .col.support-types .support-type {

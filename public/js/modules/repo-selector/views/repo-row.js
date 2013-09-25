@@ -23,11 +23,11 @@ define(function (require) {
 		},
 		setLoading: function () {
 			this.undelegateEvents()
-			this.$el.css('opacity', 0.5)
+			this.$el.addClass('loading')
 		},
 		unsetLoading: function () {
 			this.delegateEvents()
-			this.$el.css('opacity', 1)
+			this.$el.removeClass('loading')
 		},
 		updateSupport: function (support) {
 			this.model.get('support').set(support)
