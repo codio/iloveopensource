@@ -17,22 +17,20 @@ var UserSchema = new Schema({
 	twitterName: {type: String, trim: true},
 	github: {},
 	provider: { type: String, default: '' },
-	authToken: { type: String, default: '' }
+	authToken: { type: String, default: '' },
+	projectsUpdater: {
+		updated: {type: Boolean},
+		updating: {type: Boolean},
+		status: {type: String, enum: ['error', 'success']},
+		updatedAt: { type: Date }
+	}
 });
 
 UserSchema.methods.register = function (callback) {
-	this.save(function(error, user) {
+	this.save(function (error, user) {
 		if (error) return callback(error)
-
-		var task = require('../utils/update-user-projects')(user)
-
-		task.on('done', function () {
-			callback(error, user)
-		})
-
-		task.on('error', function () {
-			callback(error, user)
-		})
+		callback(error, user)
+		require('../utils/update-user-projects')(user)
 	})
 }
 

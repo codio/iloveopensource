@@ -5,6 +5,7 @@
  */
 define(function (require) {
 	require('bootstrap')
+	require('plugins/activate-plugins')
 
 	var toastr = require('toastr')
 	var Layout = require('./views/list')
@@ -19,9 +20,5 @@ define(function (require) {
 			el: $('#maintainers')
 		})
 		store().projects.fetch()
-
-		$('body').tooltip({
-			selector: '[data-toggle="tooltip"]'
-		});
 	})
 })

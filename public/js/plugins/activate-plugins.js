@@ -6,12 +6,29 @@
 define(function (require) {
 	require('jquery')
 	require('bootstrap')
+	var io = require('socket.io')
 	var toastr = require('toastr')
 
 	$(function () {
 		var emailToAuthor = $('#email-to-author'),
 			noteFromAuthor = $('#note-from-author'),
-			requestContribution = $('#need-contribution-ways')
+			requestContribution = $('#need-contribution-ways'),
+			avatar = $('#user-avatar')
+
+		if (avatar.hasClass('loading')) {
+			var sio = io.connect(window.location.origin + '/projects-update/status')
+
+			sio.on('error', function (error) {
+				avatar.addClass('error').removeClass('loading')
+				toastr.error(error, 'Failed to retrieve your info from GitHub')
+			})
+
+			sio.on('done', function () {
+				avatar.removeClass('error loading')
+				toastr.success('Your projects loaded from GitHub!')
+				$('body').trigger('github-info-updated')
+			})
+		}
 
 		$('body')
 			.tooltip({

@@ -47,6 +47,30 @@ header {
   font-size: 1.3em;
   height: 75px;
 
+  #user-avatar {
+	.loading, .error {
+	  display: none;
+	}
+	
+	&.error .error {
+	  display: inline-block;
+	  color: #F33;
+	}
+	&.loading .loading {
+	  display: inline-block;
+	}
+
+	&.error, &.loading {
+	   img {
+		 display: none;
+	   }
+	}
+  }
+
+  .tooltip {
+	width: 250px;
+  }
+
   #main-nav {
 	font-weight: 300;
 	font-size: 1.1em;

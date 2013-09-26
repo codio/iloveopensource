@@ -5,6 +5,7 @@
  */
 define(function (require) {
 	require('backbone')
+
 	var store = require('store').getNamespace('maintainer')
 	var io = require('socket.io')
 	var tpl = require('tpl!../templates/list.html')
@@ -22,6 +23,27 @@ define(function (require) {
 			this.collection = store().projects
 			this.listenTo(store().projects, 'sync', this.showProjects)
 			this.listenTo(store().projects, 'request', this.showLoading)
+			this.attachSocketEvents()
+		},
+		attachSocketEvents: function() {
+			var sio = io.connect(window.location.origin + '/projects-update/status')
+
+			sio.on('progress', _.bind(function (desc) {
+				this.$('.projects-updater .log').append('<p>' + desc + '</p>')
+			}, this))
+
+			sio.on('error', _.bind(function () {
+				var updater = this.$('.projects-updater')
+				updater.find('.btn').button('reset')
+				updater.find('.log').append('<p class="text-danger">An error occurred. Please try later.</p>')
+			}, this))
+
+			sio.on('done', _.bind(function () {
+				var updater = this.$('.projects-updater')
+				updater.find('.btn').button('Done!')
+				updater.find('.log').empty()
+				store().projects.fetch()
+			}, this))
 		},
 		showHelp: function() {
 			this.$('.content-holder').hide()
@@ -68,29 +90,9 @@ define(function (require) {
 
 			if (btn.prop('disabled')) return
 
-			var socket = io.connect(window.location.origin + '/projects-update')
 			btn.button('loading')
 
-			if (!socket.socket.connected && !socket.socket.connecting) {
-				socket.socket.reconnect()
-			}
-
-			socket.on('progress', function (desc) {
-				log.append('<p>' + desc + '</p>')
-			})
-
-			socket.on('error', function () {
-				btn.button('reset')
-				log.append('<p class="text-danger">An error occurred. Please try later.</p>')
-				socket.socket.disconnect();
-			})
-
-			socket.on('done', function () {
-				btn.html('Done!')
-				log.empty()
-				socket.socket.disconnect();
-				store().projects.fetch()
-			})
+			$.get('/maintainer/projects/update')
 		},
 		checkIsEmpty: function () {
 			var el = this.$('.is-empty.message')

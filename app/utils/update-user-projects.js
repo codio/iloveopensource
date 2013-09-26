@@ -6,39 +6,55 @@
 var git = require('./git-request'),
 	mongoose = require('mongoose'),
 	async = require('async'),
+	io = require('./socket.io'),
 	_ = require('lodash'),
 	Project = mongoose.model('Project'),
-	EventEmitter = require('events').EventEmitter,
 	Organization = mongoose.model('Organization'),
 	Support = mongoose.model('Support'),
-	User = mongoose.model('User')
+	User = mongoose.model('User'),
+	ioNamespace = '/projects-update/status'
 
 function ProjectsUpdater(user) {
 	if (!(this instanceof ProjectsUpdater))
 		return new ProjectsUpdater(user);
 
 	this.user = user
-	this.events = new EventEmitter();
 	this.reqestParams = {
 		access_token: this.user.authToken
 	}
 
-	this.fetch()
-
-	return this.events
+	this.user.projectsUpdater.updated = false
+	this.user.projectsUpdater.updating = true
+	this.user.save(_.bind(function () {
+		this.fetch()
+	}, this))
 }
 
 ProjectsUpdater.prototype.progress = function (desc) {
-	this.events.emit('progress', desc)
+	io().of(ioNamespace).in(this.user._id).emit('progress', desc)
 }
 
 ProjectsUpdater.prototype.finish = function () {
-	this.events.emit('done')
+	var self = this
+	this.updateUser('success', function () {
+		io().of(ioNamespace).in(self.user._id).emit('done')
+	})
 }
 
 ProjectsUpdater.prototype.error = function (desc, error) {
+	var self = this
 	console.error(desc, error)
-	this.events.emit('error', desc)
+	this.updateUser('error', function () {
+		io().of(ioNamespace).in(self.user._id).emit('error', desc, error)
+	})
+}
+
+ProjectsUpdater.prototype.updateUser = function (status, callback) {
+	this.user.projectsUpdater.updated = true
+	this.user.projectsUpdater.updating = false
+	this.user.projectsUpdater.updatedAt = new Date()
+	this.user.projectsUpdater.status = status
+	this.user.save(callback)
 }
 
 ProjectsUpdater.prototype.updateEntryAdmins = function (entry, add) {
@@ -54,6 +70,7 @@ ProjectsUpdater.prototype.updateEntryAdmins = function (entry, add) {
 
 ProjectsUpdater.prototype.fetch = function () {
 	var self = this
+
 	async.parallel([
 		function (callback) {
 			git.request('user/orgs', self.reqestParams, function (err, data) {
@@ -104,7 +121,7 @@ ProjectsUpdater.prototype.fetchOrgRepos = function (org, callback) {
 
 		async.waterfall([
 			async.apply(_.bind(self.updateOrganization, self), org, isAdmin),
-			function() {
+			function () {
 				var org = arguments[0],
 					callback = Array.prototype.pop.call(arguments)
 

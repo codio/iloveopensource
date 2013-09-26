@@ -14,9 +14,13 @@ define(function (require) {
 			this.listenTo(store().groups, 'sync', this.render)
 			this.listenTo(store().selected, 'add', this.addHeart)
 			this.listenTo(store().selected, 'remove', this.removeHeart)
+			$('body').on('github-info-updated', this.updateGroups)
 		},
 		events: {
 			'click a[role="menuitem"]': 'selectGroup'
+		},
+		updateGroups: function() {
+			store().groups.fetch()
 		},
 		addHeart: function () {
 			if (!store().groups.currentHasSupport()) {

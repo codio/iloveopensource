@@ -32,38 +32,15 @@ module.exports = function (server, sessionStore) {
 	});
 
 	io.set('authorization', passportSocketIo.authorize({
-		cookieParser: express.cookieParser, //or connect.cookieParser
-		key: 'connect.sid',        //the cookie where express (or connect) stores its session id.
-		secret: cfg.sessionSecret,  //the session secret to parse the cookie
-		store: sessionStore,      //the session store that express uses
-		fail: function (data, accept) {      // *optional* callbacks on success or fail
-			accept(null, false);              // second param takes boolean on whether or not to allow handshake
-		},
-		success: function (data, accept) {
-			accept(null, true);
-		}
+		cookieParser: express.cookieParser,
+		key: 'connect.sid',
+		secret: cfg.sessionSecret,
+		store: sessionStore
 	}));
 
-	io.of('/projects-update').on('connection', function (socket) {
+	io.of('/projects-update/status').on('connection', function (socket) {
 		if (!socket.handshake.user) return socket.emit('error', 'unauthorized!')
-
-		var timer = 'updating projects for ' + socket.handshake.user.username
-		console.time(timer)
-		var task = require('../utils/update-user-projects')(socket.handshake.user)
-
-		task.on('progress', function (desc) {
-			socket.emit('progress', desc)
-		})
-		task.on('done', function () {
-			socket.emit('done')
-			console.timeEnd(timer)
-		})
-
-		task.on('error', function (error) {
-			console.log(error)
-			socket.emit('error', 'failed to update')
-			console.timeEnd(timer)
-		})
+		socket.join(socket.handshake.user._id)
 	});
 
 	instance = io
