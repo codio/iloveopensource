@@ -1,11 +1,16 @@
 <% titleBuilder.add(user.username) %>
 <% titleBuilder.add('Repo Editor') %>
+<% var forkMe = true %>
 
 <% include parts/head.ejs %>
 <div class="container">
 	<section id="maintainers">
-		<div class="loading"><i class="icon-spinner icon-spin icon-large"></i> Loading</div>
-		<div class="content"></div>
+		<div class="content-holder">
+			<div class="loading"><i class="icon-spinner icon-spin icon-large"></i> Loading</div>
+			<div class="show-help"></div>
+			<div class="content"></div>
+		</div>
+		<div class="help layout"></div>
 	</section>
 </div>
 

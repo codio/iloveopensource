@@ -8,17 +8,28 @@ define(function (require) {
 	var store = require('store').getNamespace('maintainer')
 	var io = require('socket.io')
 	var tpl = require('tpl!../templates/list.html')
+	var helpTpl = require('tpl!../templates/help.html')
 	var Group = require('./group')
 
 	return Backbone.View.extend({
 		events: {
-			'click .update-projects-info': 'updateProjects'
+			'click .update-projects-info': 'updateProjects',
+			'click .show-help': 'showHelp',
+			'click .hide-help': 'hideHelp'
 		},
 		initialize: function () {
 			this.groups = []
 			this.collection = store().projects
 			this.listenTo(store().projects, 'sync', this.showProjects)
 			this.listenTo(store().projects, 'request', this.showLoading)
+		},
+		showHelp: function() {
+			this.$('.content-holder').hide()
+			this.$('.help.layout').show()
+		},
+		hideHelp: function() {
+			this.$('.content-holder').show()
+			this.$('.help.layout').hide()
 		},
 		showProjects: function () {
 			this.$('.loading').hide()
@@ -46,6 +57,7 @@ define(function (require) {
 		},
 		render: function () {
 			this.$('.content').html(tpl())
+			this.$('.help.layout').html(helpTpl())
 			this.renderGroups()
 			this.checkIsEmpty()
 			return this

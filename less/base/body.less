@@ -48,8 +48,13 @@ header {
   height: 75px;
 
   #main-nav {
+	font-weight: 300;
+	font-size: 1.1em;
+	padding-left: 70px;
+
 	& > li {
 	  height: 74px;
+	  padding-left: 10px;
 
 	  & > a {
 		height: 100%;
@@ -65,9 +70,6 @@ header {
 	  padding-top: 12px;
 	  padding-right: 60px;
 	}
-
-	font-weight: 300;
-	font-size: 1.1em;
   }
 
   .navbar-nav > li > a {
@@ -105,14 +107,21 @@ footer {
   height: 60px;
   text-align: left;
   padding-top: 10px;
+  position: relative;
 
-  img {
-	position: relative;
-	top: -2px;
+  .fork-me {
+	position: absolute;
+	top: -90px;
+	right: 0;
+	border: 0;
+	width: 149px;
+	height: 149px;
+	display: block;
   }
 
   .copyright {
 	text-align: center;
+
 	a {
 	  text-align: center;
 	  color: #fff;
@@ -126,6 +135,8 @@ footer {
 
 	  img {
 		opacity: 0.5;
+		position: relative;
+		top: -2px;
 	  }
 
 	  &:hover {

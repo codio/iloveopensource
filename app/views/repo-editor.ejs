@@ -1,5 +1,6 @@
 <% titleBuilder.add(user.username) %>
 <% titleBuilder.add('Repo Editor') %>
+<% var forkMe = true %>
 
 <% include parts/head.ejs %>
 <div class="container">
@@ -10,9 +11,7 @@
 				<i class="icon-spinner icon-spin icon-large"></i> Loading
 			</div>
 			<div class="support-selector"></div>
-			<div class="show-help">
-				<span class="icon-question-sign"></span> need help?
-			</div>
+			<div class="show-help"></div>
 			<div class="content"></div>
 		</div>
 		<div class="help layout container"></div>
