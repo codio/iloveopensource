@@ -25,6 +25,10 @@ module.exports.request = function (path, params, callback) {
 	var request = https.request(options, function (response) {
 		var bodyParts = [], bytes = 0
 
+		if (Math.floor(response.statusCode / 100) === 5) {
+			return callback('GitHub is currently not available. Please try later');
+		}
+
 		response.on("data", function (c) {
 			bodyParts.push(c)
 			bytes += c.length
@@ -38,14 +42,28 @@ module.exports.request = function (path, params, callback) {
 				copied += b.length
 			})
 
-			callback(null, JSON.parse(body), response.headers)
+			try {
+				body = JSON.parse(body || '{}');
+			} catch (err) {
+				return callback('Failed to parse github response');
+			}
+
+			if (body.message && response.statusCode === 422) {
+				return callback('GitHub error' + body.message);
+			}
+
+			if (body.message && ((_ref = response.statusCode) === 400 || _ref === 401 || _ref === 404)) {
+				return callback('GitHub error' + body.message);
+			}
+
+			callback(null, body, response.headers)
 		})
 	})
 
 	request.end();
 
 	request.on('error', function (e) {
-		callback('failed to request github api')
+		callback('GitHub is currently not available. Please try later')
 	});
 }
 

@@ -65,8 +65,8 @@ define(function (require) {
 			}).render()
 
 			store().repos[type].fetch()
-				.fail(function () {
-					toastr.error('Failed to load your ' + type + ' repos')
+				.fail(function (xhr) {
+					toastr.error(xhr.responseText, 'Failed to load your ' + type + ' repos')
 				})
 		})
 

@@ -35,7 +35,7 @@ module.exports = function (app) {
 				Project.find({
 					githubId: { $in: _.pluck(repos, 'githubId') }
 				}, function (err, projects) {
-					if (err) return callback('failed to load repos');
+					if (err) return callback('Server error: Failed to load your projects');
 					callback(null, projects, repos, links)
 				})
 			}
