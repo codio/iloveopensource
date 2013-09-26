@@ -1,15 +1,70 @@
 #repos-selector {
-  position: relative;
 
-  .show-help {
-	position: absolute;
-	top: 0;
-	right: 5px;
-	cursor: pointer;
-	font-size: 2em;
+  .header {
+	position: relative;
+	min-height: 4em;
 
-	&:after {
-	  .icon(@question-sign)
+	.show-help {
+	  position: absolute;
+	  top: 0;
+	  right: 5px;
+	  cursor: pointer;
+	  font-size: 2em;
+
+	  &:after {
+		.icon(@question-sign)
+	  }
+	}
+
+	.support-selector {
+	  font-size: 1.3em;
+	  padding: 0 .55em;
+
+	  .dropdown-toggle {
+		font-size: 1em;
+		margin-top: -2px;
+	  }
+
+	  .dropdown-menu {
+		background: #222;
+		max-height: 400px;
+		min-width: 400px;
+		overflow: hidden;
+		overflow-y: auto;
+		border: 1px solid #1C1C1C;
+		border-radius: 10px;
+		padding: 20px 24px;
+
+		.dropdown-header {
+		  font-size: 1.2em;
+		  padding-left: 0px;
+		  padding-bottom: 5px;
+		  color: #fff;
+
+		  &:not(:first-of-type) {
+			padding-top: 16px;
+		  }
+		}
+
+		& > li {
+		  font-weight: bold;
+		  & > a {
+			padding: 2px 20px;
+			font-weight: bold;
+			position: relative;
+			color: darken(#fff, 10);
+
+			&.heart {
+			  &:after {
+				.icon(@heart);
+				color: #ff9900;
+				position: absolute;
+				left: 0em;
+			  }
+			}
+		  }
+		}
+	  }
 	}
   }
 
@@ -17,57 +72,6 @@
 	text-align: center;
 	padding-top: 30px;
 	font-size: 22px;
-  }
-
-  .support-selector {
-	font-size: 1.3em;
-	padding: 0 .55em 1.5em;
-
-	.dropdown-toggle {
-	  font-size: 1em;
-	  margin-top: -2px;
-	}
-
-	.dropdown-menu {
-	  background: #222;
-	  max-height: 400px;
-	  min-width: 400px;
-	  overflow: hidden;
-	  overflow-y: auto;
-	  border: 1px solid #1C1C1C;
-	  border-radius: 10px;
-	  padding: 20px 24px;
-
-	  .dropdown-header {
-		font-size: 1.2em;
-		padding-left: 0px;
-		padding-bottom: 5px;
-		color: #fff;
-
-		&:not(:first-of-type) {
-		  padding-top: 16px;
-		}
-	  }
-
-	  & > li {
-		font-weight: bold;
-		& > a {
-		  padding: 2px 20px;
-		  font-weight: bold;
-		  position: relative;
-		  color: darken(#fff, 10);
-
-		  &.heart {
-			&:after {
-			  .icon(@heart);
-			  color: #ff9900;
-			  position: absolute;
-			  left: 0em;
-			}
-		  }
-		}
-	  }
-	}
   }
 
   .nav-tabs {
