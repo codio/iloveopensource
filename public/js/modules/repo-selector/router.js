@@ -11,7 +11,7 @@ define(function (require) {
 		initialize: function () {
 			if (!localStorage) return
 			var lastUrl = localStorage.getItem('supporters-last-url')
-			if (lastUrl != location.hash) location.hash = lastUrl
+			if (lastUrl && lastUrl != location.hash) location.hash = lastUrl
 		},
 		routes: {
 			'type/:type/id/:id': 'switchType',
@@ -19,6 +19,11 @@ define(function (require) {
 			'*actions': 'switchType'
 		},
 		switchType: function (type, id, tab) {
+			if (_.indexOf(['user', 'project', 'organization'], type) == -1) {
+				type = store().currentType.type
+				id = store().currentType.id
+			}
+
 			if (!store().currentType.type || type != store().currentType.type || id != store().currentType.id) {
 				store().currentType = {
 					type: type || 'user',
