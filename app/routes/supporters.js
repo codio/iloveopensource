@@ -66,6 +66,7 @@ module.exports = function (app) {
 			}
 		]}, function (error, projects) {
 			if (error) return res.send(500, 'Failed to retrieve your projects')
+			projects = projects || []
 
 			var orgs = _(_.map(projects, function (entry) {
 				return entry.owner.org
@@ -109,7 +110,21 @@ module.exports = function (app) {
 					group.repos.push(project)
 				})
 
-				res.send(_.values(owners))
+				owners = _.values(owners)
+
+				if (!_.find(owners, function (entry) {
+					return entry.type == 'User'
+				})) {
+					owners.push({
+						user: req.user._id,
+						githubId: req.user.github.id,
+						username: req.user.username,
+						type: 'User',
+						repos: []
+					})
+				}
+
+				res.send(owners)
 			})
 		})
 	})
