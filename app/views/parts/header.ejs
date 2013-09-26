@@ -12,6 +12,7 @@
 		</div>
 
 		<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+			<% if (isLoggedIn) { %>
 			<ul class="nav navbar-nav" id="main-nav">
 				<li>
 					<a href="/supporter" class="<%= typeof activeTab != 'undefined' && activeTab == 'supporters' ? 'active' : '' %>">Supporters</a>
@@ -20,6 +21,7 @@
 					<a href="/maintainer" class="<%= typeof activeTab != 'undefined' && activeTab == 'maintainers' ? 'active' : '' %>">Maintainers</a>
 				</li>
 			</ul>
+			<% } %>
 
 			<ul class="nav navbar-nav navbar-right">
 				<% if (isLoggedIn) { %>
