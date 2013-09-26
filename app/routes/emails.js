@@ -98,8 +98,8 @@ function sendMessage(project, message, currentUser, template, subjectCb, userCb)
 		function (project, cb) {
 			mailOptions.subject = subjectCb(project)
 
-			if (project.owner.user && project.owner.user.email) {
-				mailOptions.to += ',' + project.owner.user.email
+			if (project.donateMethods.emailMe) {
+				mailOptions.to += ',' + project.donateMethods.emailMe
 			}
 
 			mailOptions.html = ejs.render(template, {
