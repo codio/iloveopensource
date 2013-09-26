@@ -51,8 +51,8 @@ define(function (require) {
 			.on('click', '.want-contribute', function (event) {
 				var el = $(event.currentTarget)
 
-				requestContribution.modal('show').data({
-					url: 'request-contribution',
+				requestContribution.modal('show')
+				$.post('/projects/request/', {
 					project: el.data().project,
 					projectData: el.data().projectData
 				})

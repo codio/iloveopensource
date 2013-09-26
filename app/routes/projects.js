@@ -10,10 +10,27 @@ var _ = require('lodash'),
 	ensureAuthenticated = require('../utils/ensure-auth'),
 	User = mongoose.model('User'),
 	Support = mongoose.model('Support'),
-	Project = mongoose.model('Project')
+	Project = mongoose.model('Project'),
+	Request = mongoose.model('Request')
 
 
 module.exports = function (app) {
+	app.post('/projects/request', function (req, res) {
+		var data = {
+			projectGitId: req.body.projectData && req.body.projectData.githubId
+		}
+
+		if (req.user) data['user'] = req.user._id
+		if (req.body.project)data['project'] = req.body.project
+
+		var request = new Request(data)
+		request.save(function (error) {
+			console.error(error)
+			if (error) res.send(500, 'failed')
+			res.send('request accepted')
+		})
+	})
+
 	app.get('/projects/:id', function (req, res) {
 		if (!req.param('id')) return res.send(400, 'empty request')
 
