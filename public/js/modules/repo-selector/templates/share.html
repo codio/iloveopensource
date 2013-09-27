@@ -1,3 +1,7 @@
+<% var siteUrl = window.location.origin %>
+<% var img = siteUrl + '/images/logo-lightbg.png' %>
+<% var alt = 'I Love Open Source' %>
+
 <div class="help">
 	Please copy and paste the Markdown or HTML link into your site. This is very important as it publicly expresses your support and encourages others to do so as well.
 </div>
@@ -5,12 +9,12 @@
 <div class="form-group">
 	<label for="input-md" class="col-lg-2 control-label">MarkDown:</label>
 	<div class="col-lg-9">
-		<input id="input-md" class="form-control embed" readonly="" value="[![I Love Open Source](<%= window.location.origin %>/images/logo-lightbg.png)](<%= window.location.origin %>/<%= shareLink %>)">
+		<input id="input-md" class="form-control embed" readonly="" value="[![<%= alt %>](<%= window.location.origin %>/images/logo-lightbg.png)](<%= window.location.origin %><%= shareLink %>)">
 	</div>
 </div>
 <div class="form-group">
 	<label for="input-html" class="col-lg-2 control-label">HTML:</label>
 	<div class="col-lg-9">
-		<input id="input-html" class="form-control embed" readonly="" value='&lt;a href="<%= window.location.origin %>/<%= shareLink %>"&gt;&lt;img src="<%= window.location.origin %>/images/logo-lightbg.png" alt="I Love Open Source"/&gt;&lt;/a&gt;'>
+		<input id="input-html" class="form-control embed" readonly="" value='&lt;a href="<%= window.location.origin %><%= shareLink %>"&gt;&lt;img src="<%= window.location.origin %>/images/logo-lightbg.png" alt="<%= alt %>"/&gt;&lt;/a&gt;'>
 	</div>
 </div>
