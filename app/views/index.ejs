@@ -22,6 +22,8 @@
 		</section>
 	</div>
 
+	<p id="video-line"><a href="#video-here">Watch a video</a> of how <strong>I Love Open Source</strong> works.</p>
+
 	<div id="start">
 		<% if (!user) { %>
 		<a href="/auth/github" class="btn btn-info" id="login">
@@ -35,5 +37,21 @@
 		<% } %>
 	</div>
 </div>
+
+<!-- Fancybox for Video -->
+<link rel="stylesheet" type="text/css" href="/js/vendors/fancybox/source/jquery.fancybox.css"/>
+<script type="text/javascript" src="/js/vendors/fancybox/lib/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/js/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#video-line a').fancybox({
+			openEffect  : 'none',
+			closeEffect : 'none',
+			helpers : {
+				media : {}
+			}
+		});
+	});
+</script>
 
 <% include parts/foot.ejs %>

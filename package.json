@@ -26,6 +26,7 @@
     "grunt": "~0.4.1",
     "grunt-contrib-cssmin": "~0.6.1",
     "grunt-contrib-requirejs": "~0.4.1",
-    "socket.io": "~0.9.16"
+    "socket.io": "~0.9.16",
+    "bower": "~1.2.6"
   }
 }
