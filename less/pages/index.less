@@ -1,9 +1,9 @@
 body.home {
 
   footer .fork-me {
-	position: fixed;
-	top: auto;
-	bottom: 0;
+		position: fixed;
+		top: auto;
+		bottom: 0;
   }
 
   #wrap {
@@ -11,36 +11,41 @@ body.home {
 	min-height: 1px;
 
 	#logo {
-	  margin: 80px auto;
+	  margin: 80px auto 0;
 	  text-align: center;
 	  display: block;
 	}
 
+	#tagline {
+		margin: 14px auto 70px;
+		text-align: center;
+		font-size: 18px;
+		font-weight: 300;
+		color: #fff;
+		text-shadow: 0 2px 3px #000;
+		text-transform: uppercase;
+	}
+
 	section {
 	  h2 {
-		font: 46px 'Quicksand';
-		font-weight: 300;
-		color: @brand-info;
-		margin: 0 0 18px;
-		padding: 0 10px;
+			font: 46px 'Quicksand';
+			font-weight: 300;
+			color: @brand-info;
+			margin: 0 0 18px;
+			padding: 0 10px;
 	  }
 
 	  p {
-		line-height: 1.7em;
-		font-size: 15px;
-		font-weight: 300;
-		padding: 0 10px;
+			line-height: 1.7em;
+			font-size: 15px;
+			font-weight: 300;
+			padding: 0 10px;
 	  }
 
 	  // Maintainers
 	  &:first-child {
-		text-align: right;
-		border-right: 1px solid #666;
-	  }
-
-	  // Supporters
-	  &:last-child {
-
+			text-align: right;
+			border-right: 1px solid #666;
 	  }
 	}
 
@@ -49,44 +54,44 @@ body.home {
 	  text-align: center;
 
 	  #login, #welcome {
-		text-align: left;
-		padding: 12px 49px 6px;
-		.clearfix;
+			text-align: left;
+			padding: 12px 49px 6px;
+			.clearfix;
 
-		i {
-		  float: left;
-		  font-size: 54px;
-		  margin: 0 20px 6px 0;
-		}
+			i {
+			  float: left;
+			  font-size: 54px;
+			  margin: 0 20px 6px 0;
+			}
 
-		span {
-		  float: left;
-		  display: block;
-		  font-size: 30px;
-		  font-weight: 400;
-		  line-height: 0.85em;
-		  margin-top: 5px;
+			span {
+			  float: left;
+			  display: block;
+			  font-size: 30px;
+			  font-weight: 400;
+			  line-height: 0.85em;
+			  margin-top: 5px;
 
-		  small {
-			font-size: 14px;
-			display: block;
-			font-weight: 300;
+			  small {
+					font-size: 14px;
+					display: block;
+					font-weight: 300;
+				  }
+				}
+		  }
+
+		  #welcome {
+				padding: 20px 70px;
+				font-size: 18px;
+
+				i {
+				  font-size: 20px;
+				  float: none;
+				  margin-left: 6px;
+				  position: relative;
+				  top: 1px;
+				}
 		  }
 		}
-	  }
-
-	  #welcome {
-		padding: 20px 70px;
-		font-size: 18px;
-
-		i {
-		  font-size: 20px;
-		  float: none;
-		  margin-left: 6px;
-		  position: relative;
-		  top: 1px;
-		}
-	  }
-	}
   }
 }
