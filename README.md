@@ -29,11 +29,12 @@ This app uses LessCSS for it's CSS, and needs to be compiled to run in the brows
 
  - `grunt build` will compile all Less into `css/main.css`.
  - `grunt build:prod` will build app for production.
+ - `grunt update` will fetch all vendors js and build app for production.
  - `grunt watch` will watch all Less files for changes, and recompile when changes are encountered.
 
 ### JS and Bower
 
-This app uses bower as provider for vendors js:
+This app uses bower wrapper [grunt-bower-task](https://github.com/yatskevich/grunt-bower-task) as provider for vendors js:
 
  - `grunt bower` will install all dependencies.
 
