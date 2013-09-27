@@ -8,7 +8,7 @@ Please go to http://iloveopensource.io to find out more.
 ##Purpose
 I Love Open Source is a way of encouraging users of Open Source code to express their gratitude through a simple acknowledgement a donation.
 
-This short video gives a great overview : TODO Video URL
+This short video gives a great overview : TODO Video URLs
 
 ##Our "I Love Open Source" acknowledgements
 We use I Love Open Source ourselves. Click on the button below to see our Supporter page.
