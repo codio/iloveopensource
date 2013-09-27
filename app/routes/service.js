@@ -10,27 +10,25 @@ var _ = require('lodash'),
 	User = mongoose.model('User')
 
 module.exports = function (app) {
-	app.get('/service/projects/update', ensureAuthenticated, function (req, res) {
+	app.get('/service/projects/update/:username?', ensureAuthenticated, function (req, res) {
 		if (!req.user.admin) return res.send('You should be admin')
 
-		User.find(function (error, users) {
+		var query = {}
+		if (req.param('username')) query['username'] = req.param('username')
+
+		User.find(query, function (error, users) {
 			if (error) return res.send(error)
 
 			async.map(users, function (user, c) {
-				var task = require('../utils/update-user-projects')(user)
 				var results = ['Updating repos for ' + user.username]
-
-				task.on('progress', function (desc) {
-					results.push(desc)
-				})
-
-				task.on('done', function () {
-					results.push('Done!')
-					c(null, results)
-				})
-
-				task.on('error', c)
-
+				var task = require('../utils/update-user-projects')(user)
+					.then(function () {
+						results.push('Done!')
+						c(null, results)
+					}, c, function (desc) {
+						results.push(desc)
+					});
+				return results
 			}, function (err, result) {
 				if (err) return res.send(err)
 				res.send(result)
