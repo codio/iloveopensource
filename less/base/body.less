@@ -134,41 +134,60 @@ footer {
   position: relative;
 
   .fork-me {
-	position: absolute;
-	top: -90px;
-	right: 0;
-	border: 0;
-	width: 149px;
-	height: 149px;
-	display: block;
+    position: fixed;
+    top: auto;
+    bottom: 0;
+  	right: 0;
+  	border: 0;
+  	width: 149px;
+  	height: 149px;
+  	display: block;
   }
 
   .copyright {
-	text-align: center;
+  	text-align: center;
+    color: #999;
 
-	a {
-	  text-align: center;
-	  color: #fff;
-	  text-decoration: none;
-	  font-weight: 300;
+    #powered-by {
+      margin-left: 10px;
 
-	  span, img {
-		.transition(opacity .50s linear);
-		opacity: 0.5;
-	  }
+      a {
+        margin-left: 10px;
+        color: #fff;
+        .transition(opacity .50s linear);
+        opacity: 0.5;
+        font-weight: 300;
 
-	  img {
-		opacity: 0.5;
-		position: relative;
-		top: -2px;
-	  }
+        &:hover {
+          text-decoration: none;
+          opacity: 1;
+        }
+      }
+    }
 
-	  &:hover {
-		span, img {
-		  opacity: 1;
-		}
-	  }
-	}
+  	#built-with {
+  	  text-align: center;
+  	  color: #fff;
+  	  text-decoration: none;
+  	  font-weight: 300;
+
+  	  span, img {
+    		.transition(opacity .50s linear);
+    		opacity: 0.5;
+    	}
+
+  	  img {
+    		opacity: 0.5;
+    		position: relative;
+    		top: -2px;
+  	  }
+
+  	  &:hover {
+    		span, img {
+    		  opacity: 1;
+    		}
+  	  }
+  	}
   }
 }
 

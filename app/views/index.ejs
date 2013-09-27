@@ -5,21 +5,24 @@
 <div class="container">
 
 	<img src="/images/logo-darkbg.png" alt="I Love Open Source" id="logo">
+	<p id="tagline">Simple Recognition for Open Source Developers</p>
 
 	<div class="row show-grid">
-		<section class="col-md-4 col-md-offset-2">
+		<section class="col-md-5 col-md-offset-1">
 			<h2>Maintainers</h2>
 
 			<p>All you do is sign in with Github and then tell us how you would like people to support your efforts (we've got various options as standard). Then grab the button widget and drop it into your README file or your site.</p>
 		</section>
 
-		<section class="col-md-4">
+		<section class="col-md-5">
 			<h2>Supporters</h2>
 
 			<p>If you use Open Source software, then giving vocal support really makes a difference to that Open Source Project as well as the open source community as a whole. We make it really easy for you to say what projects you use in your applications.</p>
 			<a href="" class="btn"></a>
 		</section>
 	</div>
+
+	<p id="video-line"><a href="#video-here">Watch a video</a> of how <strong>I Love Open Source</strong> works.</p>
 
 	<div id="start">
 		<% if (!user) { %>
@@ -34,5 +37,21 @@
 		<% } %>
 	</div>
 </div>
+
+<!-- Fancybox for Video -->
+<link rel="stylesheet" type="text/css" href="/js/vendors/fancybox/source/jquery.fancybox.css"/>
+<script type="text/javascript" src="/js/vendors/fancybox/lib/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/js/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#video-line a').fancybox({
+			openEffect  : 'none',
+			closeEffect : 'none',
+			helpers : {
+				media : {}
+			}
+		});
+	});
+</script>
 
 <% include parts/foot.ejs %>

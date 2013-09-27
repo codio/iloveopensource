@@ -1,27 +1,32 @@
-</div>
-<footer>
-	<div class="copyright">
-		<a href="https://codio.com/codio/iloveopensource" target="_blank">
-			<span>built with</span>
-			<img src="/images/codio-icon.png" width="28" alt="">
-			<span>Codio</span>
-		</a>
 	</div>
-	<% if (typeof forkMe != 'undefined') { %>
-	<a href="https://github.com/codio/iloveopensource" class="fork-me">
-		<img src="/images/github-ribbon.png" alt="Fork me on GitHub">
-	</a>
-	<% } %>
-</footer>
-<script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	<footer>
+		<div class="copyright">
+			<a href="https://codio.com/codio/iloveopensource" target="_blank" id="built-with">
+				<span>built with</span>
+				<img src="/images/codio-icon.png" width="28" alt="">
+				<span>Codio</span>
+			</a>
 
-	ga('create', 'UA-44133648-1', 'iloveopensource.io');
-	ga('send', 'pageview');
+			<span id="powered-by">
+				&#8212; <a href="/projects/523c6c7f861be7020000000d">powered by these Open Source projects</a>
+			</span>
+		</div>
 
-</script>
+		<% if (typeof forkMe != 'undefined') { %>
+			<a href="https://github.com/codio/iloveopensource" class="fork-me">
+				<img src="/images/github-ribbon.png" alt="Fork me on GitHub">
+			</a>
+		<% } %>
+	</footer>
+
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-44133648-1', 'iloveopensource.io');
+		ga('send', 'pageview');
+	</script>
+
 </body>
 </html>
