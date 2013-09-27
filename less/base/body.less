@@ -153,7 +153,15 @@ footer {
 
       a {
         margin-left: 10px;
-        color: #999;
+        color: #fff;
+        .transition(opacity .50s linear);
+        opacity: 0.5;
+        font-weight: 300;
+
+        &:hover {
+          text-decoration: none;
+          opacity: 1;
+        }
       }
     }
 
