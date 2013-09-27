@@ -145,31 +145,41 @@ footer {
   }
 
   .copyright {
-	text-align: center;
+  	text-align: center;
+    color: #999;
 
-	a {
-	  text-align: center;
-	  color: #fff;
-	  text-decoration: none;
-	  font-weight: 300;
+    #powered-by {
+      margin-left: 10px;
 
-	  span, img {
-		.transition(opacity .50s linear);
-		opacity: 0.5;
-	  }
+      a {
+        margin-left: 10px;
+        color: #999;
+      }
+    }
 
-	  img {
-		opacity: 0.5;
-		position: relative;
-		top: -2px;
-	  }
+  	#built-with {
+  	  text-align: center;
+  	  color: #fff;
+  	  text-decoration: none;
+  	  font-weight: 300;
 
-	  &:hover {
-		span, img {
-		  opacity: 1;
-		}
-	  }
-	}
+  	  span, img {
+    		.transition(opacity .50s linear);
+    		opacity: 0.5;
+    	}
+
+  	  img {
+    		opacity: 0.5;
+    		position: relative;
+    		top: -2px;
+  	  }
+
+  	  &:hover {
+    		span, img {
+    		  opacity: 1;
+    		}
+  	  }
+  	}
   }
 }
 
