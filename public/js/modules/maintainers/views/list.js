@@ -84,16 +84,6 @@ define(function (require) {
 			this.checkIsEmpty()
 			return this
 		},
-		updateProjects: function (event) {
-			var btn = $(event.currentTarget),
-				log = btn.next('.log').empty()
-
-			if (btn.prop('disabled')) return
-
-			btn.button('loading')
-
-			$.get('/maintainer/projects/update')
-		},
 		checkIsEmpty: function () {
 			var el = this.$('.is-empty.message')
 

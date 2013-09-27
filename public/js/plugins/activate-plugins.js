@@ -10,25 +10,35 @@ define(function (require) {
 	var toastr = require('toastr')
 
 	$(function () {
-		var emailToAuthor = $('#email-to-author'),
+		var sio,
+			emailToAuthor = $('#email-to-author'),
 			noteFromAuthor = $('#note-from-author'),
 			requestContribution = $('#need-contribution-ways'),
-			avatar = $('#user-avatar')
+			projectSync = $('#projects-sync'),
+			createSocket = function () {
+				if (sio) return
 
-		if (avatar.hasClass('loading')) {
-			var sio = io.connect(window.location.origin + '/projects-update/status')
+				sio = io.connect(window.location.origin + '/projects-update/status')
+				sio.on('error', function (error) {
+					projectSync.addClass('error').removeClass('loading')
+					toastr.error(error, 'Failed to retrieve your info from GitHub')
+				})
 
-			sio.on('error', function (error) {
-				avatar.addClass('error').removeClass('loading')
-				toastr.error(error, 'Failed to retrieve your info from GitHub')
-			})
+				sio.on('done', function () {
+					projectSync.removeClass('error loading')
+					toastr.success('Your projects loaded from GitHub!')
+					projectSync.trigger('github-info-updated')
+				})
+			}
 
-			sio.on('done', function () {
-				avatar.removeClass('error loading')
-				toastr.success('Your projects loaded from GitHub!')
-				$('body').trigger('github-info-updated')
-			})
-		}
+		projectSync.find('.trigger').on('click', function () {
+			if (projectSync.hasClass('loading')) return
+			projectSync.addClass('loading')
+			createSocket()
+			$.get('/maintainer/projects/update')
+		})
+
+		if (projectSync.hasClass('loading')) createSocket()
 
 		$('body')
 			.tooltip({

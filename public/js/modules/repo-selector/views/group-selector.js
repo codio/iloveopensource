@@ -14,7 +14,7 @@ define(function (require) {
 			this.listenTo(store().groups, 'sync', this.render)
 			this.listenTo(store().selected, 'add', this.addHeart)
 			this.listenTo(store().selected, 'remove', this.removeHeart)
-			$('body').on('github-info-updated', this.updateGroups)
+			$('#projects-sync').on('github-info-updated', this.updateGroups)
 		},
 		events: {
 			'click a[role="menuitem"]': 'selectGroup'

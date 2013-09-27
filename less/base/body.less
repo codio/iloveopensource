@@ -47,7 +47,19 @@ header {
   font-size: 1.3em;
   height: 75px;
 
-  #user-avatar {
+  #projects-sync {
+	.loading, .error, .trigger {
+	  font-size: 46px;
+	  line-height: 71px;
+	}
+
+	.trigger .text {
+	  font-size: 12px;
+	  position: absolute;
+	  top: 28px;
+	  left: 5px;
+	}
+
 	.loading, .error {
 	  display: none;
 	}
@@ -61,9 +73,9 @@ header {
 	}
 
 	&.error, &.loading {
-	   img {
-		 display: none;
-	   }
+	  .trigger {
+		display: none;
+	  }
 	}
   }
 
@@ -134,60 +146,60 @@ footer {
   position: relative;
 
   .fork-me {
-    position: fixed;
-    top: auto;
-    bottom: 0;
-  	right: 0;
-  	border: 0;
-  	width: 149px;
-  	height: 149px;
-  	display: block;
+	position: fixed;
+	top: auto;
+	bottom: 0;
+	right: 0;
+	border: 0;
+	width: 149px;
+	height: 149px;
+	display: block;
   }
 
   .copyright {
-  	text-align: center;
-    color: #999;
+	text-align: center;
+	color: #999;
 
-    #powered-by {
-      margin-left: 10px;
+	#powered-by {
+	  margin-left: 10px;
 
-      a {
-        margin-left: 10px;
-        color: #fff;
-        .transition(opacity .50s linear);
-        opacity: 0.5;
-        font-weight: 300;
+	  a {
+		margin-left: 10px;
+		color: #fff;
+		.transition(opacity .50s linear);
+		opacity: 0.5;
+		font-weight: 300;
 
-        &:hover {
-          text-decoration: none;
-          opacity: 1;
-        }
-      }
-    }
+		&:hover {
+		  text-decoration: none;
+		  opacity: 1;
+		}
+	  }
+	}
 
-  	#built-with {
-  	  text-align: center;
-  	  color: #fff;
-  	  text-decoration: none;
-  	  font-weight: 300;
+	#built-with {
+	  text-align: center;
+	  color: #fff;
+	  text-decoration: none;
+	  font-weight: 300;
 
-  	  span, img {
-    		.transition(opacity .50s linear);
-    		opacity: 0.5;
-    	}
+	  span, img {
+		.transition(opacity .50s linear);
+		opacity: 0.5;
+	  }
 
-  	  img {
-    		opacity: 0.5;
-    		position: relative;
-    		top: -2px;
-  	  }
+	  img {
+		opacity: 0.5;
+		position: relative;
+		top: -2px;
+	  }
 
-  	  &:hover {
-    		span, img {
-    		  opacity: 1;
-    		}
-  	  }
-  	}
+	  &:hover {
+		span, img {
+		  opacity: 1;
+		}
+	  }
+	}
   }
 }
 
