@@ -64,6 +64,12 @@ To deploy to production (_be careful_):
 $ cap production deploy
 ```
 
+To deploy to staging (http://staging.iloveopensource.io/):
+
+```bash
+$ cap staging deploy
+```
+
 ### Running
 
  - `node ./app.js` or `forever ./app.js` for development environment
