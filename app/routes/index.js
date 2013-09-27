@@ -30,7 +30,6 @@ module.exports = function (app) {
 	require('./supporters')(app)
 	require('./maintainers')(app)
 	require('./service')(app)
-	require('./emails')(app)
 };
 
 function getRedirectUrl(session) {

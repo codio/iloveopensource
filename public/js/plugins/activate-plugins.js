@@ -52,9 +52,14 @@ define(function (require) {
 				var el = $(event.currentTarget)
 
 				requestContribution.modal('show')
-				$.post('/projects/request/', {
-					project: el.data().project,
-					projectData: el.data().projectData
+				$.ajax({
+					type: 'POST',
+					contentType: 'application/json',
+					url: '/projects/donate-request',
+					data: JSON.stringify({
+						project: el.data().project,
+						projectData: el.data().projectData
+					})
 				})
 			})
 			.on('click', '.note-from-author', function (event) {
@@ -74,9 +79,10 @@ define(function (require) {
 				$.ajax({
 					type: 'POST',
 					contentType: 'application/json',
-					url: '/emails/' + modal.data().url + '/' + modal.data().project,
+					url: '/projects/comment-for-author',
 					data: JSON.stringify({
 						message: message,
+						project: modal.data().project,
 						projectData: modal.data().projectData
 					})
 				})
