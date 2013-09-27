@@ -44,6 +44,22 @@ Create file config.<your environment name>.js in ./config folder (environment by
  - `./config/index.js` file showing list of all options
  - `example.config.js` - skeleton for new configuration files
 
+### Deploying
+
+The [Capistrano](http://capistranorb.com/) Ruby Gem is used to deploy this app.
+
+Run [Bundler](http://gembundler.com/) to install Capistrano and its requirements:
+
+```bash
+$ bundle install
+```
+**NOTE:** Deploying requires that you have your public SSH key installed on the staging and production servers.
+
+To deploy to production (_be careful_):
+
+```bash
+$ cap production deploy
+```
 
 ### Running
 
