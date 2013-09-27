@@ -9,7 +9,7 @@ define(function (require) {
 	var urlRegExp = /^((https+:\/\/github.com\/)([^\/]+)\/([^\/#]+)\/*)(.*)$/
 
 	return RepoList.extend({
-		minLength: 5,
+		minLength: 1,
 		tpl: require('tpl!../templates/repo-search.html'),
 		events: {
 			'keyup .search-string': 'triggerSearch',
