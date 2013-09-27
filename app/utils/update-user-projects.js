@@ -7,6 +7,7 @@ var git = require('./git-request'),
 	mongoose = require('mongoose'),
 	async = require('async'),
 	io = require('./socket.io'),
+	Q = require('q'),
 	_ = require('lodash'),
 	Project = mongoose.model('Project'),
 	Organization = mongoose.model('Organization'),
@@ -19,6 +20,7 @@ function ProjectsUpdater(user) {
 		return new ProjectsUpdater(user);
 
 	this.user = user
+	this.deferred = Q.defer();
 	this.reqestParams = {
 		access_token: this.user.authToken
 	}
@@ -28,9 +30,12 @@ function ProjectsUpdater(user) {
 	this.user.save(_.bind(function () {
 		this.fetch()
 	}, this))
+
+	return this.deferred.promise
 }
 
 ProjectsUpdater.prototype.progress = function (desc) {
+	this.deferred.notify(desc);
 	io().of(ioNamespace).in(this.user._id).emit('progress', desc)
 }
 
@@ -38,6 +43,7 @@ ProjectsUpdater.prototype.finish = function () {
 	var self = this
 	this.updateUser('success', function () {
 		io().of(ioNamespace).in(self.user._id).emit('done')
+		self.deferred.resolve();
 	})
 }
 
@@ -46,6 +52,7 @@ ProjectsUpdater.prototype.error = function (desc, error) {
 	console.error(desc, error)
 	this.updateUser('error', function () {
 		io().of(ioNamespace).in(self.user._id).emit('error', desc, error)
+		self.deferred.reject(desc, error);
 	})
 }
 
@@ -118,6 +125,10 @@ ProjectsUpdater.prototype.fetchOrgRepos = function (org, callback) {
 				}
 				return entry
 			})
+
+		var log = {}
+		log[org.name + ' repos'] = repos
+		self.deferred.notify(log);
 
 		async.waterfall([
 			async.apply(_.bind(self.updateOrganization, self), org, isAdmin),
