@@ -48,16 +48,20 @@ header {
   height: 75px;
 
   #projects-sync {
+	margin-left: 25px;
+
 	.loading, .error, .trigger {
 	  font-size: 46px;
 	  line-height: 71px;
 	}
 
-	.trigger .text {
-	  font-size: 12px;
-	  position: absolute;
-	  top: 28px;
-	  left: 5px;
+	.trigger {
+	  .text {
+		font-size: 12px;
+		position: absolute;
+		top: 28px;
+		left: 5px;
+	  }
 	}
 
 	.loading, .error {
@@ -81,6 +85,11 @@ header {
 
   .tooltip {
 	width: 250px;
+  }
+
+  .logout {
+	position: absolute;
+	right: 0;
   }
 
   #main-nav {
