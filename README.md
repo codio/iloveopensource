@@ -22,11 +22,17 @@ From that simple start arose a case of massive scope creep and we added more and
 
 Importantly, I Love Open Source is not just for Open Source developers. Commercial organizations who use Open Source but may not develop Open Source projects themselves now have a perfect means of acknowledgement. Giving acknowledgement and occasionally donations improves the overall health of the OS development community and helps OS developers to keep on developing.
 
+##Viewing the Source Code
+The quickest way to browse through the project is to use Codio itself. We will shortly be annotating the project, to help you find your way around the code.
 
-#For Developers
+[![Show me the Code at Codio](https://codio-public.s3.amazonaws.com/sharing/show-me-the-code.png)](https://codio.com/codio/iloveopensource)
+
+#Developers Information
+If you are interested in contributing to I Love Open Source, please read this section. 
+
+If you want to discuss general ideas please contact fmay at codio.com. For general stuff, please use Github Issues.
 
 ## Getting Started
-
 Install Node, NPM and Grunt, then install our dependencies:
 
 ```bash
