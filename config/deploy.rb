@@ -2,16 +2,34 @@ set :application, "iloveopensource"
 set :repository,  "https://github.com/codio/iloveopensource.git"
 set :scm, :git
 set :main_js, "app.js"
-set :keep_releases, 3
+set :keep_releases, 1
 set :use_sudo, false
+set :envStr, 'NODE_ENV=production'
+set :domain, 'iloveopensource.io'
+set :user, 'deployer'
 
 desc "Setup the Production Env"
  task :production do
    set :branch, 'master'
-   set :envStr, 'NODE_ENV=production'
-   set :domain, 'iloveopensource.io'
-   set :user, 'deployer'
    set :applicationdir, "/var/www/#{application}"
+   set :deploy_to, applicationdir
+ 
+   server "#{domain}", :app, :web, :db, :primary => true
+
+    task :tail do
+      resp = capture "forever logs | grep #{applicationdir}/current/#{main_js}"
+      log = resp.split(" ").last
+      log.gsub!("\e[35m", "")
+      log.gsub!("\e[39m", "")
+      run "tail -f #{log}"
+    end
+ end
+ 
+ task :staging do
+   set(:current_branch) { `git branch --no-color`.match(/\*\s(.+)\n/)[1] || raise("Couldn't determine current branch") }
+   set :branch, defer { current_branch } unless exists?(:branch)
+
+   set :applicationdir, "/var/www/staging.#{application}"
    set :deploy_to, applicationdir
  
    server "#{domain}", :app, :web, :db, :primary => true

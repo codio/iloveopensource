@@ -1,11 +1,12 @@
 <p>
+	<% if (user) { %>
 	User
-	<a href="<%= serverUrl %>/users/<%= user.username %>"><%= user.username %></a> want you to add some contribution ways for your project:
+	<a href="<%= serverUrl %>/users/<%= user.username %>"><%= user.username %></a>
+	<% } else { %>
+	Anonymous
+	<% } %>
+	want you to add some donate methods for your project:
 	<a href="<%= serverUrl %>/projects/<%= project._id %>"><%= project.owner.username %> / <%= project.name %></a>
-</p>
-<p>
-	<b>Message from user:</b>
-	<%= message %>
 </p>
 <p>
 	<% if (project.owner.user) { %>

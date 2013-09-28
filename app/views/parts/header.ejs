@@ -25,15 +25,20 @@
 
 			<ul class="nav navbar-nav navbar-right">
 				<% if (isLoggedIn) { %>
-				<li id="user-avatar" class="<%= loggedUser.projectsUpdater.updating && 'loading' %> <%= loggedUser.projectsUpdater.updated && loggedUser.projectsUpdater.status %>">
+				<li id="user-avatar">
 					<a href="/users/<%= loggedUser.username %>">
 						<%= loggedUser.displayName %>
-						<span class="icon-spinner icon-spin loading" data-toggle="tooltip" data-placement="bottom" data-title="We are updating your projects from github right now"></span>
-						<span class="icon-exclamation-sign error" data-toggle="tooltip" data-placement="bottom" data-title="Here was error on last projects update, please go to maintainers page and try again"></span>
-						<img src="http://www.gravatar.com/avatar/<%= loggedUser.github.gravatar_id %>?s=18" class="gravatar">
+						<img src="http://www.gravatar.com/avatar/<%= loggedUser.github.gravatar_id %>?s=40" class="gravatar">
 					</a>
 				</li>
-				<li><a href="/logout"><i class="icon-signout"></i></a></li>
+				<li id="projects-sync" class="<%= loggedUser.projectsUpdater.updating && 'loading' %> <%= loggedUser.projectsUpdater.updated && loggedUser.projectsUpdater.status %>">
+					<span class="icon-spinner icon-spin loading" data-toggle="tooltip" data-placement="bottom" data-title="We are updating your projects from github right now"></span>
+					<span class="icon-github trigger" data-toggle="tooltip" data-placement="bottom" data-title="Click to sync your projects with GitHub">
+						<span class="text">sync</span>
+					</span>
+					<span class="icon-exclamation-sign error" data-toggle="tooltip" data-placement="bottom" data-title="Here was error on last projects update, please go to maintainers page and try again"></span>
+				</li>
+				<li class="logout"><a href="/logout"><i class="icon-signout"></i></a></li>
 				<% } else { %>
 				<li><a href="/auth/github">Join Now!</a></li>
 				<% } %>

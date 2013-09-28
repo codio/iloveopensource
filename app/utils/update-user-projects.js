@@ -83,10 +83,7 @@ ProjectsUpdater.prototype.fetch = function () {
 			git.request('user/orgs', self.reqestParams, function (err, data) {
 				if (err) return callback(err)
 
-				async.each(data, function (entry, cb) {
-					entry = Organization.parseGitHubData(entry)
-					self.fetchOrgRepos(entry, cb)
-				}, callback)
+				self.updateOrganizations(data, callback)
 			})
 		},
 		function (callback) {
@@ -158,6 +155,65 @@ ProjectsUpdater.prototype.updateOrganization = function (org, isAdmin, callback)
 
 		self.updateEntryAdmins(entry, isAdmin)
 		entry.save(callback)
+	})
+}
+
+ProjectsUpdater.prototype.updateOrganizations = function (orgs, callback) {
+	var self = this
+	orgs = _.map(orgs, function (entry, c) {
+		return Organization.parseGitHubData(entry)
+	})
+
+	async.parallel([
+		function (cb) {
+			self.cleanUpOrganizations(orgs, cb)
+		},
+		function (cb) {
+			async.each(orgs, function (entry, c) {
+				self.fetchOrgRepos(entry, c)
+			}, cb)
+		}
+	], callback)
+}
+
+ProjectsUpdater.prototype.cleanUpOrganizations = function (orgs, callback) {
+	var self = this
+	Organization.find({
+		githubId: {$nin: _.pluck(orgs, 'githubId')},
+		admins: this.user._id
+	}, function (error, entries) {
+		if (error) return callback(error)
+
+		var ids = _.pluck(entries, '_id')
+		if (!ids.length) return callback()
+
+		self.deferred.notify('old orgs found: ' + ids.length)
+
+		async.parallel([
+			function (cb) {
+				Organization.update(
+					{_id: {$in: ids}},
+					{ $pull: { admins: self.user._id}},
+					{ multi: true },
+					function (error, removed) {
+						self.deferred.notify('orgs from which removed admin rights: ' + removed)
+						cb.apply(this, arguments)
+					})
+			},
+
+			function (cb) {
+				Project.update({
+						'owner.org': {$in: ids},
+						admins: self.user._id
+					},
+					{ $pull: { admins: self.user._id}},
+					{ multi: true },
+					function (error, removed) {
+						self.deferred.notify('projects from which removed admin rights: ' + removed)
+						cb.apply(this, arguments)
+					})
+			}
+		], callback)
 	})
 }
 
