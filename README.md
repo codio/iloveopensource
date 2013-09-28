@@ -15,6 +15,14 @@ We use I Love Open Source ourselves. Click on the button below to see our Suppor
 
 ![ilos](https://github.com/codio/iloveopensource/blob/master/public/images/logo-lightbg.png?raw=true)
 
+##How it came about
+When the Codio team were preparing the website, we wanted to show public support for the open source projects we use. We did not want to private donations or statements of support, which no-one was aware of. We wanted to list the projects for all to see, both from the website and the product itself.
+
+From that simple start arose a case of massive scope creep and we added more and more functionality until it ended up as a complete application that all developers can use.
+
+Importantly, I Love Open Source is not just for Open Source developers. Commercial organizations who use Open Source but may not develop Open Source projects themselves now have a perfect means of acknowledgement. Giving acknowledgement and occasionally donations improves the overall health of the OS development community and helps OS developers to keep on developing.
+
+
 #For Developers
 
 ## Getting Started
