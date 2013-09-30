@@ -22,7 +22,7 @@
 		</section>
 	</div>
 
-	<!-- <p id="video-line"><a href="#video-here">Watch a video</a> of how <strong>I Love Open Source</strong> works.</p> -->
+	<p id="video-line"><a href="http://player.vimeo.com/video/75609049?autoplay=1&hd=1" target="_blank">Watch a video</a> of how <strong>I Love Open Source</strong> works.</p>
 
 	<div id="start">
 		<% if (!user) { %>
@@ -37,21 +37,5 @@
 		<% } %>
 	</div>
 </div>
-
-<!-- Fancybox for Video -->
-<link rel="stylesheet" type="text/css" href="/js/vendors/fancybox/source/jquery.fancybox.css"/>
-<script type="text/javascript" src="/js/vendors/fancybox/lib/jquery-1.10.1.min.js"></script>
-<script type="text/javascript" src="/js/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-<script>
-	$(document).ready(function() {
-		$('#video-line a').fancybox({
-			openEffect  : 'none',
-			closeEffect : 'none',
-			helpers : {
-				media : {}
-			}
-		});
-	});
-</script>
 
 <% include parts/foot.ejs %>

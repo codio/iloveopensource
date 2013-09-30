@@ -16,8 +16,7 @@
     "text": "~2.0.10",
     "backbone": "~1.0.0",
     "json3": "~3.2.5",
-    "requirejs-tpl": "*",
-    "fancybox": "~2.1.5"
+    "requirejs-tpl": "*"
   },
   "exportsOverride": {
     "toastr": {
