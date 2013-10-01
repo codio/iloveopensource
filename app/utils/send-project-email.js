@@ -40,13 +40,17 @@ module.exports = function (projectData, message, currentUser, templateName, subj
 			Project.createIfNotExists(projectData, cb)
 		},
 		function (project, cb) {
-			Project.findById(projectId || project._id).exec(cb)
+			Project.findById(projectId || project._id).populate('owner.user').exec(cb)
 		},
 		function (project, cb) {
 			mailOptions.subject = subjectCb && subjectCb(project)
 
-			if (project.donateMethods.emailMe) {
+			if (templateName == 'comment-for-author' && project.donateMethods.emailMe) {
 				mailOptions.to += ',' + project.donateMethods.emailMe
+			}
+
+			if (templateName == 'request-contribution' && project.owner.user &&  project.owner.user.email) {
+				mailOptions.to += ',' + project.owner.user.email
 			}
 
 			mailOptions.html = ejs.render(templates[templateName], {
