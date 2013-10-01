@@ -4,12 +4,13 @@
  * Time: 3:45 PM
  */
 
-var mongoose = require('mongoose')
-var Schema = mongoose.Schema
+var mongoose = require('mongoose'),
+	Schema = mongoose.Schema,
+	emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
 
 var UserSchema = new Schema({
 	username: { type: String, required: true, index: { unique: true }, trim: true },
-	email: { type: String, match: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, trim: true },
+	email: { type: String, trim: true },
 	avatar: String,
 	admin: {type: Boolean, default: false},
 
@@ -25,6 +26,11 @@ var UserSchema = new Schema({
 		updatedAt: { type: Date }
 	}
 });
+
+UserSchema.path('email').validate(function (email) {
+	if (email) return emailRegExp.test(email);
+	return true
+}, 'Email field contain not an email')
 
 UserSchema.methods.register = function (callback) {
 	this.save(function (error, user) {

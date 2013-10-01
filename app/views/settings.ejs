@@ -17,7 +17,7 @@
 					<label for="input-md" class="col-lg-2 control-label">MarkDown:</label>
 
 					<div class="col-lg-9">
-						<input type="text" id="input-md" class="form-control" readonly value="[![<%= alt %>](<%= img %>)](<%= link %>)">
+						<input type="text" id="input-md" class="form-control embed" readonly value="[![<%= alt %>](<%= img %>)](<%= link %>)">
 
 						<p class="help-block">Copy and paste this into your Github README.md file to attract Supporters to the "I Love Open Source" movement.</p>
 					</div>
@@ -27,7 +27,7 @@
 					<label for="input-html" class="col-lg-2 control-label">HTML:</label>
 
 					<div class="col-lg-9">
-						<input type="text" id="input-html" class="form-control" readonly value='<a href="<%= link %>"><img src="<%=img%>" alt="<%= alt %>"/></a>'>
+						<input type="text" id="input-html" class="form-control embed" readonly value='<a href="<%= link %>"><img src="<%=img%>" alt="<%= alt %>"/></a>'>
 
 						<p class="help-block">Copy and paste this into your web pages to attract Supporters to the “I Love Open Source” movement.</p>
 					</div>
@@ -40,7 +40,7 @@
 					<label for="input-email" class="col-lg-2 control-label">Email address:</label>
 
 					<div class="col-lg-4">
-						<input type="email" name="email" class="form-control" id="input-email" placeholder="Email" data-field="email" value="<%= loggedUser.email || '' %>" required>
+						<input type="email" name="email" class="form-control" id="input-email" placeholder="Email" data-field="email" value="<%= loggedUser.email || '' %>">
 					</div>
 
 					<div class="col-lg-6 saved">Saved!</div>
