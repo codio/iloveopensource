@@ -30,7 +30,7 @@ The quickest way to browse through the project is to use Codio itself. We will s
 #Developers Information
 If you are interested in contributing to I Love Open Source, please read this section. 
 
-If you want to discuss general ideas please contact fmay at codio.com. For general stuff, please use Github Issues.
+If you want to discuss general ideas please contact fmay at codio.com. For general stuff, please use GitHub Issues.
 
 ## Getting Started
 Install Node, NPM and Grunt, then install our dependencies:
