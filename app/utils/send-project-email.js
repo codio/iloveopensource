@@ -9,21 +9,12 @@ var cfg = require('../../config'),
 	ejs = require('ejs'),
 	fs = require('fs'),
 	path = require('path'),
-	templatesDir = path.join(__dirname, '..', '/views/emails/'),
 	mongoose = require('mongoose'),
 	Project = mongoose.model('Project'),
 	User = mongoose.model('User'),
 	templates = {}
 
 
-fs.readdir(templatesDir, function (err, files) {
-	if (err) throw err;
-	files.forEach(function (file) {
-		fs.readFile(templatesDir + file, 'utf-8', function (err, data) {
-			templates[file.replace('.ejs', '')] = data
-		});
-	});
-});
 
 module.exports = function (projectData, message, currentUser, templateName, subjectCb, userCb) {
 	if (!projectData || _.isEmpty(projectData)) return userCb('Wrong params')

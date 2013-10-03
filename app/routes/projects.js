@@ -3,12 +3,13 @@
  * Date: 8/17/13
  * Time: 11:09 PM
  */
-var _ = require('lodash'),
+var cfg = require('../../config'),
+	_ = require('lodash'),
 	https = require('https'),
 	async = require('async'),
 	mongoose = require('mongoose'),
 	ensureAuthenticated = require('../utils/ensure-auth'),
-	sendProjectMessage = require('../utils/send-project-email'),
+	mailer = require('../utils/mailer'),
 	User = mongoose.model('User'),
 	Support = mongoose.model('Support'),
 	Project = mongoose.model('Project'),
@@ -17,65 +18,67 @@ var _ = require('lodash'),
 
 module.exports = function (app) {
 	app.post('/projects/comment-for-author', function (req, res) {
-		var data = req.body.projectData || {}
-		data._id = req.body.project
+		Project.createIfNotExists(req.body.projectData, function (error, project) {
+			if (error) return res.send(500, 'Server error')
+			if (!project.donateMethods.emailMe) return res.send(500, 'Author doesn\'t accepts comments')
 
-		sendProjectMessage(data,
-			req.body.message,
-			req.user,
-			'comment-for-author',
-			function (project) {
-				return [
-					'Comment from',
+			mailer.send('comment-for-author',
+				['Comment from',
 					(req.user ? req.user.username : 'anonymous'),
 					'for your project ',
 					project.owner.username + ' / ' + project.name
-				].join(' ')
-			},
-			function (error) {
-				if (error) return res.send(400, 'Failed to send your email')
+				].join(' '),
+				cfg.emails.to + ',' + project.donateMethods.emailMe,
+				{
+					user: req.user,
+					project: project,
+					message: req.body.message
+				},
+				function (error) {
+					if (error) return res.send(500, 'Failed to send your email')
 
-				res.send('ok')
-			})
+					res.send('ok')
+				})
+		})
 	});
 
 	app.post('/projects/donate-request', function (req, res) {
-		var requestData = {
-			projectGitId: req.body.projectData && req.body.projectData.githubId
-		}
-		var emailData = req.body.projectData || {}
-		var isAnonym = !!req.user
+		var data = req.body.projectData || {}
+		var ip = req.headers['X-Real-IP'] || req.connection.remoteAddress
+		var project
+		data._id = req.body.project
 
-		emailData._id = req.body.project
-		if (req.user) requestData['user'] = req.user._id
-		if (req.body.project) requestData['project'] = req.body.project
 
-		async.parallel([
+		async.series([
 			function (callback) {
-				var request = new Request(requestData)
-				request.save(callback)
+				Project.createIfNotExists(data, function (error, entity) {
+					project = entity
+					callback(error && 'Failed to find project', project)
+				})
 			},
 			function (callback) {
-				sendProjectMessage(emailData,
-					'',
-					req.user,
-					'request-contribution',
-					function (project) {
-						return [
-							'Contribution request from',
-							(isAnonym ? req.user.username : 'anonymous'),
-							'for your project ',
-							project.owner.username + ' / ' + project.name
-						].join(' ')
-					},
-					callback)
+				Request.request(req.user, project, ip, req.body.email, callback)
+			},
+			function (callback) {
+				var owner = project.owner.org || project.owner.user || {}
+				var email = cfg.emails.to + (owner.email ? ',' + project.donateMethods.emailMe : '')
+
+				mailer.send('request-contribution',
+					['Contribution request from',
+						(req.user ? req.user.username : 'anonymous'),
+						'for your project ',
+						project.owner.username + ' / ' + project.name
+					].join(' '),
+					email,
+					{
+						user: req.user,
+						project: project
+					}, callback)
 			}
 		], function (error) {
-			if (error) {
-				console.error(error)
-				return res.send(500, 'failed')
-			}
-			res.send('request accepted')
+			error && console.error(error)
+			if (error) return res.send(500, error)
+			res.send('Request accepted')
 		})
 	})
 
@@ -85,33 +88,17 @@ module.exports = function (app) {
 		Project.findById(req.param('id'), function (err, project) {
 			if (err) return res.send(400, err);
 
-			async.parallel({
-				supporting: function (cb) {
-					Support.find({byProject: project._id}).populate('project').exec(cb)
-				}
-//				supporters: function (cb) {
-//					Support.find({project: project._id, supporting: true, type: 'user'}).populate('byUser').exec(cb)
-//				},
-//				contributors: function (cb) {
-//					Support.find({project: project._id, contributing: true, type: 'user'}).populate('byUser').exec(cb)
-//				},
-//				donators: function (cb) {
-//					Support.find({project: project._id, donating: true, type: 'user'}).populate('byUser').exec(cb)
-//				},
-//				userSupport: function (cb) {
-//					if (!req.user) return cb(null, {})
-//					Support.findOne({project: project._id, byUser: req.user._id, type: 'user'}).exec(cb)
-//				}
-			}, function (error, result) {
-				if (error) return res.send(500, err)
+			Support.find({byProject: project._id}).populate('project')
+				.exec(function (error, result) {
+					if (error) return res.send(500, err)
 
-				res.render('project', {
-					supporting: result.supporting,
-					project: project,
-					users: _.pick(result, 'supporters', 'contributors', 'donators'),
-					userSupport: result.userSupport || {}
+					res.render('project', {
+						supporting: result.supporting,
+						project: project,
+						users: _.pick(result, 'supporters', 'contributors', 'donators'),
+						userSupport: result.userSupport || {}
+					})
 				})
-			})
 		})
 	})
 

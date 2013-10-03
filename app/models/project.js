@@ -90,7 +90,10 @@ ProjectSchema.statics.parseGitHubData = function (repo) {
 ProjectSchema.statics.createIfNotExists = function (data, cb) {
 	var self = this
 
-	this.findOne({'githubId': data.githubId}, function (err, project) {
+	this.findOne({$or: [
+		{githubId: data.githubId},
+		{_id: data._id}
+	]}, function (err, project) {
 		if (err) return cb('Failed to find project');
 
 		if (project) return self.checkForOwner(project, cb)

@@ -1,13 +1,13 @@
 <p>
 	<% if (user) { %>
 	User
-	<a href="<%= serverUrl %>/users/<%= user.username %>"><%= user.username %></a>
+	<a href="<%= siteUrl %>/users/<%= user.username %>"><%= user.username %></a>
 	<% } else { %>
 	Anonymous
 	<% } %>
 
 	sent a comment your project:
-	<a href="<%= serverUrl %>/projects/<%= project._id %>"><%= project.owner.username %> / <%= project.name %></a>
+	<a href="<%= siteUrl %>/projects/<%= project._id %>"><%= project.owner.username %> / <%= project.name %></a>
 </p>
 
 <p>
