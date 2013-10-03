@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
 	sanitizer = require('sanitizer'),
 	Schema = mongoose.Schema,
 	User = mongoose.model('User'),
+	Organization = mongoose.model('Organization'),
 	emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
 
 var ProjectSchema = new Schema({
@@ -116,13 +117,22 @@ ProjectSchema.statics.updateOwner = function (user, cb) {
 }
 
 ProjectSchema.statics.checkForOwner = function (project, cb) {
-	if (project.owner.user) return cb(null, project)
+	if (project.owner.user || project.owner.org) return cb(null, project)
 
-	User.findOne({'github.id': project.owner.githubId}, function (err, user) {
+	var search, field
+	if (project.owner.type.toLowerCase() == 'user') {
+		search = User.findOne({'github.id': project.owner.githubId})
+		field = 'user'
+	} else {
+		search = Organization.findOne({githubId: project.owner.githubId})
+		field = 'org'
+	}
+
+	search.exec(function (err, entry) {
 		if (err) return cb('Failed to retrieve project owner')
-		if (!user) return cb(null, project)
+		if (!entry) return cb(null, project)
 
-		project.owner.user = user._id
+		project.owner[field] = entry._id
 
 		project.save(function (error) {
 			if (error) return cb('Failed to update project owner')
