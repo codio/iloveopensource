@@ -34,7 +34,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.logger('dev'));
-app.use(express.favicon(__dirname + '/public/favicon.ico'));
+app.use(express.favicon(path.join(__dirname, 'public/favicon.ico')));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser(cfg.sessionSecret));
@@ -58,6 +58,11 @@ var server = http.createServer(app)
 
 require('./app/utils/socket.io')(server, sessionStore)
 
-server.listen(app.get('port'), function () {
-	console.log('Express server listening on port ' + app.get('port'));
-});
+require('./app/utils/mailer').fillTemplates(path.join(__dirname, 'app/views/emails/'), function (error) {
+	if (error) throw error;
+
+	server.listen(app.get('port'), function () {
+		console.log('Express server listening on port ' + app.get('port'));
+	});
+})
+
