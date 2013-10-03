@@ -4,6 +4,7 @@
  * Time: 8:06 AM
  */
 var mongoose = require('mongoose'),
+	_ = require('lodash'),
 	sanitizer = require('sanitizer'),
 	Schema = mongoose.Schema,
 	User = mongoose.model('User'),
@@ -42,6 +43,31 @@ var ProjectSchema = new Schema({
 		code: Boolean
 	}
 })
+
+ProjectSchema.methods.hasDonateMethods = function () {
+	return _(this.donateMethods.toObject()).values().compact().value().length > 0
+}
+
+ProjectSchema.methods.hasOwner = function () {
+	return this.owner.user || this.owner.org
+}
+
+ProjectSchema.methods.getOwner = function (cb) {
+	if (!this.hasOwner()) return cb()
+
+	var search, self = this, isUser = this.owner.user
+
+	if (isUser) {
+		search = User.findById(this.owner.user)
+	} else {
+		search = Organization.findById(this.owner.org)
+	}
+
+	search.exec(function (error, owner) {
+		if (error) return cb('Failed to get owner')
+		cb(null, owner)
+	})
+}
 
 ProjectSchema.pre('validate', function (next, done) {
 	var reg = /^https:\/\/www.paypal(objects)?.com\//

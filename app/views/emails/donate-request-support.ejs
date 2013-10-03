@@ -1,0 +1,25 @@
+<p>
+    <% if (user) { %>
+    The GitHub user <a href="<%= siteUrl %>/users/<%= user.username %>"><%= user.username %></a>
+    <% } else { %>
+    Anonymous
+    <% } %>
+    &nbsp;wants to make a donation to
+    &nbsp;<a href="<%= siteUrl %>/projects/<%= project._id %>"><%= project.owner.username %> / <%= project.name %></a>
+</p>
+<p>
+    <% if (owner) { %>
+    Project owned by&nbsp;
+    <% if (project.owner.type.toLowerCase() == 'user') { %>
+    our user: <a href="<%= siteUrl %>/users/<%= project.owner.username %>"><%= project.owner.username %></a>
+    <% } else { %>
+    organization: <a href="<%= siteUrl %>/orgs/<%= project.owner.org %>"><%= project.owner.username %></a>
+    <% } %>
+    &nbsp;which didn't specify email!
+    <% } else { %>
+    Owner not registered yet, or not claimed this project
+    <% } %>
+</p>
+<p>
+    GitHub project link:&nbsp;<a href="https://github.com/<%= project.owner.username %>/<%= project.name %>"><%= project.owner.username %> / <%= project.name %></a>
+</p>

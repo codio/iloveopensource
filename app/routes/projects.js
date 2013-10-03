@@ -5,7 +5,6 @@
  */
 var cfg = require('../../config'),
 	_ = require('lodash'),
-	https = require('https'),
 	async = require('async'),
 	mongoose = require('mongoose'),
 	ensureAuthenticated = require('../utils/ensure-auth'),
@@ -45,35 +44,17 @@ module.exports = function (app) {
 	app.post('/projects/donate-request', function (req, res) {
 		var data = req.body.projectData || {}
 		var ip = req.headers['X-Real-IP'] || req.connection.remoteAddress
-		var project
 		data._id = req.body.project
 
 
-		async.series([
+		async.waterfall([
 			function (callback) {
-				Project.createIfNotExists(data, function (error, entity) {
-					project = entity
+				Project.createIfNotExists(data, function (error, project) {
 					callback(error && 'Failed to find project', project)
 				})
 			},
-			function (callback) {
+			function (project, callback) {
 				Request.request(req.user, project, ip, req.body.email, callback)
-			},
-			function (callback) {
-				var owner = project.owner.org || project.owner.user || {}
-				var email = cfg.emails.to + (owner.email ? ',' + project.donateMethods.emailMe : '')
-
-				mailer.send('request-contribution',
-					['Contribution request from',
-						(req.user ? req.user.username : 'anonymous'),
-						'for your project ',
-						project.owner.username + ' / ' + project.name
-					].join(' '),
-					email,
-					{
-						user: req.user,
-						project: project
-					}, callback)
 			}
 		], function (error) {
 			error && console.error(error)
@@ -93,10 +74,8 @@ module.exports = function (app) {
 					if (error) return res.send(500, err)
 
 					res.render('project', {
-						supporting: result.supporting,
-						project: project,
-						users: _.pick(result, 'supporters', 'contributors', 'donators'),
-						userSupport: result.userSupport || {}
+						supporting: result,
+						project: project
 					})
 				})
 		})
