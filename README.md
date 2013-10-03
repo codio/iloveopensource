@@ -6,28 +6,32 @@ Proclaim your support for your favourite Open Source projects and help OS develo
 Please go to http://iloveopensource.io to find out more.
 
 ##Purpose
-I Love Open Source is a way of encouraging users of Open Source code to express their gratitude through a simple acknowledgement a donation.
+I Love Open Source is a way of encouraging users of Open Source code to express their gratitude through a simple acknowledgement page. Along the way, they are gently offered a chance to donate cash or just thanks.
 
-This short video gives a great overview : TODO Video URL
+This [short video](https://vimeo.com/75609049?autoplay=1) explains things properly.
 
-##Our "I Love Open Source" acknowledgements
+##Our "I Love Open Source" acknowledgments
 We use I Love Open Source ourselves. Click on the button below to see our Supporter page.
 
 ![ilos](https://github.com/codio/iloveopensource/blob/master/public/images/logo-lightbg.png?raw=true)
 
 ##How it came about
-When the Codio team were preparing the website, we wanted to show public support for the open source projects we use. We did not want to private donations or statements of support, which no-one was aware of. We wanted to list the projects for all to see, both from the website and the product itself.
+When the Codio team were preparing the website, we wanted to show public support for the open source projects we use. We didn't want to just give private donations or statements of support, which no-one was aware of other than the recipient. We wanted to list the projects for all to see, both from the website and the product itself.
 
-From that simple start arose a case of massive scope creep and we added more and more functionality until it ended up as a complete application that all developers can use.
+That simple start developed into a case of massive scope creep and we added more and more functionality until it ended up as a complete application.
 
 Importantly, I Love Open Source is not just for Open Source developers. Commercial organizations who use Open Source but may not develop Open Source projects themselves now have a perfect means of acknowledgement. Giving acknowledgement and occasionally donations improves the overall health of the OS development community and helps OS developers to keep on developing.
 
 ##Viewing the Source Code
-The quickest way to browse through the project is to use Codio itself. We will shortly be annotating the project, to help you find your way around the code.
+The quickest way to browse through the project is to click below. We will shortly be annotating the project, to help you find your way around the code. Click below to load it.
 
 [![Show me the Code at Codio](https://codio-public.s3.amazonaws.com/sharing/show-me-the-code.png)](https://codio.com/codio/iloveopensource)
 
-#Developers Information
+##Sponsor Thanks
+- **Codio** : I Love Open Source is coded and (currently) maintained by [Codio](http://codio.com) developers
+- **Digital Ocean** : All of the cloud hosting is provided free of charge by [Digital Ocean](http://www.digitalocean.com).
+
+#Developer Information
 If you are interested in contributing to I Love Open Source, please read this section. 
 
 If you want to discuss general ideas please contact fmay at codio.com. For general stuff, please use GitHub Issues.
