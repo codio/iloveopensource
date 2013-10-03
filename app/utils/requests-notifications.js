@@ -4,6 +4,7 @@
  * Time: 1:07 AM
  */
 var mongoose = require('mongoose'),
+	_ = require('lodash'),
 	async = require('async'),
 	cfg = require('../../config'),
 	mailer = require('../utils/mailer')
@@ -11,23 +12,13 @@ var mongoose = require('mongoose'),
 
 module.exports.notifyRequesters = function (project, cb) {
 	var Request = mongoose.model('Request')
-	var owner = project.owner.org || project.owner.user || null
-
-	Request
-		.update(
-		{
-			$or: [
-				{'project.ref': project._id},
-				{'project.githubId': project.githubId}
-			],
-			satisfied: false
-		},
-		{
-			'project.methodsSet': true,
-			'project.methodsSetAt': new Date,
-			satisfied: true
-		})
-		.exec(function (error, entries) {
+	Request.find({
+		$or: [
+			{'project.ref': project._id},
+			{'project.githubId': project.githubId}
+		],
+		satisfied: false
+	}).exec(function (error, entries) {
 			if (error) return cb('Failed to get requests for project')
 
 			async.each(entries, function (entry, callback) {
@@ -43,7 +34,15 @@ module.exports.notifyRequesters = function (project, cb) {
 					{
 						project: project
 					}, callback)
-			}, cb)
+			}, function (err) {
+				if (err) return cb('Failed to get requests for project')
+
+				Request.update({_id: {$in: _.pluck(entries, '_id')}}, {
+					'project.methodsSet': true,
+					'project.methodsSetAt': new Date,
+					satisfied: true
+				}, cb)
+			})
 		})
 }
 
