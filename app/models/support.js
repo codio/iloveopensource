@@ -6,7 +6,7 @@
 var mongoose = require('mongoose'),
 	_ = require('lodash'),
 	Project = mongoose.model('Project'),
-	Organization = mongoose.model('Project'),
+	Organization = mongoose.model('Organization'),
 	async = require('async'),
 	Schema = mongoose.Schema
 
