@@ -4,7 +4,7 @@
  * Time: 7:32 AM
  */
 require('./user')
+require('./orgs')
 require('./project')
 require('./support')
-require('./orgs')
 require('./requests')
