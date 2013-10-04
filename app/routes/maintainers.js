@@ -41,9 +41,14 @@ module.exports = function (app) {
 		var id = req.param('project'), data = req.body.donateMethods
 		if (!id) return res.send(500, 'failed to update project settings')
 
-		Project.findOneAndUpdate({_id: id}, {donateMethods: data}, function (error, project) {
+		Project.findById(id, function (error, project) {
 			if (error) return res.send(500, 'failed to save project settings')
-			res.send(project)
+
+            project.donateMethods = data
+            project.save(function(err) {
+                if (err) return res.send(500, 'failed to save project settings')
+                res.send(project)
+            })
 		})
 	});
 };

@@ -42,6 +42,7 @@ define(function (require) {
 				.fail(_.bind(this.setError, this, el))
 		},
 		setSuccess: function (field) {
+            field.val(this.model.get('donateMethods')[field.data().field])
 			var group = field.closest('.form-group')
 			group.removeClass('has-error').addClass('has-success')
 			group.find('.saved').show().fadeOut(3000, function () {
