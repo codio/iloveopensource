@@ -9,7 +9,8 @@ var mongoose = require('mongoose'),
     sanitizer = require('html-css-sanitizer'),
     Schema = mongoose.Schema,
     User = mongoose.model('User'),
-    emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+    emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+    stripTagsRegExp = /<\/?[^>]+>/g
 
 var ProjectSchema = new Schema({
     githubId: {type: Number, required: true, index: { unique: true }},
@@ -58,6 +59,14 @@ ProjectSchema.pre('validate', function (next, done) {
 
     if (methods.other) {
         methods.other = sanitizer.smartSanitize(methods.other)
+    }
+
+    if (methods.flattr) {
+        methods.flattr = methods.flattr.replace(stripTagsRegExp, '')
+    }
+
+    if (methods.gittip) {
+        methods.gittip = methods.gittip.replace(stripTagsRegExp, '')
     }
 
     if (methods.emailMe && !methods.emailMe.match(emailRegExp)) {
