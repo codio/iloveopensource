@@ -6,17 +6,23 @@
 var mongoose = require('mongoose'),
     async = require('async'),
     _ = require('lodash'),
-    notifier = require('../utils/requests-notifications')
-Schema = mongoose.Schema
+    notifier = require('../utils/requests-notifications'),
+    Schema = mongoose.Schema
+
+var RequesterSchema = new Schema({
+    request: {type: Schema.ObjectId, ref: 'Request'},
+    ref: {type: Schema.ObjectId, ref: 'User'},
+    username: {type: String, trim: true },
+    email: {type: String, trim: true },
+    isAnon: {type: Boolean, default: false},
+    ip: {type: String, trim: true }
+})
+mongoose.model('Requester', RequesterSchema)
 
 var RequestSchema = new Schema({
-    supporter: {
-        ref: {type: Schema.ObjectId, ref: 'User'},
-        username: {type: String, trim: true },
-        email: {type: String, trim: true },
-        isAnon: {type: Boolean, default: false},
-        ip: {type: String, trim: true }
-    },
+    supporters: [
+        {type: Schema.ObjectId, ref: 'Requester'}
+    ],
 
     project: {
         ref: {type: Schema.ObjectId, ref: 'Project'},
@@ -35,6 +41,7 @@ var RequestSchema = new Schema({
     },
 
     satisfied: {type: Boolean, default: false},
+    updatedAt: Date,
     createdAt: Date
 })
 
@@ -55,79 +62,86 @@ RequestSchema.statics.satisfy = function (project, cb) {
 }
 
 RequestSchema.statics.request = function (user, project, ip, altEmail, cb) {
+    var Requester = mongoose.model('Requester')
     var self = this
-    var owner = project.hasOwner()
     var isAnon = !user
-    var query = {'project.ref': project._id}
     var request = {
-        supporter: {
-            ref: user && user._id,
-            username: user && user.username,
-            email: (user && user.email) || altEmail,
-            isAnon: isAnon,
-            ip: ip
-        },
-
         project: {
             ref: project._id,
             githubId: project.githubId,
             methodsSet: project.hasDonateMethods()
         },
-
         maintainer: {
-            user: project.owner.user && project.owner.user._id,
-            org: project.owner.org && project.owner.org._id,
             name: project.owner.username,
             notified: false
         }
     }
-
-    if (isAnon) {
-        query['supporter.isAnon'] = true
-        query['supporter.ip'] = ip
-    } else {
-        query['supporter.ref'] = user._id
+    var supporter = {
+        ref: !isAnon && user._id,
+        username: !isAnon && user.username,
+        email: (!isAnon && user.email) || altEmail,
+        isAnon: isAnon,
+        ip: ip
     }
+
+    if (project.owner.user) request.maintainer.user = project.owner.user
+    if (project.owner.org) request.maintainer.org = project.owner.org
 
     async.series([
         function (callback) {
-            self.findOne(query, function (error, entry) {
-                if (error) return callback(error && 'Server error')
-                if (entry) return callback(entry && 'You already sent request for this project')
+            project.getOwner(function (error, owner) {
+                if (error) return callback(error)
+                if (owner) request.maintainer.email = owner.email
                 callback()
             })
         },
         function (callback) {
-            project.getOwner(function (error, owner) {
-                if (error) return callback(error)
+            self.findOneAndUpdate({'project.ref': project._id, satisfied: false},
+                request, {upsert: true}, function (error, entry) {
+                    error && console.error(error)
+                    if (error) return callback('Server error')
+                    request = entry
+                    callback()
+                })
+        },
+        function (callback) {
+            var query = {request: request._id}
+            _.merge(supporter, {request: request._id})
 
-                if (owner) {
-                    request.maintainer.email = owner.email
-                    request.maintainer.notified = !!owner.email
-                }
-                callback()
+            if (isAnon) {
+                query.isAnon = true
+                query.ip = ip
+            } else {
+                query.ref = user._id
+            }
+
+            Requester.findOne(query, function (error, entry) {
+                if (error) return callback('Server error')
+                if (entry) return callback('You already sent request for this project')
+
+                Requester.create(supporter, function(err, requester) {
+                    request.supporters.push(requester)
+                    callback(err, requester)
+                })
             })
+        },
+        function (callback) {
+            if (!request.maintainer.email) {
+                return notifier.notifySupport(request, project, user, callback)
+            } else {
+                notifier.notifyMaintainer(request, project, user, callback)
+            }
         }
     ], function (error) {
         if (error) return cb(error)
 
-        async.parallel({
-            saving: function (callback) {
-                self.create(request, function (error, entry) {
-                    if (error) return callback(error && 'Failed to save your request')
-                    callback(null)
-                })
-            },
-            notification: function (callback) {
-                if (request.maintainer.email) {
-                    notifier.notifyMaintainer(request, project, user, callback)
-                } else {
-                    notifier.notifySupport(request, project, user, callback)
-                }
-            }
-        }, cb)
+        if (request.maintainer.email) {
+            request.maintainer.notified = !!request.maintainer.email
+        }
+
+        request.updatedAt = new Date
+        request.save(cb)
     })
 }
 
 mongoose.model('Request', RequestSchema)
-

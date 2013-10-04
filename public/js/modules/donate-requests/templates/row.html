@@ -1,0 +1,30 @@
+<% var format = 'MM/D/YY, h:mm:ss a' %>
+<div class="col-md-2">
+    <%= moment(request.updatedAt).format(format) %>
+    <br>
+    <span class="text-muted"><%= moment(request.createdAt).format(format) %></span>
+</div>
+<div class="col-md-1">
+</div>
+<div class="col-md-2">
+    <input type="email" name="" class="form-control input-sm" value="<%= request.maintainer.email || '' %>" placeholder="set email"/>
+</div>
+<div class="col-md-3">
+    <a href="<%= project.url %>" class="icon-github go-to" target="_blank"></a>
+    <% if (project.owner.user) { %>
+    <a href="/users/<%=project.owner.username %>"><%= project.owner.username %></a>
+    <% } else if (project.owner.org) { %>
+    <a href="/orgs/<%=project.owner.org %>"><%= project.owner.username %></a>
+    <% } else { %>
+    <%= project.owner.username %>
+    <% } %>
+    <span> / </span>
+    <a href="/projects/<%= project._id %>"><%= project.name %></a>
+</div>
+<div class="col-md-1">
+    <% if (request.maintainer.notified) { %>
+    <span class="btn btn-warning">re-notify</span>
+    <% } else { %>
+    <span class="btn btn-info">notify</span>
+    <% } %>
+</div>

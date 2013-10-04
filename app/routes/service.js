@@ -6,16 +6,20 @@
 var _ = require('lodash'),
     mongoose = require('mongoose'),
     async = require('async'),
-    ensureAuthenticated = require('../utils/ensure-auth'),
+    ensureAuth = require('../utils/ensure-auth'),
+    ensureAdmin = function (req, res, next) {
+        ensureAuth(req, res, function () {
+            if (!req.user.admin) return res.send(403, 'You should be admin')
+            return next();
+        })
+    },
     RequsetsConverter = require('../utils/requests-converter'),
     Request = mongoose.model('Request'),
     Project = mongoose.model('Project'),
     User = mongoose.model('User')
 
 module.exports = function (app) {
-    app.get('/service/projects/update/:username?', ensureAuthenticated, function (req, res) {
-        if (!req.user.admin) return res.send('You should be admin')
-
+    app.get('/service/projects/update/:username?', ensureAdmin, function (req, res) {
         var query = {}
         if (req.param('username')) query['username'] = req.param('username')
 
@@ -39,13 +43,25 @@ module.exports = function (app) {
         })
     });
 
-    app.get('/service/requests/fix', ensureAuthenticated, function (req, res) {
-        if (!req.user.admin) return res.send('You should be admin')
-
+    app.get('/service/requests/fix', ensureAdmin, function (req, res) {
         RequsetsConverter(function (error, result) {
             if (error) return res.send(error)
             res.send(result)
         })
+    });
+
+    app.get('/service/donation-requests', ensureAdmin, function (req, res) {
+        res.render('service/donation-requests')
+    });
+
+    app.get('/service/requests', ensureAdmin, function (req, res) {
+        Request.find({satisfied: false, 'maintainer.notified': false})
+            .populate('project.ref')
+            .exec(function (error, requests) {
+                console.log(requests)
+                if (error) return res.send(500, 'Failed to fetch requests')
+                res.send(requests)
+            })
     });
 };
 
