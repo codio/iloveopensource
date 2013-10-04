@@ -104,8 +104,6 @@ RequestSchema.statics.request = function (user, project, ip, altEmail, cb) {
                 if (owner) {
                     request.maintainer.email = owner.email
                     request.maintainer.notified = !!owner.email
-
-                    if (owner.email) request.satisfied = true
                 }
                 callback()
             })
