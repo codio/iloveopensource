@@ -10,6 +10,7 @@ var cfg = require('../../config'),
 	fs = require('fs'),
 	templates = {}
 
+//TODO: add mail queue
 module.exports.fillTemplates = function (dir, callback) {
 	if (!_.isEmpty(templates)) return
 	console.log('Reading email templates from', dir)
