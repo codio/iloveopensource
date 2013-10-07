@@ -13,14 +13,15 @@ define(function (require) {
 		events: {
 		},
 		initialize: function () {
-			this.listenTo(this.collection, 'sync', this.renderRows)
+			this.listenTo(this.collection, 'fetched', this.renderRows)
 			this.rows = []
 		},
         renderRows: function () {
-			var list = this.$el
+			var list = this.$('.requests-list')
 			_.invoke(this.rows, 'remove')
 			this.rows = []
 
+            this.showEmpty()
 			this.collection.each(function (entry) {
 				var view = new Row({model: entry})
 				this.rows.push(view)
@@ -29,6 +30,11 @@ define(function (require) {
 
 			list.append(_.pluck(this.rows, 'el'))
 		},
+        showEmpty: function() {
+            var cond = this.collection.length > 0
+            this.$('.empty-message').toggle(!cond)
+            this.$('.content').toggle(cond)
+        },
 		render: function () {
 			this.$el.html(tpl())
 			return this

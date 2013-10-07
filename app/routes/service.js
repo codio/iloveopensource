@@ -55,13 +55,46 @@ module.exports = function (app) {
     });
 
     app.get('/service/requests', ensureAdmin, function (req, res) {
-        Request.find({satisfied: false, 'maintainer.notified': false})
+        var query = {}
+
+//        query['project.methodsSet'] = req.query.methodsSet ? true : false
+        query['maintainer.notified'] = req.query.notified ? true : false
+
+        if (req.query.search) {
+            var term = (req.query.search + '').toLowerCase().replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1")
+            query['project.name'] = new RegExp(term, "i")
+        }
+
+        Request.find(query)
+            .sort({updatedAt: -1})
             .populate('project.ref')
             .exec(function (error, requests) {
-                console.log(requests)
                 if (error) return res.send(500, 'Failed to fetch requests')
                 res.send(requests)
             })
+    });
+
+    app.put('/service/requests/:id', ensureAdmin, function (req, res) {
+        Request.findById(req.param('id'), function (error, request) {
+            if (error || !request) return res.send(500, 'Failed to fetch request')
+
+            request.maintainer.email = req.body.maintainer.email
+            request.save(function (err) {
+                if (err) return res.send(500, 'Failed to update request')
+                res.send(req.body)
+            })
+        })
+    });
+
+    app.get('/service/requests/:id/notify', ensureAdmin, function (req, res) {
+        Request.findById(req.param('id')).populate('project.ref supporters').exec(function (error, request) {
+            if (error || !request) return res.send(500, 'Failed to fetch request')
+
+            request.supportNotifyMaintainer(function (err, request) {
+                if (err) return res.send(500, 'Failed to notify maintainer')
+                res.send(request)
+            })
+        })
     });
 };
 

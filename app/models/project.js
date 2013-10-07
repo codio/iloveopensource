@@ -5,7 +5,7 @@
  */
 var mongoose = require('mongoose'),
 	_ = require('lodash'),
-	sanitizer = require('sanitizer'),
+	sanitizer = require('html-css-sanitizer'),
 	Schema = mongoose.Schema,
 	User = mongoose.model('User'),
 	Organization = mongoose.model('Organization'),

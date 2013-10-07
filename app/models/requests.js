@@ -27,6 +27,7 @@ var RequestSchema = new Schema({
     project: {
         ref: {type: Schema.ObjectId, ref: 'Project'},
         githubId: {type: Number},
+        name: String,
         methodsSet: {type: Boolean, default: false},
         methodsSetAt: Date
     },
@@ -61,6 +62,16 @@ RequestSchema.statics.satisfy = function (project, cb) {
     notifier.notifyRequesters(project, cb)
 }
 
+RequestSchema.methods.supportNotifyMaintainer = function (cb) {
+    if (!this.maintainer.email) return cb('Can\'t notify without email')
+    notifier.supportNotifyMaintainer(this, _.bind(function(error) {
+        if (error) return cb('Failed to notify maintainer')
+
+        this.maintainer.notified = true
+        this.save(cb)
+    }, this))
+}
+
 RequestSchema.statics.request = function (user, project, ip, altEmail, cb) {
     var Requester = mongoose.model('Requester')
     var self = this
@@ -68,6 +79,7 @@ RequestSchema.statics.request = function (user, project, ip, altEmail, cb) {
     var request = {
         project: {
             ref: project._id,
+            name: project.name,
             githubId: project.githubId,
             methodsSet: project.hasDonateMethods()
         },

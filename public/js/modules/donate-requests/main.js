@@ -8,19 +8,23 @@ define(function (require) {
 	require('moment')
 
 	var toastr = require('toastr')
-	var Layout = require('./views/layout')
 	var List = require('./views/list')
+	var Search = require('./views/search')
 	var Requests = require('./collections/requests')
 
-	var store = require('store').getNamespace('donate-requests')
+	var store = require('store').getNamespace('donation-requests')
 
 	$(function () {
+        var container = $('#donation-requests')
+
+        store().notify = toastr
 		store().requests = new Requests()
-		store().layout = new Layout({
-			el: $('#donate-requests')
-		})
 		store().list = new List({
-			el: store().layout.$('.list'),
+			el: $('.list', container),
+			collection: store().requests
+		}).render()
+		store().search = new Search({
+			el: $('.search', container),
 			collection: store().requests
 		}).render()
 
