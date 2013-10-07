@@ -7,17 +7,8 @@ var mongoose = require('mongoose'),
     async = require('async'),
     _ = require('lodash'),
     notifier = require('../utils/requests-notifications'),
+    Requester = mongoose.model('Requester'),
     Schema = mongoose.Schema
-
-var RequesterSchema = new Schema({
-    request: {type: Schema.ObjectId, ref: 'Request'},
-    ref: {type: Schema.ObjectId, ref: 'User'},
-    username: {type: String, trim: true },
-    email: {type: String, trim: true },
-    isAnon: {type: Boolean, default: false},
-    ip: {type: String, trim: true }
-})
-mongoose.model('Requester', RequesterSchema)
 
 var RequestSchema = new Schema({
     supporters: [
@@ -64,7 +55,7 @@ RequestSchema.statics.satisfy = function (project, cb) {
 
 RequestSchema.methods.supportNotifyMaintainer = function (cb) {
     if (!this.maintainer.email) return cb('Can\'t notify without email')
-    notifier.supportNotifyMaintainer(this, _.bind(function(error) {
+    notifier.supportNotifyMaintainer(this, _.bind(function (error) {
         if (error) return cb('Failed to notify maintainer')
 
         this.maintainer.notified = true
@@ -72,8 +63,30 @@ RequestSchema.methods.supportNotifyMaintainer = function (cb) {
     }, this))
 }
 
+RequestSchema.statics.updateRequesterEmail = function (user, projectData, ip, altEmail, cb) {
+    var self = this, query = {satisfied: false}
+
+    if (projectData) {
+        query['project.ref'] = projectData._id
+    } else {
+        query['project.githubId '] = projectData.githubId
+    }
+
+    async.waterfall([
+        function (callback) {
+            self.findOne(query).exec(callback)
+        },
+        function (request, callback) {
+            Requester.findOne(getUserQuery(user, ip, request), callback)
+        },
+        function (requester, callback) {
+            requester.email = altEmail
+            requester.save(callback)
+        }
+    ], cb)
+}
+
 RequestSchema.statics.request = function (user, project, ip, altEmail, cb) {
-    var Requester = mongoose.model('Requester')
     var self = this
     var isAnon = !user
     var request = {
@@ -89,11 +102,15 @@ RequestSchema.statics.request = function (user, project, ip, altEmail, cb) {
         }
     }
     var supporter = {
-        ref: !isAnon && user._id,
-        username: !isAnon && user.username,
         email: (!isAnon && user.email) || altEmail,
         isAnon: isAnon,
         ip: ip
+    }
+
+    if (!isAnon) {
+        supporter.ref = user._id
+        supporter.username = user.username
+        supporter.email = user.email || ''
     }
 
     if (project.owner.user) request.maintainer.user = project.owner.user
@@ -103,7 +120,7 @@ RequestSchema.statics.request = function (user, project, ip, altEmail, cb) {
         function (callback) {
             project.getOwner(function (error, owner) {
                 if (error) return callback(error)
-                if (owner) request.maintainer.email = owner.email
+                if (owner && owner.email) request.maintainer.email = owner.email
                 callback()
             })
         },
@@ -117,21 +134,14 @@ RequestSchema.statics.request = function (user, project, ip, altEmail, cb) {
                 })
         },
         function (callback) {
-            var query = {request: request._id}
             _.merge(supporter, {request: request._id})
 
-            if (isAnon) {
-                query.isAnon = true
-                query.ip = ip
-            } else {
-                query.ref = user._id
-            }
-
-            Requester.findOne(query, function (error, entry) {
+            Requester.findOne(getUserQuery(user, ip, request), function (error, entry) {
                 if (error) return callback('Server error')
                 if (entry) return callback('You already sent request for this project')
 
-                Requester.create(supporter, function(err, requester) {
+                Requester.create(supporter, function (err, requester) {
+                    if (err) return callback(err)
                     request.supporters.push(requester)
                     callback(err, requester)
                 })
@@ -157,3 +167,18 @@ RequestSchema.statics.request = function (user, project, ip, altEmail, cb) {
 }
 
 mongoose.model('Request', RequestSchema)
+
+function getUserQuery(user, ip, request) {
+    var isAnon = !user
+
+    var query = {request: request._id}
+
+    if (isAnon) {
+        query.isAnon = true
+        query.ip = ip
+    } else {
+        query.ref = user._id
+    }
+
+    return query
+}

@@ -1,13 +1,29 @@
 <div class="modal fade" id="need-contribution-ways" tabindex="-1" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Contribute</h4>
-			</div>
-			<div class="modal-body">
-				We are automating our notification processes so please be patient for a day or two. We will let the Maintainer of this project know that you are keen to donate. We’ll be back in touch once they’ve set something up
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Contribute</h4>
+            </div>
+            <div class="modal-body">
+                <% if (isLoggedIn && loggedUser.email) { %>
+                <p>We are letting the Maintainer of this project know that you are keen to donate. We’ll be back in touch once they’ve set something up.</p>
+                <% } else { %>
+                <p>
+                    We are letting the Maintainer of this project know that you are keen to donate. Left your email to us, so we will be able to be back in touch once they’ve set something up
+                </p>
+
+                <p>
+                    <input type="email" class="form-control" placeholder="Your email"/>
+                </p>
+                <% } %>
+            </div>
+            <% if (!isLoggedIn || !loggedUser.email) { %>
+            <div class="modal-footer">
+                <span class="btn btn-default" data-dismiss="modal">Close</span>
+                <span class="btn btn-primary set-email">Left us your email</span>
+            </div>
+            <% } %>
+        </div>
+    </div>
 </div>
