@@ -34,7 +34,7 @@ module.exports.send = function (templateName, subject, to, data, callback) {
 		from: cfg.emails.from,
 		subject: subject,
 		to: to,
-		html: ejs.render(template, _.merge(data, {siteUrl: cfg.fullUrl()}))
+		html: ejs.render(template, _.merge(data, {siteUrl: cfg.fullUrl(), _: _}))
 	}, function (error) {
 		error && console.error(error)
 		callback(error ? 'Failed to send email' : null)
