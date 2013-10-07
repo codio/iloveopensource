@@ -5,8 +5,10 @@
  */
 var _ = require('lodash'),
     mongoose = require('mongoose'),
+    moment = require('moment'),
     async = require('async'),
     Request = mongoose.model('Request'),
+    Requester = mongoose.model('Requester'),
     Project = mongoose.model('Project'),
     User = mongoose.model('User')
 
@@ -16,117 +18,176 @@ function RequestsConverter(callback) {
     if (!(this instanceof RequestsConverter))
         return new RequestsConverter(callback);
 
-    async.waterfall([
-        this.fetch,
-        this.update,
-        this.save
-    ], callback)
+    async.series([
+        _.bind(this.fetchRequests, this),
+        _.bind(this.fetchProjects, this),
+        _.bind(this.fetchUsers, this),
+        _.bind(this.updateRequests, this),
+        _.bind(this.updateSupporters, this),
+        _.bind(this.cleanup, this)
+    ], _.bind(function (error) {
+        error && console.error(error)
+        callback(error, {
+            unhandledRequests: this.unhandledRequests,
+            newRequests: this.newReqs,
+            oldRequests: this.oldReqs
+        })
+    }, this))
 }
 
-RequestsConverter.prototype.fetch = function (callback) {
-    Request.find({supporter: {$exists: false}}, function (error, requests) {
-        if (error) return callback(error)
+RequestsConverter.prototype.cleanup = function (callback) {
+    Request.remove({maintainer: {$exists: false}}, callback)
+}
 
-        //removing duplicates
-        var ids = []
-        requests = _.compact(_.map(requests, function (entity) {
-            entity = entity.toObject()
+RequestsConverter.prototype.updateSupporters = function (callback) {
+    var supporters = _.flatten(_.pluck(this.newReqs, 'supporters'))
 
-            var id
-            if (entity.project instanceof mongoose.Types.ObjectId) {
-                id = entity.project
-                entity.projectId = entity.project
-            } else {
-                id = entity.projectGitId
-            }
+    async.map(supporters, function (entry, cb) {
+        entry.save(cb)
+    }, callback)
+}
 
-            id += (entity.user || entity._id)
-            if (_.indexOf(ids, id) != -1) return
+RequestsConverter.prototype.updateRequests = function (callback) {
+    this.prepareRequests()
+    async.map(this.newReqs, function (req, cb) {
+        req.req.save(function (error, request) {
+            if (error) return cb(error);
+            req.req = request
+            req.supporters = _.map(req.supporters, function (entry) {
+                entry.request = request._id
+                return entry
+            })
+            cb(null, req)
+        })
+    }, callback)
+}
 
-            ids.push(id)
-            return entity
-        }))
+RequestsConverter.prototype.fetchUsers = function (callback) {
+    var self = this
+    var ids = _.compact(_.uniq(_.map(self.oldReqs, function (entity) {
+        return entity.user instanceof mongoose.Types.ObjectId && entity.user.toString()
+    })))
 
-        callback(null, requests)
+    User.find({_id: {$in: ids}}, function (error, users) {
+        self.users = {}
+        _.each(users, function (user) {
+            self.users[user._id.toString()] = user.toObject()
+        })
+        callback(error)
     })
 }
 
-RequestsConverter.prototype.update = function (requests, callback) {
-    async.map(requests, function (entity, c) {
-        async.parallel({
-            project: function (cb) {
-                var query = {}
+RequestsConverter.prototype.fetchProjects = function (callback) {
+    var self = this
+    var projectIds = _.compact(_.uniq(_.map(self.oldReqs, function (entity) {
+        return entity.project instanceof mongoose.Types.ObjectId && entity.project.toString()
+    })))
+    var gitHubIds = _.compact(_.uniq(_.map(self.oldReqs, function (entity) {
+        return entity.projectGitId
+    })))
 
-                if (entity.projectId) {
-                    query._id = entity.projectId
-                } else {
-                    query.githubId = entity.projectGitId
-                }
+    Project.find({$or: [
+        {_id: {$in: projectIds}},
+        {githubId: {$in: gitHubIds}},
+    ]})
+        .populate(['owner.user', 'owner.org'])
+        .exec(function (error, projects) {
+            self.checkUnhandled(gitHubIds)
+            self.projects = projects
+            callback(error)
+        })
+}
 
-                Project.findOne(query).populate(['owner.user', 'owner.org']).exec(cb)
-            },
-            user: function (cb) {
-                if (!entity.user) return cb(null)
-                User.findById(entity.user, cb)
-            }
-        }, function (err, results) {
-            if (err) return c(err)
-            if (!results.project) return c(null)
+RequestsConverter.prototype.fetchRequests = function (callback) {
+    var self = this
+    Request.find({supporters: {$exists: false}}, function (error, requests) {
+        self.oldReqs = _.map(requests, function (entity) {
+            return entity.toObject()
+        })
+        callback(error)
+    })
+}
 
-            var project = results.project
-            var user = results.user
-            var owner = project.owner.org || project.owner.user || {}
+RequestsConverter.prototype.checkUnhandled = function (ghIds) {
+    this.unhandledProjects = _.compact(_.map(ghIds, function (id) {
+        var exists = _.find(this.projects, function (entry) {
+            return entry.githubId == id
+        })
+        if (!exists) return id
+    }, this))
 
-            c(null, {
-                supporter: {
-                    ref: user && user._id,
-                    username: user && user.username,
-                    email: user && user.email,
-                    isAnon: !user
-                },
+    this.unhandledRequests = _.filter(this.oldReqs, function (entry) {
+        return _.indexOf(this.unhandledProjects, entry.projectGitId) != -1
+    })
+}
 
+RequestsConverter.prototype.prepareSupporters = function (reqs) {
+    var users = {}
+    return _.compact(_.map(reqs, function (entry) {
+        var isAnon = !entry.user
+        var userId = !isAnon && entry.user.toString()
+        var supporter = new Requester({
+            isAnon: isAnon,
+            ip: '',
+            _id: entry._id
+        })
+
+        if (!isAnon && this.users[userId]) {
+            if (users[userId]) return
+            users[userId] = true
+            var user = this.users[userId]
+            supporter.ref = user._id
+            supporter.username = user.username
+            supporter.email = user.email || ''
+        }
+
+        return supporter
+    }, this))
+}
+
+RequestsConverter.prototype.getCreatedAt = function (reqs) {
+    var createdAt = moment()
+    _.each(reqs, function (entry) {
+        var time = moment(entry._id.getTimestamp())
+        if (createdAt.isAfter(time)) createdAt = time
+    })
+    return createdAt
+}
+
+RequestsConverter.prototype.prepareRequests = function () {
+    var self = this
+    self.newReqs = _.map(self.projects, function (project) {
+        var owner = project.owner.org || project.owner.user || {}
+
+        var reqs = _.filter(self.oldReqs, function (request) {
+            return request.project.toString() == project._id.toString() || request.projectGitId == project.githubId
+        })
+
+        var supporters = self.prepareSupporters(reqs)
+        var createdAt = self.getCreatedAt(reqs)
+
+        return {
+            req: new Request({
                 project: {
                     ref: project._id,
                     githubId: project.githubId,
                     name: project.owner.username + '/' + project.name,
-                    methodsSet: _(project.donateMethods.toObject()).values().compact().value().length > 0
+                    methodsSet: project.hasDonateMethods()
                 },
 
                 maintainer: {
                     user: project.owner.user && project.owner.user._id,
                     org: project.owner.org && project.owner.org._id,
                     name: project.owner.username,
-                    email: owner.email,
+                    email: owner.email || '',
                     notified: !!owner.email
                 },
-
-                _id: entity._id,
-                createdAt: entity._id.getTimestamp()
-            })
-        })
-    }, function (error, result) {
-        if (error) return callback(error)
-
-        var ids = []
-        result = _.compact(_.map(_.compact(result), function (entity) {
-            var id = entity.project.ref + (entity.user || entity._id)
-            if (_.indexOf(ids, id) != -1) return
-
-            ids.push(id)
-            delete entity._id
-            return entity
-        }))
-
-        callback(null, result)
-    })
-}
-RequestsConverter.prototype.save = function (requests, callback) {
-    async.parallel({
-        removed: function (cb) {
-            Request.remove({supporter: {$exists: false}}, cb)
-        },
-        created: function (cb) {
-            Request.create(requests, cb)
+                supporters: _.pluck(supporters, '_id'),
+                satisfied: project.hasDonateMethods(),
+                updatedAt: new Date,
+                createdAt: createdAt
+            }),
+            supporters: supporters
         }
-    }, callback)
+    })
 }
