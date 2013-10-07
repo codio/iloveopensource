@@ -1,3 +1,3 @@
-server 'iloveopensource.io', :app, :web, :db, :primary => true
+server 'staging.iloveopensource.io', :app, :web, :db, :primary => true
 set :applicationdir, "/var/www/staging.#{application}"
 set :deploy_to, applicationdir
