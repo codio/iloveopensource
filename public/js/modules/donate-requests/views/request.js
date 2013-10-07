@@ -18,7 +18,6 @@ define(function (require) {
             'click .edit-email': 'toggleEmailEditor',
             'click .notify-trigger': 'notify',
             'click .toggle-requests': 'toggleRequests',
-            'blur input.email': 'handleUserInput',
             'keyup input.email': 'handleUserInput'
         },
         handleUserInput: function (event) {
@@ -30,12 +29,17 @@ define(function (require) {
             var val = $.trim(this.$('input.email').val())
             var data = this.model.get('maintainer')
 
-            if (!val) return this.toggleEmailEditor()
-
             data.email = val
             this.model.save('maintainer', data)
+                .success(_.bind(function (data) {
+                    this.updateEmail()
+                    this.toggleEmailEditor()
+                }, this))
+                .fail(function () {
+                    store().notify('Failed to change email')
+                })
         },
-        toggleSupporters: function() {
+        toggleSupporters: function () {
             var el = this.$('.supporters')
             if (!this.supporters) {
                 this.supporters = new Supporters({
@@ -60,14 +64,24 @@ define(function (require) {
             if (btn.prop('disabled')) return
             btn.button('loading')
             $.get('/service/requests/' + this.model.id + '/notify')
-                .fail(function() {
+                .success(_.bind(function (data) {
+                    this.model.set('maintainer', data.maintainer)
+                    this.updateNotifiedState()
+                }, this))
+                .fail(function () {
                     store().notify('Failed to send email')
-                })
-                .always(function() {
                     btn.button('reset')
                 })
         },
-        remove: function() {
+        updateEmail: function () {
+            this.$('.edit-email').html(this.model.get('maintainer').email || 'Not Set')
+        },
+        updateNotifiedState: function () {
+            this.$('.notified.status').addClass('active')
+            this.$('.notify-trigger').button('reset')
+                .addClass('btn-warning').removeClass('btn-info').html('re-notify')
+        },
+        remove: function () {
             this.supporters && this.supporters.remove()
             Backbone.View.prototype.remove.apply(this, arguments)
         },
