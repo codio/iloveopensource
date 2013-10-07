@@ -15,6 +15,7 @@ var _ = require('lodash'),
     },
     RequsetsConverter = require('../utils/requests-converter'),
     Request = mongoose.model('Request'),
+    Requester = mongoose.model('Requester'),
     Project = mongoose.model('Project'),
     User = mongoose.model('User')
 
@@ -87,7 +88,7 @@ module.exports = function (app) {
     });
 
     app.get('/service/requests/:id/notify', ensureAdmin, function (req, res) {
-        Request.findById(req.param('id')).populate('project.ref supporters').exec(function (error, request) {
+        Request.findById(req.param('id')).populate('project.ref').exec(function (error, request) {
             if (error || !request) return res.send(500, 'Failed to fetch request')
 
             request.supportNotifyMaintainer(function (err, request) {
@@ -95,6 +96,21 @@ module.exports = function (app) {
                 res.send(request)
             })
         })
+    });
+
+    app.get('/service/requests/:id/supporters', ensureAdmin, function (req, res) {
+        Requester.find({request: req.param('id')})
+            .populate('ref')
+            .sort({_id: -1})
+            .exec(function (error, supporters) {
+                if (error) return res.send(500, 'Failed to fetch supporters')
+                res.send(_.map(supporters, function (entry) {
+                    var createdAt = entry._id.getTimestamp()
+                    entry = entry.toObject()
+                    entry.createdAt = createdAt
+                    return entry
+                }))
+            })
     });
 };
 

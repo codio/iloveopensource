@@ -6,22 +6,24 @@
 define(function (require) {
 	require('backbone')
 
-    var tpl = require('tpl!../templates/list.html'),
-        Row = require('./request')
+    var tpl = require('tpl!../templates/supporters.html'),
+        Supporters = require('../collections/supporters'),
+        Row = require('./supporter')
 
 	return Backbone.View.extend({
-		events: {
-		},
 		initialize: function () {
-			this.listenTo(this.collection, 'fetched', this.renderRows)
 			this.rows = []
-		},
+            this.collection = new Supporters
+            this.collection.requestId = this.options.requestId
+            this.listenTo(this.collection, 'fetched', this.renderRows)
+            this.collection.fetch()
+            this.render()
+        },
         renderRows: function () {
-			var list = this.$('.requests-list')
+			var list = this.$('.supporters-list')
 			_.invoke(this.rows, 'remove')
 			this.rows = []
 
-            this.showEmpty()
 			this.collection.each(function (entry) {
 				var view = new Row({model: entry})
 				this.rows.push(view)
@@ -30,11 +32,6 @@ define(function (require) {
 
 			list.append(_.pluck(this.rows, 'el'))
 		},
-        showEmpty: function() {
-            var cond = this.collection.length > 0
-            this.$('.empty-message').toggle(!cond)
-            this.$('.content').toggle(cond)
-        },
         remove: function() {
             _.invoke(this.rows, 'remove')
             Backbone.View.prototype.remove.apply(this, arguments)

@@ -1,0 +1,21 @@
+<% var format = 'MM/D/YY, h:mm:ss a' %>
+<div class="col-md-4">
+    <time datetime="<%= obj.createdAt %>" class="created"><%= moment(obj.createdAt).format(format) %></time>
+</div>
+<div class="col-md-4">
+    <% if (!obj.isAnon) { %>
+    <a href="/users/<%= obj.username %>"><%= obj.username %></a>
+    <% } else { %>
+    Anonymous (<%= obj.ip %>)
+    <% } %>
+</div>
+<div class="col-md-4">
+    <% if (obj.email) { %>
+    <a href="mailto:<%= obj.email %>"><%= obj.email %></a>
+    <% } else { %>
+    User haven't set email
+    <% if (obj.ref && obj.ref.email) { %>
+    but here is current account email <a href="mailto:<%= obj.ref.email %>"><%= obj.ref.email %></a>
+    <% } %>
+    <% } %>
+</div>

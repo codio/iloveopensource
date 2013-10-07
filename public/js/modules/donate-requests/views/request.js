@@ -5,14 +5,16 @@
  */
 define(function (require) {
     require('backbone')
-    var tpl = require('tpl!../templates/row.html')
+    var tpl = require('tpl!../templates/request.html')
     var store = require('store').getNamespace('donation-requests')
+    var Supporters = require('./supporters')
 
     return Backbone.View.extend({
         attributes: {
             class: 'row'
         },
         events: {
+            'click .toggle-supporters': 'toggleSupporters',
             'click .edit-email': 'toggleEmailEditor',
             'click .notify-trigger': 'notify',
             'click .toggle-requests': 'toggleRequests',
@@ -32,6 +34,17 @@ define(function (require) {
 
             data.email = val
             this.model.save('maintainer', data)
+        },
+        toggleSupporters: function() {
+            var el = this.$('.supporters')
+            if (!this.supporters) {
+                this.supporters = new Supporters({
+                    requestId: this.model.id,
+                    el: el
+                })
+            }
+
+            el.slideToggle(el.is(':visible'))
         },
         toggleEmailEditor: function () {
             var input = this.$('input.email')
@@ -53,6 +66,10 @@ define(function (require) {
                 .always(function() {
                     btn.button('reset')
                 })
+        },
+        remove: function() {
+            this.supporters && this.supporters.remove()
+            Backbone.View.prototype.remove.apply(this, arguments)
         },
         render: function () {
             var data = this.model.toJSON()
