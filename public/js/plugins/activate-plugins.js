@@ -52,8 +52,8 @@ define(function (require) {
                     projectData: requestContribution.data().projectData
                 })
             })
-                .fail(function () {
-                    toastr.error('Failed to update your email')
+                .fail(function (xhr) {
+                    toastr.error(xhr.responseText)
                 })
                 .done(function () {
                     requestContribution.modal('hide')
