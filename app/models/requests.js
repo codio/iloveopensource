@@ -39,7 +39,7 @@ var RequestSchema = new Schema({
 
 
 RequestSchema.pre('save', function (next) {
-    if (!this.created_at) this.created_at = new Date;
+    if (!this.createdAt) this.createdAt = new Date;
     if (this.maintainer) {
         if (this.maintainer.notified && !this.maintainer.notifiedAt) {
             this.maintainer.notifiedAt = new Date

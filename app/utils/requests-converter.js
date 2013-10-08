@@ -145,14 +145,26 @@ RequestsConverter.prototype.prepareSupporters = function (reqs) {
     }, this))
 }
 
-RequestsConverter.prototype.getCreatedAt = function (reqs) {
-    var createdAt = moment()
+RequestsConverter.prototype.getDates = function (reqs) {
+    var dates = {
+        createdAt: moment(),
+        updatedAt: null
+    }
+
     _.each(reqs, function (entry) {
         var time = moment(entry._id.getTimestamp())
-        if (createdAt.isAfter(time)) createdAt = time
+        if (dates.createdAt.isAfter(time)) dates.createdAt = time
     })
-    return createdAt
+
+    dates.updatedAt = dates.createdAt
+
+    _.each(reqs, function (entry) {
+        var time = moment(entry._id.getTimestamp())
+        if (dates.updatedAt.isBefore(time)) dates.updatedAt = time
+    })
+    return dates
 }
+
 
 RequestsConverter.prototype.prepareRequests = function () {
     var self = this
@@ -164,7 +176,7 @@ RequestsConverter.prototype.prepareRequests = function () {
         })
 
         var supporters = self.prepareSupporters(reqs)
-        var createdAt = self.getCreatedAt(reqs)
+        var dates = self.getDates(reqs)
 
         return {
             req: new Request({
@@ -184,8 +196,8 @@ RequestsConverter.prototype.prepareRequests = function () {
                 },
                 supporters: _.pluck(supporters, '_id'),
                 satisfied: project.hasDonateMethods(),
-                updatedAt: new Date,
-                createdAt: createdAt
+                updatedAt: dates.updatedAt,
+                createdAt: dates.createdAt
             }),
             supporters: supporters
         }
