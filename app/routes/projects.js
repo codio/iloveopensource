@@ -71,7 +71,7 @@ module.exports = function (app) {
         }
 
         Request.updateRequesterEmail(req.user, project, ip, req.body.email, function (error) {
-            if (error) return res.send(500, 'Failed to update your email')
+            if (error) return res.send(500, 'Please enter valid email address')
             res.send('ok')
         })
     })
