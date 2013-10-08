@@ -88,7 +88,7 @@ module.exports = function (app) {
     });
 
     app.get('/service/requests/:id/notify', ensureAdmin, function (req, res) {
-        Request.findById(req.param('id')).populate('project.ref').exec(function (error, request) {
+        Request.findById(req.param('id')).populate('project.ref supporters').exec(function (error, request) {
             if (error || !request) return res.send(500, 'Failed to fetch request')
 
             request.supportNotifyMaintainer(function (err, request) {
