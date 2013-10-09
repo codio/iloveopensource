@@ -43,7 +43,6 @@ module.exports = function (app) {
 
     app.post('/projects/donate-request', function (req, res) {
         var data = req.body.projectData || {}
-        var ip = req.headers['X-Real-IP'] || req.connection.remoteAddress
         data._id = req.body.project
 
 
@@ -54,7 +53,7 @@ module.exports = function (app) {
                 })
             },
             function (project, callback) {
-                Request.request(req.user, project, ip, req.body.email, callback)
+                Request.request(req.user, project, req.realIP, req.body.email, callback)
             }
         ], function (error) {
             error && console.error(error)
@@ -64,13 +63,12 @@ module.exports = function (app) {
     })
 
     app.post('/projects/donate-request/update-email', function (req, res) {
-        var ip = req.headers['X-Real-IP'] || req.connection.remoteAddress
         var project = {
             _id: req.body.project,
             githubId: req.body.projectData && req.body.projectData.githubId
         }
 
-        Request.updateRequesterEmail(req.user, project, ip, req.body.email, function (error) {
+        Request.updateRequesterEmail(req.user, project, req.realIP, req.body.email, function (error) {
             if (error) return res.send(500, 'Please enter valid email address')
             res.send('ok')
         })
