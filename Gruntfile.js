@@ -39,23 +39,11 @@ module.exports = function (grunt) {
 					paths: {
 						'socket.io': 'empty:'
 					},
-					modules: [
-						{
-							name: 'modules/repo-selector/main'
-						},
-						{
-							name: 'modules/user-settings/main'
-						},
-						{
-							name: 'modules/account/main'
-						},
-						{
-							name: 'modules/project/main'
-						},
-						{
-							name: 'modules/maintainers/main'
+					modules: grunt.file.expand('./public/js/modules/*').map(function (entry) {
+						return    {
+							name: entry.replace('./public/js/', '') + '/main'
 						}
-					]
+					})
 				}
 			}
 		},
@@ -99,5 +87,5 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 	grunt.registerTask('build', ['less', 'autoprefixer']);
 	grunt.registerTask('build:prod', ['less', 'autoprefixer', 'cssmin', 'requirejs']);
-	grunt.registerTask('update', ['bower','build:prod']);
+	grunt.registerTask('update', ['bower', 'build:prod']);
 };

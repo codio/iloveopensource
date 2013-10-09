@@ -1,0 +1,36 @@
+<p>
+    <% if (totalCount == 1) { %>
+    <% if (usersCount) { %>
+    The GitHub user <a href="<%= siteUrl %>/users/<%= users[0].username %>"><%= users[0].username %></a>
+    <% } else { %>
+    Anonymous user
+    <% } %>
+    <% } else { %>
+    <%= totalCount %> our users
+    <% } %>
+    wants to make a donation to your project
+    <a href="<%= siteUrl %>/projects/<%= project._id %>"><%= project.owner.username %> / <%= project.name %></a>
+    on <a href="<%= siteUrl %>">http://iloveopensource.io</a>
+</p>
+<p>
+    Please visit
+    <a href="<%= siteUrl %>/maintainer">http://iloveopensource.io</a> to set how you would like to receive donations. Head to the Maintainers page, locate the repo and edit your donation preferences.
+</p>
+<p>
+    If you don't want to receive donations then just leave a message in the 'Other' field. This way you're acknowledging the acknowledgement.
+</p>
+<% if (usersCount) { %>
+<p>
+    Registered users: <% _.each(users, function(user, i) { %>
+    <a href="<%= siteUrl %>/users/<%= user.username %>"><%= user.username %></a><%= ((i+1) == usersCount ? '' : ', ') %>
+    <% }) %>
+</p>
+<% } %>
+<% if (anonsCount) { %>
+<p>
+    Anonymous users: <%= anonsCount %>
+</p>
+<% } %>
+<p>
+    <a href="<%= siteUrl %>">I LOVE OPEN SOURCE</a>
+</p>

@@ -1,0 +1,19 @@
+<p>
+    <% if (user) { %>
+    The GitHub user <a href="<%= siteUrl %>/users/<%= user.username %>"><%= user.username %></a>
+    <% } else { %>
+    Anonymous
+    <% } %>
+    &nbsp;wants to make a donation to
+    &nbsp;<a href="<%= siteUrl %>/projects/<%= project._id %>"><%= project.owner.username %> / <%= project.name %></a> on
+    &nbsp;<a href="<%= siteUrl %>">http://iloveopensource.io</a>
+</p>
+<p>
+    Please visit <a href="<%= siteUrl %>/maintainer">http://iloveopensource.io</a> to set how you would like to receive donations. Head to the Maintainers page, locate the repo and edit your donation preferences.
+</p>
+<p>
+    If you don't want to receive donations then just leave a message in the 'Other' field. This way you're acknowledging the acknowledgement.
+</p>
+<p>
+    <a href="<%= siteUrl %>">I LOVE OPEN SOURCE</a>
+</p>

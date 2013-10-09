@@ -1,15 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title><%- titleBuilder.render() %></title>
+    <title><%- titleBuilder.render() %></title>
 
-	<link rel="stylesheet" type="text/css" href="/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+    <% if (isLoggedIn) { %>
+    <script type="text/javascript">
+        var isLoggedIn = true
+        var currentUser = {
+            email: '<%= loggedUser.email %>',
+            username: '<%= loggedUser.username %>',
+            _id: '<%= loggedUser._id %>'
+        }
+    </script>
+    <% } else { %>
+    <script type="text/javascript">
+        var isLoggedIn
+    </script>
+    <% } %>
 </head>
 <body class="<%= typeof bodyClass != 'undefined' ? bodyClass : ''%>">
 <div id="wrap">
-	<% if (typeof noHead == 'undefined') { %>
-	<% include header.ejs %>
-	<% } %>
+    <% if (typeof noHead == 'undefined') { %>
+    <% include header.ejs %>
+    <% } %>
