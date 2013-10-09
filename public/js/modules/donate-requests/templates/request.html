@@ -1,0 +1,41 @@
+<% var format = 'MM/D/YY, h:mm:ss a' %>
+<div class="col-md-2">
+    <time datetime="<%= request.updatedAt %>"><%= moment(request.updatedAt).format(format) %></time>
+    <br>
+    <time datetime="<%= request.createdAt %>" class="created"><%= moment(request.createdAt).format(format) %></time>
+</div>
+<div class="col-md-1">
+    <span class="methods-set status <%= request.project.methodsSet &&'active' %>"></span>
+</div>
+<div class="col-md-1">
+    <span class="notified status <%= request.maintainer.notified &&'active' %>"></span>
+</div>
+<div class="col-md-2">
+    <span class="btn btn-link edit-email"><%= request.maintainer.email || 'Not set' %></span>
+    <input type="email" name="" class="form-control input-sm email" value="<%= request.maintainer.email || '' %>" placeholder="set email"/>
+</div>
+<div class="col-md-3 name">
+    <a href="<%= project.url %>" class="icon-github go-to" target="_blank"></a>
+    <% if (project.owner.user) { %>
+    <a href="/users/<%=project.owner.username %>"><%= project.owner.username %></a>
+    <% } else if (project.owner.org) { %>
+    <a href="/orgs/<%=project.owner.org %>"><%= project.owner.username %></a>
+    <% } else { %>
+    <%= project.owner.username %>
+    <% } %>
+    <span> / </span>
+    <a href="/projects/<%= project._id %>"><%= project.name %></a>
+</div>
+<div class="col-md-1">
+    <% if (request.maintainer.notified) { %>
+    <span class="btn btn-warning notify-trigger">re-notify</span>
+    <% } else { %>
+    <span class="btn btn-info notify-trigger">notify</span>
+    <% } %>
+</div>
+<div class="col-md-2">
+    <div class="btn btn-link toggle-supporters">
+        Requests: <%= request.supporters.length %>
+    </div>
+</div>
+<div class="supporters"></div>

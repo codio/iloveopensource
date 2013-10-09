@@ -16,7 +16,8 @@
     "text": "~2.0.10",
     "backbone": "~1.0.0",
     "json3": "~3.2.5",
-    "requirejs-tpl": "*"
+    "requirejs-tpl": "*",
+    "momentjs": "~2.2.1"
   },
   "exportsOverride": {
     "toastr": {
@@ -25,6 +26,9 @@
     },
     "jquery": {
       "js": "jquery.js"
+    },
+    "momentjs": {
+      "js": "moment.js"
     },
     "backbone": {
       "js": "backbone.js"

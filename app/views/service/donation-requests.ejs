@@ -1,0 +1,17 @@
+<% titleBuilder.add('Services') %>
+<% titleBuilder.add('Donation Requests') %>
+<% include ../parts/head.ejs %>
+<section class="container" id="donation-requests">
+    <div class="search"></div>
+    <div class="list"></div>
+</section>
+<script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
+<script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
+<script type="text/javascript">
+    require.config({
+        baseUrl: "<%=jsPath %>"
+    })
+    window.currentUserName = '<%= isLoggedIn && loggedUser.username %>'
+    require(['modules/donate-requests/main'])
+</script>
+<% include ../parts/foot.ejs %>

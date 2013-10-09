@@ -16,6 +16,7 @@ require.config({
 		toastr: 'vendors/toastr/js/toastr',
 		lodash: 'vendors/lodash/js/lodash',
 		backbone: 'vendors/backbone/js/backbone',
+		moment: 'vendors/momentjs/js/moment',
 		'require-tpl': 'vendors/require-tpl/js/require-tpl',
 		json: 'vendors/json3/js/json3',
 		'socket.io': '/socket.io/socket.io',
