@@ -89,6 +89,7 @@ RequestSchema.statics.updateRequesterEmail = function (user, projectData, ip, al
 RequestSchema.statics.request = function (user, project, ip, altEmail, cb) {
     var self = this
     var isAnon = !user
+    var isNew = true
     var request = {
         project: {
             ref: project._id,
@@ -125,13 +126,23 @@ RequestSchema.statics.request = function (user, project, ip, altEmail, cb) {
             })
         },
         function (callback) {
-            self.findOneAndUpdate({'project.ref': project._id, satisfied: false},
-                request, {upsert: true}, function (error, entry) {
-                    error && console.error(error)
-                    if (error) return callback('Server error')
-                    request = entry
-                    callback()
-                })
+            self.findOne({'project.ref': project._id, satisfied: false}, function (error, entry) {
+                error && console.error(error)
+                if (error) return callback('Server error')
+                if (!entry) return callback()
+                isNew = false
+                request = entry
+                return callback()
+            })
+        },
+        function (callback) {
+            if (!isNew) return callback()
+            self.create(request, function (error, entry) {
+                error && console.error(error)
+                if (error) return callback('Server error')
+                request = entry
+                callback()
+            })
         },
         function (callback) {
             _.merge(supporter, {request: request._id})
