@@ -4,12 +4,14 @@
  * Time: 8:06 AM
  */
 var mongoose = require('mongoose'),
-	_ = require('lodash'),
-	sanitizer = require('html-css-sanitizer'),
-	Schema = mongoose.Schema,
-	User = mongoose.model('User'),
-	Organization = mongoose.model('Organization'),
-	emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+    PayPalRegExp = /^https:\/\/www.paypal(objects)?.com/,
+    emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+    stripTagsRegExp = /<\/?[^>]+>/g,
+    _ = require('lodash'),
+    sanitizer = require('html-css-sanitizer'),
+    Schema = mongoose.Schema,
+    User = mongoose.model('User'),
+    Organization = mongoose.model('Organization')
 
 var ProjectSchema = new Schema({
 	githubId: {type: Number, required: true, index: { unique: true }},
@@ -70,26 +72,34 @@ ProjectSchema.methods.getOwner = function (cb) {
 }
 
 ProjectSchema.pre('validate', function (next, done) {
-	var reg = /^https:\/\/www.paypal(objects)?.com\//
-	var methods = this.donateMethods
+    var methods = this.donateMethods,
+        hasMethods = _(methods.toObject()).values().compact().value().length
 
-	if (!methods) return next()
+    if (!hasMethods) return next()
 
-	if (methods.paypal) {
-		methods.paypal = sanitizer.sanitize(methods.paypal, function (value) {
-			return  value.match(reg) ? value : ''
-		})
-	}
+    if (methods.paypal) {
+        methods.paypal = sanitizer.sanitize(methods.paypal, function (value) {
+            return  PayPalRegExp.test(value) ? value : ''
+        })
+    }
 
-	if (methods.other) {
-		methods.other = sanitizer.sanitize(methods.other)
-	}
+    if (methods.other) {
+        methods.other = sanitizer.smartSanitize(methods.other)
+    }
 
-	if (methods.emailMe && !methods.emailMe.match(emailRegExp)) {
-		methods.emailMe = ''
-	}
+    if (methods.flattr) {
+        methods.flattr = methods.flattr.replace(stripTagsRegExp, '')
+    }
 
-	next()
+    if (methods.gittip) {
+        methods.gittip = methods.gittip.replace(stripTagsRegExp, '')
+    }
+
+    if (methods.emailMe && !methods.emailMe.match(emailRegExp)) {
+        methods.emailMe = ''
+    }
+
+    next()
 });
 
 ProjectSchema.statics.parseGitHubData = function (repo) {
