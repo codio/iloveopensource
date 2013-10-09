@@ -4,9 +4,10 @@ module.exports = function (app) {
 	app.get('/auth/github', passport.authenticate('github'));
 
 	app.get('/auth/github/callback', function (req, res, next) {
-		passport.authenticate('github', function (err, user, info) {
+		passport.authenticate('github', function (err, user, isNew) {
 			if (err) return next(err);
 			if (!user) return res.redirect('/');
+			if (isNew) req.session.isNewUser = true;
 
 			req.logIn(user, function (err) {
 				if (err) return next(err);

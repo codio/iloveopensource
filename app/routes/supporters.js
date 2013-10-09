@@ -138,7 +138,16 @@ module.exports = function (app) {
 
 			Support.updateEntry(req.user, req.param('type'), req.param('by'), project._id, req.body.support, function (error, supports) {
 				if (error) return res.send(400, 'Failed to update your support');
-				res.send(supports)
+                if (!req.user.statistics.becameSupporterAt) {
+                    req.user.statistics.becameSupporterAt = new Date
+                    req.user.save(function(err) {
+                        err && console.error(err);
+                        res.set('Became-Supporter', new Date);
+                        res.send(supports)
+                    })
+                } else {
+                    res.send(supports)
+                }
 			})
 		})
 	})

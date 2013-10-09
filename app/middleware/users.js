@@ -4,10 +4,14 @@
  * Time: 7:34 PM
  */
 module.exports = function (app) {
-	//exposing current user
-	app.use(function (req, res, next) {
-		res.locals.isLoggedIn = req.isAuthenticated()
-		res.locals.loggedUser = req.user
-		next();
-	});
+    //exposing current user
+    app.use(function (req, res, next) {
+        res.locals.isLoggedIn = req.isAuthenticated()
+        res.locals.loggedUser = req.user
+        if (req.session.isNewUser) {
+            res.locals.isNewUser = true
+            req.session.isNewUser = null
+        }
+        next();
+    });
 }

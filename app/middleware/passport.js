@@ -43,8 +43,8 @@ passport.use(new GitHubStrategy({
 			})
 
 			user.register(function (err) {
-				if (err) console.log(err)
-				return done(err, user)
+				if (err) console.error(err)
+				return done(err, user, true)
 			})
 		})
 	}

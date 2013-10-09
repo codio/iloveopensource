@@ -24,7 +24,11 @@ var UserSchema = new Schema({
 		updating: {type: Boolean},
 		status: {type: String, enum: ['error', 'success']},
 		updatedAt: { type: Date }
-	}
+	},
+    statistics: {
+        becameSupporterAt: Date,
+        becameMaintainerAt: Date
+    }
 });
 
 UserSchema.path('email').validate(function (email) {
