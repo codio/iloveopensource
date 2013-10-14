@@ -161,7 +161,8 @@ RequestSchema.statics.request = function (user, project, ip, altEmail, cb) {
         function (callback) {
             if (!request.maintainer.email) {
                 return notifier.notifySupport(request, project, user, callback)
-            } else {
+            }
+            if (request.maintainer.email && !request.maintainer.notified) {
                 notifier.notifyMaintainer(request, project, user, callback)
             }
         }
