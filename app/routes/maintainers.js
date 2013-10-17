@@ -17,7 +17,24 @@ var _ = require('lodash'),
 
 module.exports = function (app) {
     app.get('/maintainer', ensureAuthenticated, function (req, res) {
-        res.render('maintainer-editor', { user: req.user, activeTab: 'maintainers' });
+        var callback = function () {
+            res.render('maintainer-editor', { user: req.user, activeTab: 'maintainers' })
+        }
+
+        if (req.query.unsubscribe) {
+            req.user.noMaintainerNotifications = true;
+            req.user.save(callback)
+        } else {
+            callback()
+        }
+    });
+
+    app.get('/maintainer/subscription/update', ensureAuthenticated, function (req, res) {
+        req.user.noMaintainerNotifications = !req.user.noMaintainerNotifications;
+        req.user.save(function(error) {
+            if (error) res.send(500, 'Failed to update your subscription')
+            res.send('ok')
+        })
     });
 
     app.get('/maintainer/projects/update', ensureAuthenticated, function (req, res) {

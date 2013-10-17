@@ -121,7 +121,13 @@ RequestSchema.statics.request = function (user, project, ip, altEmail, cb) {
         function (callback) {
             project.getOwner(function (error, owner) {
                 if (error) return callback(error)
-                if (owner && owner.email) request.maintainer.email = owner.email
+                if (owner && owner.email) {
+                    request.maintainer.email = owner.email
+
+                    if (owner.noMaintainerNotifications) {
+                        request.maintainer.notified = true
+                    }
+                }
                 callback()
             })
         },
@@ -170,7 +176,7 @@ RequestSchema.statics.request = function (user, project, ip, altEmail, cb) {
         if (error) return cb(error)
 
         if (request.maintainer.email) {
-            request.maintainer.notified = !!request.maintainer.email
+            request.maintainer.notified = true
         }
 
         request.updatedAt = new Date

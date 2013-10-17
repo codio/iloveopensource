@@ -4,14 +4,28 @@
 
 <% include parts/head.ejs %>
 <div class="container">
-	<section id="maintainers">
-		<div class="content-holder">
-			<div class="loading"><i class="icon-spinner icon-spin icon-large"></i> Loading</div>
-			<div class="show-help"></div>
-			<div class="content"></div>
-		</div>
-		<div class="help layout"></div>
-	</section>
+    <section id="maintainers">
+        <div class="form-group clearfix">
+            <div class="col-sm-6">
+                <div class="checkbox">
+                    <label for="subscribe-status">
+                        <input type="checkbox" id="subscribe-status" <%= loggedUser.noMaintainerNotifications && 'checked' %> value="true">
+                        I don't want to receive notifications about donate methods requests
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="saved" style="display: none;">Saved!</div>
+            </div>
+        </div>
+
+        <div class="content-holder">
+            <div class="loading"><i class="icon-spinner icon-spin icon-large"></i> Loading</div>
+            <div class="show-help"></div>
+            <div class="content"></div>
+        </div>
+        <div class="help layout"></div>
+    </section>
 </div>
 
 <% include modals/index.ejs %>
@@ -19,11 +33,11 @@
 <script type="text/javascript" src="<%= jsPath %>vendors/requirejs/js/require.js"></script>
 <script type="text/javascript" src="<%= jsPath %>require.config.js"></script>
 <script type="text/javascript">
-	require.config({
-		baseUrl: "<%= jsPath %>"
-	})
-	window.currentUserEmail = '<%= loggedUser.email %>'
-	require(['modules/maintainers/main'])
+    require.config({
+        baseUrl: "<%= jsPath %>"
+    })
+    window.currentUserEmail = '<%= loggedUser.email %>'
+    require(['modules/maintainers/main'])
 </script>
 
 

@@ -20,5 +20,23 @@ define(function (require) {
 			el: $('#maintainers')
 		})
 		store().projects.fetch()
+
+        $('#subscribe-status').on('change', function(event) {
+            var el = $(event.currentTarget)
+
+            if (el.prop('disabled')) return
+            el.prop('disabled', true)
+
+            $.get('/maintainer/subscription/update')
+                .done(function() {
+                    toastr.success('Your notification settings updated')
+                })
+                .fail(function(xhr) {
+                    toastr.error(xhr.responseText)
+                })
+                .always(function() {
+                    el.prop('disabled', false)
+                })
+        })
 	})
 })

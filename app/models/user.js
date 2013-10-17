@@ -25,6 +25,7 @@ var UserSchema = new Schema({
 		status: {type: String, enum: ['error', 'success']},
 		updatedAt: { type: Date }
 	},
+    noMaintainerNotifications: {type: Boolean, default: false},
     statistics: {
         becameSupporterAt: Date,
         becameMaintainerAt: Date
