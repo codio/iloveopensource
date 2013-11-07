@@ -16,6 +16,8 @@ var config = {};
 config.env = process.env.NODE_ENV || 'development';
 config.isDev = config.env === 'development';
 
+//config.logsDir absolute path for directory with logs, be sure it is writable
+config.logsDir = '/var/log/iloveopensource';
 //config.hostname used to create site links
 config.hostname = 'www.iloveopensource.io';
 //config.isHttps used to create site links
