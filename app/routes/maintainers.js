@@ -98,7 +98,7 @@ module.exports = function (app) {
                 })
             }
         ], function (error, project) {
-            if (error) return res.send(500, 'failed to save project settings')
+            if (error) return res.send(500, error)
             res.send(project)
         })
     });
