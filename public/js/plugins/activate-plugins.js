@@ -31,8 +31,9 @@ define(function (require) {
                 })
             }
 
-        projectSync.find('.trigger').on('click', function () {
+        projectSync.find('.trigger, .error').on('click', function () {
             if (projectSync.hasClass('loading')) return
+            projectSync.removeClass('error')
             projectSync.addClass('loading')
             createSocket()
             $.get('/maintainer/projects/update')
