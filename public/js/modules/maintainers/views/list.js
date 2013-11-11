@@ -7,7 +7,7 @@ define(function (require) {
 	require('backbone')
 
 	var store = require('store').getNamespace('maintainer')
-	var io = require('socket.io')
+	var updater = require('plugins/project.updater')
 	var tpl = require('tpl!../templates/list.html')
 	var helpTpl = require('tpl!../templates/help.html')
 	var Group = require('./group')
@@ -23,27 +23,9 @@ define(function (require) {
 			this.collection = store().projects
 			this.listenTo(store().projects, 'sync', this.showProjects)
 			this.listenTo(store().projects, 'request', this.showLoading)
-			this.attachSocketEvents()
-		},
-		attachSocketEvents: function() {
-			var sio = io.connect(window.location.origin + '/projects-update/status')
-
-			sio.on('progress', _.bind(function (desc) {
-				this.$('.projects-updater .log').append('<p>' + desc + '</p>')
-			}, this))
-
-			sio.on('error', _.bind(function () {
-				var updater = this.$('.projects-updater')
-				updater.find('.btn').button('reset')
-				updater.find('.log').append('<p class="text-danger">An error occurred. Please try later.</p>')
-			}, this))
-
-			sio.on('done', _.bind(function () {
-				var updater = this.$('.projects-updater')
-				updater.find('.btn').button('Done!')
-				updater.find('.log').empty()
-				store().projects.fetch()
-			}, this))
+            updater.on('done', _.bind(function () {
+                store().projects.fetch()
+            }, this))
 		},
 		showHelp: function() {
 			this.$('.content-holder').hide()

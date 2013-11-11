@@ -8,12 +8,13 @@ var cfg = require('../../config'),
 	_ = require('lodash'),
 	ejs = require('ejs'),
 	fs = require('fs'),
+    logger = require('winston'),
 	templates = {}
 
 //TODO: add mail queue
 module.exports.fillTemplates = function (dir, callback) {
 	if (!_.isEmpty(templates)) return
-	console.log('Reading email templates from', dir)
+	logger.info('Reading email templates from', dir)
 
 	fs.readdir(dir, function (err, files) {
 		if (err) return callback(err);

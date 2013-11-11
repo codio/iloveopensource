@@ -7,6 +7,7 @@ var passport = require('passport'),
 	cfg = require('../../config'),
 	GitHubStrategy = require('passport-github').Strategy,
 	mongoose = require('mongoose'),
+    logger = require('winston'),
 	User = mongoose.model('User')
 
 passport.serializeUser(function (user, done) {
@@ -20,7 +21,7 @@ passport.deserializeUser(function (obj, done) {
 });
 
 var callbackUrl = cfg.fullUrl() + '/auth/github/callback'
-console.log('GitHub callback url is', callbackUrl)
+logger.info('GitHub callback url is', callbackUrl)
 
 passport.use(new GitHubStrategy({
 		clientID: cfg.github.clientId,

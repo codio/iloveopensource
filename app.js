@@ -4,14 +4,21 @@
  * Time: 9:14 PM
  */
 var http = require('http'),
-	path = require('path'),
-	express = require('express'),
-	cfg = require('./config'),
-	MongoStore = require('connect-mongo')(express),
-	mongoose = require('mongoose'),
-	app = express();
+    path = require('path'),
+    express = require('express'),
+    cfg = require('./config'),
+    logger = require('./app/utils/logger'),
+    MongoStore = require('connect-mongo')(express),
+    mongoose = require('mongoose'),
+    app = express();
 
 mongoose.connect(cfg.mongodbUri)
+mongoose.connection.on('error', function (err) {
+    logger.error('Mongo connection error', err.message);
+});
+mongoose.connection.once('open', function callback () {
+    logger.info("Connected to MongoDB");
+});
 
 // Bootstrap models
 require('./app/models')
@@ -39,19 +46,18 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser(cfg.sessionSecret));
 app.use(express.session({
-	secret: cfg.sessionSecret,
-	store: sessionStore
+    secret: cfg.sessionSecret,
+    store: sessionStore
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 require('./app/middleware/users')(app)
 app.use(app.router);
 require('./app/routes')(app)
-// development only
-if ('development' == cfg.env) {
-	app.use(express.errorHandler());
+if (cfg.isDev) {
+    app.use(express.errorHandler());
 } else {
-	require('./app/middleware/errors')(app)
+    require('./app/middleware/errors')(app)
 }
 
 var server = http.createServer(app)
@@ -59,10 +65,10 @@ var server = http.createServer(app)
 require('./app/utils/socket.io')(server, sessionStore)
 
 require('./app/utils/mailer').fillTemplates(path.join(__dirname, 'app/views/emails/'), function (error) {
-	if (error) throw error;
+    if (error) throw error;
 
-	server.listen(app.get('port'), function () {
-		console.log('Express server listening on port ' + app.get('port'));
-	});
+    server.listen(app.get('port'), function () {
+        logger.info('Express server listening on port ' + app.get('port'));
+    });
 })
 

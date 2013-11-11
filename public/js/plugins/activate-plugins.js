@@ -6,37 +6,13 @@
 define(function (require) {
     require('jquery')
     require('bootstrap')
-    var io = require('socket.io')
+    require('./project.updater')
     var toastr = require('toastr')
 
     $(function () {
-        var sio,
-            emailToAuthor = $('#email-to-author'),
+        var emailToAuthor = $('#email-to-author'),
             noteFromAuthor = $('#note-from-author'),
-            requestContribution = $('#need-contribution-ways'),
-            projectSync = $('#projects-sync'),
-            createSocket = function () {
-                if (sio) return
-
-                sio = io.connect(window.location.origin + '/projects-update/status')
-                sio.on('error', function (error) {
-                    projectSync.addClass('error').removeClass('loading')
-                    toastr.error(error, 'Failed to retrieve your info from GitHub')
-                })
-
-                sio.on('done', function () {
-                    projectSync.removeClass('error loading')
-                    toastr.success('Your projects loaded from GitHub!')
-                    projectSync.trigger('github-info-updated')
-                })
-            }
-
-        projectSync.find('.trigger').on('click', function () {
-            if (projectSync.hasClass('loading')) return
-            projectSync.addClass('loading')
-            createSocket()
-            $.get('/maintainer/projects/update')
-        })
+            requestContribution = $('#need-contribution-ways');
 
         requestContribution.on('click', '.set-email', function () {
             var email = $.trim(requestContribution.find('input').val())
@@ -59,8 +35,6 @@ define(function (require) {
                     requestContribution.modal('hide')
                 })
         })
-
-        if (projectSync.hasClass('loading')) createSocket()
 
         $('body')
             .tooltip({

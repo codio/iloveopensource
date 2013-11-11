@@ -13,6 +13,7 @@ var _ = require('lodash'),
             return next();
         })
     },
+    ProjectsUpdater = require('../utils/updater'),
     RequsetsConverter = require('../utils/requests-converter'),
     Request = mongoose.model('Request'),
     Requester = mongoose.model('Requester'),
@@ -29,7 +30,7 @@ module.exports = function (app) {
 
             async.map(users, function (user, c) {
                 var results = ['Updating repos for ' + user.username]
-                var task = require('../utils/update-user-projects')(user)
+                var task = (new ProjectsUpdater(user))
                     .then(function () {
                         results.push('Done!')
                         c(null, results)

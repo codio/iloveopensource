@@ -18,7 +18,8 @@
     "passport.socketio": "~1.2.1",
     "q": "~0.9.7",
     "html-css-sanitizer": "0.0.3",
-    "moment": "~2.3.0"
+    "moment": "~2.3.0",
+    "winston": "~0.7.2"
   },
   "devDependencies": {
     "grunt-contrib-less": "~0.6.5",
