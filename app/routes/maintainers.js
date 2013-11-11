@@ -7,8 +7,6 @@ var _ = require('lodash'),
     mongoose = require('mongoose'),
     async = require('async'),
     ensureAuthenticated = require('../utils/ensure-auth'),
-    projectsUpdater = require('../utils/updater/index.js'),
-
     Project = mongoose.model('Project'),
     Organization = mongoose.model('Organization'),
     Support = mongoose.model('Support'),
@@ -36,11 +34,6 @@ module.exports = function (app) {
             res.send('ok')
         })
     });
-
-    app.get('/maintainer/projects/update', ensureAuthenticated, function (req, res) {
-        !req.user.projectsUpdater.updating && projectsUpdater(req.user)
-        res.send('started')
-    })
 
     app.get('/maintainer/projects', ensureAuthenticated, function (req, res) {
         Project.find({ $or: [

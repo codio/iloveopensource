@@ -6,7 +6,7 @@
 var mongoose = require('mongoose'),
     async = require('async'),
     logger = require('winston'),
-    io = require('./../socket.io.js'),
+    io = require('../socket.io.js'),
     OrgsUpdater = require('./organizations.js'),
     ProjectsUpdater = require('./projects.js'),
     Q = require('q'),
