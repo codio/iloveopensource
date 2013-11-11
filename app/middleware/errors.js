@@ -26,10 +26,7 @@ module.exports = function (app) {
 
     app.use(function (err, req, res, next) {
         res.status(err.status || 500);
-        logger.error('Route Error', {
-            error: err,
-            req: req
-        })
+        logger.warn('Route Error: %s', req.originalUrl, err)
 
         if (req.accepts('html')) {
             return res.render('500', { error: err });

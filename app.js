@@ -54,7 +54,11 @@ app.use(passport.session());
 require('./app/middleware/users')(app)
 app.use(app.router);
 require('./app/routes')(app)
-require('./app/middleware/errors')(app)
+if (cfg.isDev) {
+    app.use(express.errorHandler());
+} else {
+    require('./app/middleware/errors')(app)
+}
 
 var server = http.createServer(app)
 

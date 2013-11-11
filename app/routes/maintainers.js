@@ -7,7 +7,7 @@ var _ = require('lodash'),
     mongoose = require('mongoose'),
     async = require('async'),
     ensureAuthenticated = require('../utils/ensure-auth'),
-    projectsUpdater = require('../utils/update-user-projects'),
+    projectsUpdater = require('../utils/updater/index.js'),
 
     Project = mongoose.model('Project'),
     Organization = mongoose.model('Organization'),

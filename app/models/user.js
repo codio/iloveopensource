@@ -41,7 +41,7 @@ UserSchema.methods.register = function (callback) {
 	this.save(function (error, user) {
 		if (error) return callback(error)
 		callback(error, user)
-		require('../utils/update-user-projects')(user)
+		require('../utils/updater/index.js')(user)
 	})
 }
 
