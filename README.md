@@ -13,7 +13,7 @@ This [short video](https://vimeo.com/75609049?autoplay=1) explains things proper
 ##Our "I Love Open Source" acknowledgments
 We use I Love Open Source ourselves. Click on the button below to see our Supporter page.
 
-![ilos](https://github.com/codio/iloveopensource/blob/master/public/images/logo-lightbg.png?raw=true)
+[![ilos](https://github.com/codio/iloveopensource/blob/master/public/images/logo-lightbg.png?raw=true)](http://www.iloveopensource.io/projects/523c6c7f861be7020000000d)
 
 ##How it came about
 When the Codio team were preparing the website, we wanted to show public support for the open source projects we use. We didn't want to just give private donations or statements of support, which no-one was aware of other than the recipient. We wanted to list the projects for all to see, both from the website and the product itself.
