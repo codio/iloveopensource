@@ -2,6 +2,8 @@
  * Created by krasu on 11/11/13.
  */
 define(function (require) {
+    if (!window.isLoggedIn) return null
+
     var io = require('socket.io')
     var toastr = require('toastr')
     var sio = io.connect(window.location.origin + '/projects-update/status')
