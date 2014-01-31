@@ -17,7 +17,8 @@ module.exports.request = function (path, params, callback) {
         path: '/' + path + '?' + qs.stringify(params),
         method: 'GET',
         headers: {
-            'Agent': 'octonode',
+            'User-Agent': 'ilos',
+            'Agent': 'ilos',
             'Accept': 'application/vnd.github.preview'
         }
     };
