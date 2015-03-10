@@ -7,7 +7,7 @@
     <title><%- titleBuilder.render() %></title>
 
     <link rel="stylesheet" type="text/css" href="/css/main.css"/>
-    <% if (isLoggedIn) { %>
+    <% if (this.isLoggedIn) { %>
     <script type="text/javascript">
         var isLoggedIn = true
         var currentUser = {
@@ -24,6 +24,6 @@
 </head>
 <body class="<%= typeof bodyClass != 'undefined' ? bodyClass : ''%>">
 <div id="wrap">
-    <% if (typeof noHead == 'undefined') { %>
+    <% if (!this.noHead) { %>
     <% include header.ejs %>
     <% } %>
