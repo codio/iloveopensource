@@ -22,11 +22,6 @@ That simple start developed into a case of massive scope creep and we added more
 
 Importantly, I Love Open Source is not just for Open Source developers. Commercial organizations who use Open Source but may not develop Open Source projects themselves now have a perfect means of acknowledgement. Giving acknowledgement and occasionally donations improves the overall health of the OS development community and helps OS developers to keep on developing.
 
-##Viewing the Source Code
-The quickest way to browse through the project is to click below. We will shortly be annotating the project, to help you find your way around the code. Click below to load it.
-
-[![Show me the Code at Codio](https://codio-public.s3.amazonaws.com/sharing/show-me-the-code.png)](https://codio.com/codio/iloveopensource)
-
 ##Sponsor Thanks
 - **Codio** : I Love Open Source is coded and (currently) maintained by [Codio](http://codio.com) developers
 - **Digital Ocean** : All of the cloud hosting is provided free of charge by [Digital Ocean](http://www.digitalocean.com).
