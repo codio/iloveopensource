@@ -19,17 +19,17 @@ config.isDev = config.env === 'development';
 //config.logsDir absolute path for directory with logs, be sure it is writable
 config.logsDir = '/var/log/iloveopensource';
 //config.hostname used to create site links
-config.hostname = 'www.iloveopensource.io';
+config.hostname = process.env.HOSTNAME || 'www.iloveopensource.io';
 //config.isHttps used to create site links
 config.isHttps = false;
 //config.usePort used to create site links
 config.usePort = false;
 //config.mongodb connection Uri string
-config.mongodbUri = 'mongodb://localhost/ilos'
+config.mongodbUri = process.env.MONGOHQ_URL || 'mongodb://localhost/ilos'
 //config.github app settings
 config.github = {
-	clientId: '',
-	clientSecret: ''
+	clientId: process.env.GITHUB_CLIENT_ID || '',
+	clientSecret: process.env.GITHUB_CLIENT_SECRET || ''
 }
 //config.emails.from - name of sender
 //config.emails.to - email of support
@@ -43,7 +43,7 @@ config.emails = {
 	})
 }
 //config.sessionSecret to hash sessions
-config.sessionSecret = 's,dfjsklfj3k45j34k5kjLKj87093476ukvj jlk';
+config.sessionSecret = process.env.SESSION_SECRET || 's,dfjsklfj3k45j34k5kjLKj87093476ukvj jlk';
 //config.port on which app should run
 config.port = '5000';
 //config.port on which app should run
