@@ -25,7 +25,7 @@
     "grunt-contrib-less": "~0.6.5",
     "grunt-autoprefixer": "~0.2.20130806",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-bower-task": "~0.3.2",
+    "grunt-bower-task": "~0.4.0",
     "grunt": "~0.4.1",
     "grunt-contrib-cssmin": "~0.6.1",
     "grunt-contrib-requirejs": "~0.4.1",

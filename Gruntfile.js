@@ -7,7 +7,7 @@ module.exports = function (grunt) {
 					targetDir: './public/js/vendors/',
 					layout: 'byComponent',
 					install: true,
-//					verbose: true,
+					verbose: true,
 					cleanTargetDir: true,
 					cleanBowerDir: true
 				}
@@ -88,4 +88,6 @@ module.exports = function (grunt) {
 	grunt.registerTask('build', ['less', 'autoprefixer']);
 	grunt.registerTask('build:prod', ['less', 'autoprefixer', 'cssmin', 'requirejs']);
 	grunt.registerTask('update', ['bower', 'build:prod']);
+	grunt.registerTask('heroku:production', ['update']);
+
 };
