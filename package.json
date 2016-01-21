@@ -31,5 +31,8 @@
     "grunt-contrib-requirejs": "~0.4.1",
     "socket.io": "~0.9.16",
     "bower": "~1.7.2"
+  },
+  "engines": {
+    "node": "0.10.41"
   }
 }
